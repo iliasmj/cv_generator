@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet", href="/static/css/style.css">
+    <title>CV Generator</title>
+</head>
+<body>
+    <div id="form_box">
+        <form method="get">
+            <div id="personal_data">
+                <div id="input_box">
+                    <label>Name<span id="required">*</span> :</label>
+                    <input id="name" type="text" name="name" required>
+                </div>
+
+                <div id="input_box">
+                    <label>Firstname<span id="required">*</span> :</label>
+                    <input id="first_name" type="text" name="first_name" required>
+                </div>
+
+                <div id="input_box">
+                    <label>Date of birth<span id="required">*</span> :</label>
+                    <input id="birth_date" type="date" name="birth_date" required>
+                </div>
+
+                <div id="input_box">
+                    <label>Nationality<span id="required">*</span> :</label>
+                    <input id="nationality" type="text" name="nationality" required>
+                </div>
+                
+                <div id="input_box">
+                    <label>Phone number<span id="required">*</span> :</label>
+                    <input id="phone_number" type="text" name="phone_number" placeholder="07- --- -- --" required>
+                </div>
+                    
+                <div id="input_box">
+                    <label>Email<span id="required">*</span> :</label>
+                    <input id="email" type="text" name="email" placeholder="exemple@gmail.com" required>
+                </div>
+                    
+                <div id="input_box">
+                    <label>Address<span id="required">*</span> :</label>
+                    <input id="address" type="text" name="adress" placeholder="Rue de la Gare 1, 1205 Genève" required>
+                </div>
+
+                <div id="input_box">
+                    <label>Driver's license :</label>
+                    <input id="driver_license" type="text" name="driver_license" placeholder="Permis B">
+                </div>
+            </div>
+                
+            <div id="about_me">
+                <div id="input_box">
+                    <label>Job title<span id="required">*</span> :</label>
+                    <input id="job_title" type="text" name="job_title" required>
+                </div>
+
+                <div id="years_experience">
+                    <label>Years of experience<span id="required">*</span> :</label>
+                    <input id="years_experience" type="text" name="years_experience" required>
+                </div>
+
+                <div id="bio">
+                    <label>Biography<span id="required">*</span> :</label>
+                    <input id="bio" type="text" name="bio" required>
+                </div>
+
+                <div id="skills">
+                    <label>Add Skill<span id="required">*</span> :</label>
+                    <input id="add_skill" type="button" value="+">
+                </div>
+
+                <div id="languages">
+                    <label>Add language<span id="required">*</span> :</label>
+                    <input id="add_language" type="button" value="+">
+                </div>
+            </div>
+
+            <div id="experience">
+                <label>Add experience<span id="required">*</span> :</label>
+                <input id="add_experience" type="button" value="+">
+            </div>
+
+            <div id="education">
+                <label>Add education<span id="required">*</span> :</label>
+                <input id="add_education" type="button" value="+">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
