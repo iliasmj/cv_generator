@@ -29,34 +29,37 @@ function createHTHMLLabel(title, parentElement, required) {
     parentElement.appendChild(newLabel);
 }
 
-function createHTHMLInput(name, type, parentElement) {
+function createHTHMLInput(htmlClass, type, name, parentElement) {
     const newInput = document.createElement("input");
-    newInput.id = name + "_input";
+    newInput.className = htmlClass;
     newInput.type = type;
     newInput.name = name;
     parentElement.appendChild(newInput);
+    return newInput;
 }
 
-function createHTMLAddButton(id, parentElement) {
+function createHTMLAddButton(parentElement) {
     const newAddButton = document.createElement("input");
-    newAddButton.id = id;
     newAddButton.class = "add";
     newAddButton.type = "button";
     newAddButton.value = "+";
     parentElement.appendChild(newAddButton);
+    return newAddButton;
 }
 
 //creates and appends new text input to skills div.
 const addSkill = function() {
-    createHTHMLInput("skill", "text", skillsDiv);
+    const skill = createHTHMLInput("text_box","text", "skill", skillsDiv);
 }
 
 //Creates text box input for specifying the language and creates proficiency level selector.
 //Appends both to langage div.
 const addLanguage = function() {
-    createHTHMLInput("language", "text", languageDiv);
+    const language = createHTHMLInput("text_box", "text", "language", languageDiv);
 
     const proficiencySelector = document.createElement("select");
+    proficiencySelector.className = "select"
+    proficiencySelector.name = "proficiency"
     for(let level of proficiencyLevel){
         const option = document.createElement("option");
         option.value = level.toLowerCase();
@@ -69,25 +72,25 @@ const addLanguage = function() {
 const addExperience = function() {
     //Add job title input.
     createHTHMLLabel("Job title", experiencesDiv, required=true);
-    createHTHMLInput("job_title", "text", experiencesDiv);
+    const jobTitleInput = createHTHMLInput("text_box", "text", "job_title", experiencesDiv);
 
     //Add employer input.
     createHTHMLLabel("Employer", experiencesDiv, required=true);
-    createHTHMLInput("employer", "text", experiencesDiv);
+    const employerInput = createHTHMLInput("text_box", "text", "employer", experiencesDiv);
 
     //Add location input.
     createHTHMLLabel("Location", experiencesDiv, required=true);
-    createHTHMLInput("location", "text", experiencesDiv);
+    const expLocationInput = createHTHMLInput("text_box", "text", "exp_location", experiencesDiv);
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("From", experiencesDiv, required=true);
-    createHTHMLInput("from", "month", experiencesDiv)
-    document.getElementById("from_input").placeholder = "MM-AAAA";
+    const expFromInput = createHTHMLInput("date", "month", "exp_from", experiencesDiv)
+    expFromInput.placeholder = "MM-AAAA";
 
-    //Add duration "since" date input (with MM-AAAA format).
-    createHTHMLLabel("Since", experiencesDiv, required=true);
-    createHTHMLInput("since", "month", experiencesDiv);
-    document.getElementById("since_input").placeholder = "MM-AAAA"; // ATTENTION PLACEHOLDER !!
+    //Add duration "to" date input (with MM-AAAA format).
+    createHTHMLLabel("To", experiencesDiv, required=true);
+    const expSinceInput = createHTHMLInput("date", "month", "exp_to", experiencesDiv);
+    expSinceInput.placeholder = "MM-AAAA";
 
     //create div for containing activities inputs
     const activitiesDiv = document.createElement("div");
@@ -95,20 +98,41 @@ const addExperience = function() {
      
     //Add button action "add task".
     createHTHMLLabel("Add task", activitiesDiv, required=true);
-    createHTMLAddButton("add_activity", activitiesDiv);
+    const addActivityButton = createHTMLAddButton(activitiesDiv);
     experiencesDiv.appendChild(activitiesDiv);
    
     const addActivity = function() {
-        createHTHMLInput("activity", "text", activitiesDiv);  // ATTENTION ID vs CLASS !!
+        return createHTHMLInput("text_box", "text", "activity", activitiesDiv);
     }
-    document.getElementById("add_activity").addEventListener("click", addActivity);
+    addActivityButton.addEventListener("click", addActivity);
 }
 
 const addEducation = function() {
+    //Add institution input.
+    createHTHMLLabel("Institution", educationsDiv, required=true);
+    const institutionInput = createHTHMLInput("text_box", "text", "institution", educationsDiv);
 
+    //Add location input.
+    createHTHMLLabel("Location", educationsDiv, required=true);
+    const eduLocationInput = createHTHMLInput("text_box", "text", "edu_location", educationsDiv);
+
+     //Add duration "from" date input (with MM-AAAA format).
+     createHTHMLLabel("From", educationsDiv, required=true);
+     const eduFromInput = createHTHMLInput("date", "month", "edu_from", educationsDiv)
+     eduFromInput.placeholder = "MM-AAAA";
+ 
+     //Add duration "to" date input (with MM-AAAA format).
+     createHTHMLLabel("To", educationsDiv, required=true);
+     const eduSinceInput = createHTHMLInput("date", "month", "edu_to", educationsDiv);
+     eduSinceInput.placeholder = "MM-AAAA";
+
+     //Add program title input.
+    createHTHMLLabel("Program title", educationsDiv, required=true);
+    const programTitleInput = createHTHMLInput("text_box", "text", "program_title", educationsDiv);
 }
 
 //Links adding functions to action buttons. :
 addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
+addEducationButton.addEventListener("click", addEducation);
