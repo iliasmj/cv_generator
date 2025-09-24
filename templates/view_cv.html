@@ -16,7 +16,6 @@
             <li>{{ cv.personal_data["address"] }}</li>
             <li>{{ cv.personal_data["driver_license"] }}</li>
         </ul>
-
     </section>
     <section id="about_me">
         <h1>{{ cv.about_me["job_title"] }}</h1>
@@ -35,10 +34,25 @@
         {% endfor %}
     </section>
     <section id="experiences">
-        
+        <h1>Expériences</h1>
+        {% for experience in cv.experiences %}
+            <h2>{{ experience.employer }} | {{ experience.location }}</h2>
+            <p>{{ experience.duration_from.replace("-", "/") }} - {{ experience.duration_to.replace("-", "/") }}</p>
+            <p>{{ experience.job_title }}</p>
+            <ul>
+            {% for activity in experience.keyActivities%}
+                <li>{{ activity }}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
     </section>
     <section id="educations">
-
+        <h1>Formations</h1>
+        {% for education in cv.educations %}
+            <h2>{{ education.institution }} | {{ education.location }}</h2>
+            <p>{{ education.duration_from.replace("-", "/") }} - {{ education.duration_to.replace("-", "/") }}</p>
+            <p>{{ education.program_title }}</p>
+        {% endfor %}
     </section>
 </body>
 </html>
