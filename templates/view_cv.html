@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/view.css">
     <title>myCV</title>
 </head>
 <body>
-    
+    <section id="personal_data">
+        <h1>{{ cv.personal_data["name"] }} {{ cv.personal_data["first_name"] }}</h1>
+        <p>{{ cv.personal_data["birth_date"] }}</p>
+        <ul>
+            <li>{{ cv.personal_data["nationality"] }}</li>
+            <li>{{ cv.personal_data["phone_number"] }}</li>
+            <li>{{ cv.personal_data["email"] }}</li>
+            <li>{{ cv.personal_data["address"] }}</li>
+            <li>{{ cv.personal_data["driver_license"] }}</li>
+        </ul>
+
+    </section>
+    <section id="about_me">
+        <h1>{{ cv.about_me["job_title"] }}</h1>
+        <h2>{{ cv.about_me["years_experience"] }}</h2>
+        <p>{{ cv.about_me["bio"] }}</p>
+        <h1>Compétences</h1>
+        <ul>
+            {% for skill in cv.about_me["skills"] %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+        <h1>Langues</h1>
+        {% for language in cv.about_me["languages"] %}
+            <h2>{{ language.language }}</h2>
+            <p>{{ language.proficiency }}</p>
+        {% endfor %}
+    </section>
+    <section id="experiences">
+        
+    </section>
+    <section id="educations">
+
+    </section>
 </body>
 </html>
