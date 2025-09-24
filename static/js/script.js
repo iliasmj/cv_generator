@@ -10,7 +10,10 @@ const languagesDiv = document.getElementById("languages");
 const experiencesDiv = document.getElementById("experiences");
 const educationsDiv = document.getElementById("educations");
 
-//list that contains proficiency level.
+//Activities divs count
+let activitiesDivCount = 0;
+
+//List that contains proficiency level.
 const proficiencyLevel = [
     "Beginner",
     "Intermediate",
@@ -47,14 +50,14 @@ function createHTHMLInput(htmlClass, type, name, parentElement) {
 
 function createHTMLAddButton(parentElement) {
     const newAddButton = document.createElement("input");
-    newAddButton.class = "add";
+    newAddButton.className = "add";
     newAddButton.type = "button";
     newAddButton.value = "+";
     parentElement.appendChild(newAddButton);
     return newAddButton;
 }
 
-//creates and appends new text input to skills div.
+//Creates and appends new text input to skills div.
 const addSkill = function() {
     const skill = createHTHMLInput("text_box","text", "skill", skillsDiv);
 }
@@ -102,8 +105,9 @@ const addExperience = function() {
     expSinceInput.placeholder = "MM-AAAA";
 
     //create div for containing activities inputs
-    const activitiesDiv = document.createElement("div");
-    activitiesDiv.id = "activities";
+    const activitiesDiv = createHTMLDiv("activities", experienceDiv)
+    activitiesDivCount++;
+    activitiesDiv.className = "activities";
      
     //Add button action "add task".
     createHTHMLLabel("Add task", activitiesDiv, required=true);
@@ -111,13 +115,13 @@ const addExperience = function() {
     experienceDiv.appendChild(activitiesDiv);
    
     const addActivity = function() {
-        return createHTHMLInput("text_box", "text", "activity", activitiesDiv);
+        return createHTHMLInput("text_box", "text", "activity_" + activitiesDivCount, activitiesDiv);
     }
     addActivityButton.addEventListener("click", addActivity);
 }
 
 const addEducation = function() {
-    const educationDiv = createHTMLDiv("language", educationsDiv)
+    const educationDiv = createHTMLDiv("education", educationsDiv)
     //Add institution input.
     createHTHMLLabel("Institution", educationDiv, required=true);
     const institutionInput = createHTHMLInput("text_box", "text", "institution", educationDiv);
