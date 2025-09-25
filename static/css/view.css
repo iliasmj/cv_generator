@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    padding: 0%;
+}
+
+.cv_container {
+    display: grid; /* activate CSS Grid Layout mode */
+    grid-template-columns: 30% 70%; /* create 2 columns by specifying the proportions*/
+    min-height: 100vh; /* constrain the minimum height of cv_container to 100% of display window */
+}
+
+.left_column {
+    background-color: #0ea9c4;
+    text-align: center;
+}
+
+.photo_container {
+    display: flex;
+    justify-content: center;
+}
+
+.photo {
+    width: 265px;
+    height: 355px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 5%;
+}
+
+.left_column h1 {
+    font-size: 18px;
+    background-color: white;
+    border-radius: 50px;
+    display: inline-block;
+    padding: 20px 20px;
+}
+
+/*
+.right_column {
+
+}
+*/

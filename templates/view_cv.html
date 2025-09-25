@@ -6,53 +6,72 @@
     <title>myCV</title>
 </head>
 <body>
-    <section id="personal_data">
-        <h1>{{ cv.personal_data["name"] }} {{ cv.personal_data["first_name"] }}</h1>
-        <p>{{ cv.personal_data["birth_date"] }}</p>
-        <ul>
-            <li>{{ cv.personal_data["nationality"] }}</li>
-            <li>{{ cv.personal_data["phone_number"] }}</li>
-            <li>{{ cv.personal_data["email"] }}</li>
-            <li>{{ cv.personal_data["address"] }}</li>
-            <li>{{ cv.personal_data["driver_license"] }}</li>
-        </ul>
-    </section>
-    <section id="about_me">
-        <h1>{{ cv.about_me["job_title"] }}</h1>
-        <h2>{{ cv.about_me["years_experience"] }}</h2>
-        <p>{{ cv.about_me["bio"] }}</p>
-        <h1>Compétences</h1>
-        <ul>
-            {% for skill in cv.about_me["skills"] %}
-                <li>{{ skill }}</li>
-            {% endfor %}
-        </ul>
-        <h1>Langues</h1>
-        {% for language in cv.about_me["languages"] %}
-            <h2>{{ language.language }}</h2>
-            <p>{{ language.proficiency }}</p>
-        {% endfor %}
-    </section>
-    <section id="experiences">
-        <h1>Expériences</h1>
-        {% for experience in cv.experiences %}
-            <h2>{{ experience.employer }} | {{ experience.location }}</h2>
-            <p>{{ experience.duration_from.replace("-", "/") }} - {{ experience.duration_to.replace("-", "/") }}</p>
-            <p>{{ experience.job_title }}</p>
-            <ul>
-            {% for activity in experience.keyActivities%}
-                <li>{{ activity }}</li>
-            {% endfor %}
-            </ul>
-        {% endfor %}
-    </section>
-    <section id="educations">
-        <h1>Formations</h1>
-        {% for education in cv.educations %}
-            <h2>{{ education.institution }} | {{ education.location }}</h2>
-            <p>{{ education.duration_from.replace("-", "/") }} - {{ education.duration_to.replace("-", "/") }}</p>
-            <p>{{ education.program_title }}</p>
-        {% endfor %}
-    </section>
+    <div class="cv_container">
+        <aside class="left_column">
+            <section id="about_me">
+                <div class="photo_container">
+                    <img class="photo" src="/static/img/photo.jpg"></img>
+                </div>
+                <div class="bio_container">
+                    <h1>{{ cv.about_me["job_title"]|upper }}</h1>
+                    <h2>{{ cv.about_me["years_experience"] }}</h2>
+                    <p>{{ cv.about_me["bio"] }}</p>
+                </div>
+                <div class="skills_container">
+                    <h1>COMPÉTENCES</h1>
+                    <ul>
+                        {% for skill in cv.about_me["skills"] %}
+                            <li>{{ skill }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="languages_container">
+                    <h1>LANGUES</h1>
+                    {% for language in cv.about_me["languages"] %}
+                        <h2>{{ language.language }}</h2>
+                        <p>{{ language.proficiency }}</p>
+                    {% endfor %}
+                </div>
+            </section>
+        </aside>
+        <main class="right_column">
+            <section id="personal_data">
+                <h1>{{ cv.personal_data["name"] }} {{ cv.personal_data["first_name"] }}</h1>
+                <p>{{ cv.personal_data["birth_date"] }}</p>
+                <ul>
+                    <li>{{ cv.personal_data["nationality"] }}</li>
+                    <li>{{ cv.personal_data["phone_number"] }}</li>
+                    <li>{{ cv.personal_data["email"] }}</li>
+                    <li>{{ cv.personal_data["address"] }}</li>
+                    <li>{{ cv.personal_data["driver_license"] }}</li>
+                </ul>
+            </section>
+            <section id="experiences">
+                <h1>Expériences</h1>
+                {% for experience in cv.experiences %}
+                    <div class="experience_container">
+                        <h2>{{ experience.employer }} | {{ experience.location }}</h2>
+                        <p>{{ experience.duration_from.replace("-", "/") }} - {{ experience.duration_to.replace("-", "/") }}</p>
+                        <p>{{ experience.job_title }}</p>
+                        <ul>
+                        {% for activity in experience.keyActivities%}
+                            <li>{{ activity }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </section>
+            <section id="educations">
+                <h1>Formations</h1>
+                {% for education in cv.educations %}
+                    <div class="education_container">
+                        <h2>{{ education.institution }} | {{ education.location }}</h2>
+                        <p>{{ education.duration_from.replace("-", "/") }} - {{ education.duration_to.replace("-", "/") }}</p>
+                        <p>{{ education.program_title }}</p>
+                    </div>
+                {% endfor %}
+            </section>
+        </main>
+    </div>
 </body>
 </html>
