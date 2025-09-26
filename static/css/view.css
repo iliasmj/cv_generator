@@ -1,42 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
     margin: 0;
-    padding: 0%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #1e1e1e;
 }
 
 .cv_container {
+    width: 210mm; /*A4 width*/
+    height: 297mm; /*A4 height*/
+    font-size: 11px;
+    font-family: Saira;
     display: grid; /* activate CSS Grid Layout mode */
-    grid-template-columns: 30% 70%; /* create 2 columns by specifying the proportions*/
-    min-height: 100vh; /* constrain the minimum height of cv_container to 100% of display window */
+    grid-template-columns: 35% 65%; /* create 2 columns by specifying the proportions*/
+    background-color: white;
 }
 
 .left_column {
+    height: 100%;
     background-color: #0ea9c4;
-    text-align: center;
+}
+
+section#about_me {
+    height: 100%;
+}
+
+.left_grid {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto;
+    padding: 5% 10% 5% 10%;
+    box-sizing: border-box;
+    row-gap: 2%;
+}
+
+section#about_me > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section#about_me h1 {
+    margin-top: 0%;
+    margin-bottom: 8%;
 }
 
 .photo_container {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .photo {
-    width: 265px;
-    height: 355px;
+    width:90%;
+    height: 90%;
     border-radius: 50%;
     object-fit: cover;
-    padding: 5%;
 }
 
 .left_column h1 {
-    font-size: 18px;
+    font-size: 16px;
     background-color: white;
-    border-radius: 50px;
-    display: inline-block;
-    padding: 20px 20px;
+    border-radius: 30px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: block;
+    text-align: center;
 }
 
-/*
+section#about_me h2 {
+    color: white;
+    margin: 0%;
+    text-align: center;
+}
+
+div.bio_container h2 {
+    font-size: 12px;
+}
+
+.bio {
+    padding-left: 5%;
+    padding-right: 5%;
+    color: white;
+    text-align: left;
+    margin-bottom: 0%;
+}
+
+section#about_me ul {
+    color: white;
+    padding-left: 10%;
+    padding-right: 5%;
+    margin-bottom: 0;
+}
+
+div.languages_container h2 {
+    font-size: 14px;
+}
+.languages_container p{
+    color: white;
+    text-align: center;
+}
+
 .right_column {
-
+    height: 100%;
 }
-*/
+
+.right_grid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    box-sizing: border-box;
+    gap: 2%;
+}
+
+.right_grid > section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right_grid > section h1 {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    line-height: 1;
+    margin: 0% 0% 0% 0%;
+}
+
+.right_grid > section:not(section#personal_data) h1 {
+    margin-bottom: 5%;
+}
+
+.right_grid > section h1:not(h1.first_name) {
+    color: #0ea9c4;
+}
+
+.personal_header {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.per_header_name {
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+}
+
+.per_header_name > h1 {
+    font-size: 32px;
+}
+
+.personal_header > p {
+    font-size: 12px;
+    margin: 0%;
+}
+
+section#personal_data ul {
+    font-size: 12px;
+    list-style-type: none;
+    padding-left: 1em;
+}
+
+.nationality::before {
+    content: url("/static/img/nationality.png");
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+.phone_number::before {
+    content: url("/static/img/phone_number.png");
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+.email::before {
+    content: url("/static/img/email.png");
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+.address::before {
+    content: url("/static/img/address.png");
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+.driver_license::before {
+    content: url("/static/img/driver_license.png");
+    display: inline-flex;
+    height: 1em;
+    width: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+}
+
+.right_grid > section:not(section#personal_data) h1::before {
+    content: "";
+    flex: 1;
+    border-top: 2px solid #0ea9c4;
+    margin-right: 2%;
+}
+
+.right_grid > section:not(section#personal_data) h1::after {
+    content: "";
+    flex: 1;
+    border-top: 2px solid #0ea9c4;
+    margin-left: 2%;
+}
+
+.experience_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exp_header_left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.experience_header h2 {
+    margin: 0%;
+    text-align: left;
+    font-size: 12px;
+}
+
+.exp_location {
+    margin: 0%;
+    font-style: normal;
+}
+
+.exp_location::before {
+    content: "|";
+    margin: 5px;
+}
+
+.exp_duration {
+    margin: 0%;
+    text-align: right;
+}
+
+.job_title {
+    margin: 0%;
+}
+
+.experience_container ul {
+    padding-left: 2%;
+    margin-bottom: 0%;
+    list-style: none;
+}
+
+.experience_container ul li {
+    position: relative;
+    padding-left: 1.5em;
+}
+
+.experience_container ul li::before {
+    content: "➤";
+    font-size: 10px;
+    margin-right: 1%;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.education_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edu_header_left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.education_header h2 {
+    margin: 0%;
+    text-align: left;
+    font-size: 12px;
+}
+
+.edu_location {
+    margin: 0%;
+    font-style: normal;
+}
+
+.edu_location::before {
+    content: "|";
+    margin: 5px;
+}
+
+.edu_duration {
+    margin: 0%;
+    text-align: right;
+}
+
+.program_title {
+    margin: 0%;
+}
