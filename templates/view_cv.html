@@ -29,8 +29,10 @@
                     <div class="languages_container">
                         <h1>LANGUES</h1>
                         {% for language in cv.about_me["languages"] %}
-                            <h2>{{ language.language }}</h2>
-                            <p>{{ language.proficiency }}</p>
+                            <div class="language">
+                                <h2>{{ language.language }}</h2>
+                                <p>{{ language.proficiency }}</p>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -41,7 +43,7 @@
                 <section id="personal_data">
                     <div class="personal_header">
                         <div class="per_header_name">
-                            <h1>{{ cv.personal_data["name"] }}</h1>
+                            <h1>{{ cv.personal_data["name"]|upper }}</h1>
                             <h1 class="first_name">{{ cv.personal_data["first_name"] }}</h1>
                         </div>
                         <p>{{ cv.personal_data["birth_date"] }}</p>

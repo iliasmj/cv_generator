@@ -1,6 +1,15 @@
 import flask
+from datetime import datetime
 
 app = flask.Flask("app.py")
+
+language_proficiency_level_french = {
+    "native" : "Langue maternelle",
+    "fluent" : "Courant",
+    "professional" : "Professionnel",
+    "intermediate" : "Intermédiaire",
+    "beginner" : "Débutant"
+}
 
 class Language:
     def __init__(self, language, level):
@@ -50,7 +59,7 @@ class Cv:
     def get_personal_data(self):
         self.personal_data["name"] = flask.request.args.get("name")
         self.personal_data["first_name"] = flask.request.args.get("first_name")
-        self.personal_data["birth_date"] = flask.request.args.get("birth_date")
+        self.personal_data["birth_date"] = datetime.strptime(flask.request.args.get("birth_date"), "%Y-%m-%d").strftime("%d.%m.%Y")
         self.personal_data["nationality"] = flask.request.args.get("nationality")
         self.personal_data["phone_number"] = flask.request.args.get("phone_number")
         self.personal_data["email"] = flask.request.args.get("email")
@@ -71,7 +80,7 @@ class Cv:
         languagesObjectsList = []
         for i in range (len(languagesList)):
             language = languagesList[i]
-            level = proficiencyLevelsList[i]
+            level = language_proficiency_level_french[proficiencyLevelsList[i]]
             newlanguage = Language(language, level)
 #            print("New Language : ") #---------------------------------------CHECK
 #            print(vars(newlanguage))  #---------------------------------------CHECK
