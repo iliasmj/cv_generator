@@ -96,39 +96,61 @@ class FirstLevelLabels {
 
 class AddExperienceLabels {
     constructor(){
-        this.expJobTitleLabel = document.getElementById("exp_job_title_label");
-        this.employerLabel = document.getElementById("employer_label");
-        this.expLocationLabel = document.getElementById("exp_location_label");
-        this.expFromLabel = document.getElementById("exp_from_label");
-        this.expToLabel = document.getElementById("exp_to_label");
-        this.addTaskLabel = document.getElementById("add_task_label");
+        this.expJobTitleLabels = document.getElementsByClassName("exp_job_title_label");
+        this.employerLabels = document.getElementsByClassName("employer_label");
+        this.expLocationLabels = document.getElementsByClassName("exp_location_label");
+        this.expFromLabels = document.getElementsByClassName("exp_from_label");
+        this.expToLabels = document.getElementsByClassName("exp_to_label");
+        this.addTaskLabels = document.getElementsByClassName("add_task_label");
     }
 
     translate(language) {
-        this.expJobTitleLabel.innerHTML = traduction[language].expJobTitle;
-        this.employerLabel.innerHTML = traduction[language].employer;
-        this.expLocationLabel.innerHTML = traduction[language].expLocation;
-        this.expFromLabel.innerHTML = traduction[language].expFrom;
-        this.expToLabel.innerHTML = traduction[language].expTo;
-        this.addTaskLabel = traduction[language].addTask;
+        for (const label of this.expJobTitleLabels) {
+            label.innerHTML = traduction[language].expJobTitle;
+        }
+        for (const label of this.employerLabels) {
+            label.innerHTML = traduction[language].expJobTitle;
+        }
+        for (const label of this.expLocationLabels) {
+            label.innerHTML = traduction[language].expLocation;
+        }
+        for (const label of this.expFromLabels) {
+            label.innerHTML = traduction[language].expFrom;
+        }
+        for (const label of this.expToLabels) {
+            label.innerHTML = traduction[language].expTo;
+        }
+        for (const label of this.addTaskLabels) {
+            label.innerHTML = traduction[language].addTask;
+        }
     }
 }
 
 class AddEducationLabels {
-    constructor(){
-        this.institutionLabel = document.getElementById("institution_label");
-        this.eduLocationLabel = document.getElementById("edu_location_label");
-        this.eduFromLabel = document.getElementById("edu_from_label");
-        this.eduToLabel = document.getElementById("edu_to_label");
-        this.programTitleLabel = document.getElementById("program_title_label");
+    constructor() {
+        this.institutionLabels = document.getElementsByClassName("institution_label");
+        this.eduLocationLabels = document.getElementsByClassName("edu_location_label");
+        this.eduFromLabels = document.getElementsByClassName("edu_from_label");
+        this.eduToLabels = document.getElementsByClassName("edu_to_label");
+        this.programTitleLabels = document.getElementsByClassName("program_title_label");
     }
 
     translate(language) {
-        this.institutionLabel.innerHTML = traduction[language].institution;
-        this.eduLocationLabel.innerHTML = traduction[language].eduLocation;
-        this.eduFromLabel.innerHTML = traduction[language].eduFrom;
-        this.eduToLabel.innerHTML = traduction[language].eduTo;
-        this.programTitleLabel.innerHTML = traduction[language].programTitle;
+        for(const label of this.institutionLabels) {
+            label.innerHTML = traduction[language].institution;
+        }
+        for(const label of this.eduLocationLabels) {
+            label.innerHTML = traduction[language].eduLocation;
+        }
+        for(const label of this.eduFromLabels) {
+            label.innerHTML = traduction[language].eduFrom;
+        }
+        for(const label of this.eduToLabels) {
+            label.innerHTML = traduction[language].eduTo;
+        }
+        for(const label of this.programTitleLabels) {
+            label.innerHTML = traduction[language].programTitle;
+        }
     }
 }
 
@@ -162,19 +184,54 @@ const proficiencyLevel = {
     ]
 };
 
+let addLanguageClicked = false;
+let addExperienceClicked = false;
+let addEducationClicked = false;
+
+function updatePlaceholders() {
+    const monthTypeInput = document.getElementsByClassName("date_month");
+    for (const input of monthTypeInput) {
+        if (localStorage.getItem("display_language")  == "🇫🇷") {
+            input.placeholder = "MM-AAAA";
+        } else {
+            input.placeholder = "MM-YYYY";
+        }
+    }
+}
+
 const saveDisplayLanguage = function() {
     localStorage.setItem("display_language", displayLanguageSelector.value);
-    const labels = new FirstLevelLabels();
-    labels.translate(displayLanguageSelector.value);
+    const firstLevelLabels = new FirstLevelLabels();
+    firstLevelLabels.translate(displayLanguageSelector.value);
+    if (addExperienceClicked) {
+        const addExperiencelabels = new AddExperienceLabels()
+        addExperiencelabels.translate(displayLanguageSelector.value);
+        updatePlaceholders();
+    }
+    if (addEducationClicked) {
+        const addEducationLabels = new AddEducationLabels();
+        addEducationLabels.translate(displayLanguageSelector.value);
+        updatePlaceholders();
+    }
 };
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
 const loadDisplayLanguage = function() {
     const savedDisplayLanguage = localStorage.getItem("display_language");
-    if(savedDisplayLanguage) {
+    if (savedDisplayLanguage) {
         displayLanguageSelector.value = savedDisplayLanguage;
         const labels = new FirstLevelLabels();
         labels.translate(displayLanguageSelector.value);
+        if (addExperienceClicked) {
+            const addExperiencelabels = new AddExperienceLabels()
+            addExperiencelabels.translate(displayLanguageSelector.value);
+            updatePlaceholders();
+        }
+        if (addEducationClicked) {
+            const addEducationLabels = new AddEducationLabels();
+            addEducationLabels.translate(displayLanguageSelector.value);
+            updatePlaceholders();
+        }
     } else {
         saveDisplayLanguage();
     }
@@ -188,15 +245,15 @@ function createHTMLDiv(className, parentElement) {
     return newDiv;
 }
 
-function createHTHMLLabel(id, parentElement) {
+function createHTHMLLabel(className, parentElement) {
     const newLabel = document.createElement("label");
-    newLabel.id = id;
+    newLabel.className = className;
     parentElement.appendChild(newLabel);
 }
 
-function createHTHMLInput(htmlClass, type, name, parentElement) {
+function createHTHMLInput(className, type, name, parentElement) {
     const newInput = document.createElement("input");
-    newInput.className = htmlClass;
+    newInput.className = className;
     newInput.type = type;
     newInput.name = name;
     parentElement.appendChild(newInput);
@@ -220,6 +277,7 @@ const addSkill = function() {
 //Creates text box input for specifying the language and creates proficiency level selector.
 //Appends both to langage div.
 const addLanguage = function() {
+    addLanguageClicked = true;
     const languageDiv = createHTMLDiv("language", languagesDiv);
     const language = createHTHMLInput("text_box", "text", "language", languageDiv);
 
@@ -239,6 +297,8 @@ const addLanguage = function() {
 let activitiesDivCount = 0;
 
 const addExperience = function() {
+    addExperienceClicked = true;
+
     const experienceDiv = createHTMLDiv("experience", experiencesDiv);
     //Add job title input.
     
@@ -255,8 +315,8 @@ const addExperience = function() {
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("exp_from_label", experienceDiv);
-    const expFromInput = createHTHMLInput("date", "month", "exp_from", experienceDiv);
-    if(localStorage.getItem("display_language", "🇫🇷")) {
+    const expFromInput = createHTHMLInput("date_month", "month", "exp_from", experienceDiv);
+    if (localStorage.getItem("display_language")  == "🇫🇷") {
         expFromInput.placeholder = "MM-AAAA";
     } else {
         expFromInput.placeholder = "MM-YYYY";
@@ -264,8 +324,8 @@ const addExperience = function() {
 
     //Add duration "to" date input (with MM-AAAA format).
     createHTHMLLabel("exp_to_label", experienceDiv);
-    const expSinceInput = createHTHMLInput("date", "month", "exp_to", experienceDiv);
-    if(localStorage.getItem("display_language", "🇫🇷")) {
+    const expSinceInput = createHTHMLInput("date_month", "month", "exp_to", experienceDiv);
+    if (localStorage.getItem("display_language")  == "🇫🇷") {
         expSinceInput.placeholder = "MM-AAAA";
     } else {
         expSinceInput.placeholder = "MM-YYYY";
@@ -291,6 +351,8 @@ const addExperience = function() {
 };
 
 const addEducation = function() {
+    addEducationClicked = true;
+
     const educationDiv = createHTMLDiv("education", educationsDiv);
     //Add institution input.
     createHTHMLLabel("institution_label", educationDiv);
@@ -302,8 +364,8 @@ const addEducation = function() {
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("edu_from_label", educationDiv);
-    const eduFromInput = createHTHMLInput("date", "month", "edu_from", educationDiv);
-    if(localStorage.getItem("display_language", "🇫🇷")) {
+    const eduFromInput = createHTHMLInput("date_month", "month", "edu_from", educationDiv);
+    if (localStorage.getItem("display_language") == "🇫🇷") {
         eduFromInput.placeholder = "MM-AAAA";
     } else {
         eduFromInput.placeholder = "MM-YYYY";
@@ -311,8 +373,8 @@ const addEducation = function() {
  
     //Add duration "to" date input (with MM-AAAA format).
     createHTHMLLabel("edu_to_label", educationDiv);
-    const eduSinceInput = createHTHMLInput("date", "month", "edu_to", educationDiv);
-    if(localStorage.getItem("display_language", "🇫🇷")) {
+    const eduSinceInput = createHTHMLInput("date_month", "month", "edu_to", educationDiv);
+    if (localStorage.getItem("display_language")  == "🇫🇷") {
         eduSinceInput.placeholder = "MM-AAAA";
     } else {
         eduSinceInput.placeholder = "MM-YYYY";

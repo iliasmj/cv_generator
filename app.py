@@ -3,14 +3,6 @@ from datetime import datetime
 
 app = flask.Flask("app.py")
 
-language_proficiency_level_french = {
-    "native" : "Langue maternelle",
-    "fluent" : "Courant",
-    "professional" : "Professionnel",
-    "intermediate" : "Intermédiaire",
-    "beginner" : "Débutant"
-}
-
 class Language:
     def __init__(self, language, level):
         self.language = language
@@ -80,10 +72,10 @@ class Cv:
         languagesObjectsList = []
         for i in range (len(languagesList)):
             language = languagesList[i]
-            level = language_proficiency_level_french[proficiencyLevelsList[i]]
+            level = proficiencyLevelsList[i]
             newlanguage = Language(language, level)
-#            print("New Language : ") #---------------------------------------CHECK
-#            print(vars(newlanguage))  #---------------------------------------CHECK
+            print("New Language : ") #---------------------------------------CHECK
+            print(vars(newlanguage))  #---------------------------------------CHECK
             languagesObjectsList.append(newlanguage)
         self.about_me["languages"] = languagesObjectsList
 
