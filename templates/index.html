@@ -7,81 +7,78 @@
 </head>
 <body>
     <div id="form_box">
+        <select id="translate">
+            <option id="english" value="🇬🇧">🇬🇧</option>
+            <option id="french" value="🇫🇷">🇫🇷</option>
+        </select>
         <form action="/view_cv" method="get">
             <div id="personal_data">
                 <div>
-                    <label>Name<span class="required">*</span> :</label>
+                    <label id="name_label"></label>
                     <input class="text_box" type="text" name="name" required>
                 </div>
-
                 <div>
-                    <label>Firstname<span class="required">*</span> :</label>
+                    <label id="first_name_label"></label>
                     <input class="text_box" type="text" name="first_name" required>
                 </div>
-
                 <div>
-                    <label>Date of birth<span class="required">*</span> :</label>
+                    <label id="birth_date_label"></label>
                     <input class="date" type="date" name="birth_date" required>
                 </div>
-
                 <div>
-                    <label>Nationality<span class="required">*</span> :</label>
+                    <label id="nationality_label"></label>
                     <input class="text_box" type="text" name="nationality" required>
                 </div>
-                
                 <div>
-                    <label>Phone number<span class="required">*</span> :</label>
-                    <input class="text_box" type="text" name="phone_number" placeholder="07- --- -- --" required>
+                    <label id="phone_number_label"></label>
+                    <input class="text_box" type="text" name="phone_number" placeholder="+41 7- --- -- --" required>
                 </div>
-                    
                 <div>
-                    <label>Email<span class="required">*</span> :</label>
+                    <label id="email_label">Email<span id=\"required\">*</span> :</label>
                     <input class="text_box" type="text" name="email" placeholder="exemple@gmail.com" required>
                 </div>
-                    
                 <div>
-                    <label>Address<span class="required">*</span> :</label>
+                    <label id="address_label"></label>
                     <input class="text_box" type="text" name="address" placeholder="Rue de la Gare 1, 1205 Genève" required>
                 </div>
-
                 <div>
-                    <label>Driver's license :</label>
-                    <input class="text_box" type="text" name="driver_license" placeholder="Permis B">
+                    <label id="driver_license_label"></label>
+                    <input class="text_box" type="text" name="driver_license" placeholder="Permis B" required>
                 </div>
             </div>
             <div id="about_me">
                 <div>
-                    <label>Job title<span class="required">*</span> :</label>
+                    <label id="about_job_title_label"></label>
                     <input class="text_box" type="text" name="about_job_title" required>
                 </div>
 
                 <div>
-                    <label>Years of experience<span class="required">*</span> :</label>
+                    <label id="years_experience_label"></label>
                     <input class="text_box" type="text" name="years_experience" required>
                 </div>
 
                 <div>
-                    <label>Biography<span class="required">*</span> :</label>
+                    <label id="bio_label"></label>
                     <input class="text_box" type="text" name="bio" required>
                 </div>
 
                 <div id="skills">
-                    <label>Add Skill<span class="required">*</span> :</label>
-                    <input id="add_skill" class="add" type="button" value="+">
+                    <label id="add_skill_label"></label>
+                    <input id="add_skill_button" class="add" type="button" value="+">
                 </div>
 
                 <div id="languages">
-                    <label>Add language<span class="required">*</span> :</label>
-                    <input id="add_language" class="add" type="button" value="+">
+                    <label id="add_language_label"></label>
+                    <input id="add_language_button" class="add" type="button" value="+">
                 </div>
             </div>
             <div id="experiences">
-                <label>Add experience<span class="required">*</span> :</label>
-                <input id="add_experience" class="add" type="button" value="+">
+                <label id="add_experience_label"></label>
+                <input id="add_experience_button" class="add" type="button" value="+">
             </div>
             <div id="educations">
-                <label>Add education<span class="required">*</span> :</label>
-                <input id="add_education" class="add" type="button" value="+">
+                <label id="add_education_label"></label>
+                <input id="add_education_button" class="add" type="button" value="+">
             </div>
             <input class="submit" type="submit" value="Generate CV">
         </form>
