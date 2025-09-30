@@ -1,4 +1,4 @@
-import flask
+import flask, json
 from datetime import datetime
 
 app = flask.Flask("app.py")
@@ -8,6 +8,12 @@ class Language:
         self.language = language
         self.proficiency = level
 
+    def serialize(self):
+        return {
+            "language" : self.language,
+            "proficiency" : self.proficiency
+        }
+
 class Experience:
     def __init__(self, exp_job_title, employer, exp_location, exp_from, exp_to, activities):
         self.job_title = exp_job_title
@@ -15,7 +21,17 @@ class Experience:
         self.location = exp_location
         self.duration_from = exp_from
         self.duration_to = exp_to
-        self.keyActivities = activities
+        self.key_activities = activities
+
+    def serialize(self):
+        return {
+            "job_title" : self.job_title,
+            "employer" : self.employer,
+            "location" : self.location,
+            "duration_from" : self.duration_from,
+            "duration_to" : self.duration_to,
+            "key_activities" : self.key_activities
+        }
 
 class Education:
     def __init__(self, edu_institution, edu_location, edu_from, edu_to, edu_program):
@@ -24,6 +40,15 @@ class Education:
         self.duration_from = edu_from
         self.duration_to = edu_to
         self.program_title = edu_program
+
+    def serialize(self):
+        return {
+            "institution" : self.institution,
+            "location" : self.location,
+            "duration_from" : self.duration_from,
+            "duration_to" : self.duration_to,
+            "program_title" : self.program_title
+        }
 
 class Cv:
     def __init__(self):
@@ -74,8 +99,8 @@ class Cv:
             language = languagesList[i]
             level = proficiencyLevelsList[i]
             newlanguage = Language(language, level)
-            print("New Language : ") #---------------------------------------CHECK
-            print(vars(newlanguage))  #---------------------------------------CHECK
+#            print("New Language : ") #---------------------------------------CHECK
+#            print(vars(newlanguage))  #---------------------------------------CHECK
             languagesObjectsList.append(newlanguage)
         self.about_me["languages"] = languagesObjectsList
 
@@ -108,6 +133,25 @@ class Cv:
 #            print(vars(newEducation)) #---------------------------------------CHECK
             self.educations.append(newEducation)
 
+    def serialize(self):
+        return {
+            "personal_data": self.personal_data,
+            "about_me": {
+                "job_title": self.about_me["job_title"],
+                "years_experience": self.about_me["years_experience"],
+                "bio": self.about_me["bio"],
+                "skills": self.about_me["skills"],
+                "languages": [language.serialize() for language in self.about_me["languages"]]
+            },
+            "experiences": [experience.serialize() for experience in self.experiences],
+            "educations": [education.serialize() for education in self.educations]
+        }
+
+    def save_json(self):
+        cv_json = open("data/json/cv_data.json", "w")
+        json.dump(self.serialize(), cv_json, ensure_ascii=False, indent=4)
+        cv_json.close()
+
 @app.route("/")
 def index():
     return flask.render_template("index.html")
@@ -119,6 +163,7 @@ def view_cv():
     myCv.get_about_me()
     myCv.get_experiences()
     myCv.get_educations()
+    myCv.save_json()
 
 #    print("myCv : ") #---------------------------------------CHECK
 #    print(vars(myCv)) #---------------------------------------CHECK

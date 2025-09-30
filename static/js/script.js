@@ -109,7 +109,7 @@ class AddExperienceLabels {
             label.innerHTML = traduction[language].expJobTitle;
         }
         for (const label of this.employerLabels) {
-            label.innerHTML = traduction[language].expJobTitle;
+            label.innerHTML = traduction[language].employer;
         }
         for (const label of this.expLocationLabels) {
             label.innerHTML = traduction[language].expLocation;
@@ -286,7 +286,8 @@ const addLanguage = function() {
     proficiencySelector.name = "proficiency";
     for(let level of proficiencyLevel[localStorage.getItem("display_language")]){
         const option = document.createElement("option");
-        option.value = level.toLowerCase();
+        console.log(level);
+        option.value = level;
         option.innerHTML = level;
         proficiencySelector.appendChild(option);
     }
