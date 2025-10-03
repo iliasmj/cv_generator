@@ -159,10 +159,22 @@ div.languages_container h2 {
     align-content: center;
 }
 
+.personal_header_sub {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    gap: 40%;
+}
+
 .per_header_name {
     display: flex;
     justify-content: left;
     gap: 5px;
+}
+
+.per_header_dl {
+    display: flex;
+    justify-content: right;
 }
 
 .per_header_name > h1 {

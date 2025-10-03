@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/view.css">
+    <link rel="stylesheet" href="/static/css/cv.css">
     <title>myCV</title>
 </head>
 <body>
@@ -42,11 +42,18 @@
             <div class="right_grid">
                 <section id="personal_data">
                     <div class="personal_header">
-                        <div class="per_header_name">
-                            <h1>{{ cv.personal_data["name"]|upper }}</h1>
-                            <h1 class="first_name">{{ cv.personal_data["first_name"] }}</h1>
+                        <div class="personal_header_sub">
+                            <div class="per_header_name">
+                                <h1>{{ cv.personal_data["name"]|upper }}</h1>
+                                <h1 class="first_name">{{ cv.personal_data["first_name"] }}</h1>
+                            </div>
+                            <div class="per_header_dl">
+                                <button id="pdf">
+                                    ⬇️ PDF
+                                </button>
+                            </div>
                         </div>
-                        <p>{{ cv.personal_data["birth_date"] }}</p>
+                        <p>{{ cv.personal_data["birth_date"] |datetimeformat }}</p>
                     </div>
                     <ul>
                         <li class="nationality">{{ cv.personal_data["nationality"] }}</li>
@@ -94,5 +101,6 @@
             </div>
         </main>
     </div>
+    <script src="/static/js/cv.js"></script>
 </body>
 </html>

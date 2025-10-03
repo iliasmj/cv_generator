@@ -160,6 +160,8 @@ const addLanguageButton = document.getElementById("add_language_button");
 const addExperienceButton = document.getElementById("add_experience_button");
 const addEducationButton = document.getElementById("add_education_button");
 
+const loadButton = document.getElementById("load");
+
 //Selects action related divs.
 const skillsDiv = document.getElementById("skills");
 const languagesDiv = document.getElementById("languages");
@@ -213,6 +215,7 @@ const saveDisplayLanguage = function() {
         addEducationLabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
+
 };
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
@@ -271,22 +274,21 @@ function createHTMLAddButton(parentElement) {
 
 //Creates and appends new text input to skills div.
 const addSkill = function() {
-    const skill = createHTHMLInput("text_box","text", "skill", skillsDiv);
+    const skill = createHTHMLInput("skill","text", "skill", skillsDiv);
 };
 
 //Creates text box input for specifying the language and creates proficiency level selector.
 //Appends both to langage div.
 const addLanguage = function() {
     addLanguageClicked = true;
-    const languageDiv = createHTMLDiv("language", languagesDiv);
-    const language = createHTHMLInput("text_box", "text", "language", languageDiv);
+    const languageDiv = createHTMLDiv("language_div", languagesDiv);
+    const language = createHTHMLInput("language", "text", "language", languageDiv);
 
     const proficiencySelector = document.createElement("select");
-    proficiencySelector.className = "select";
+    proficiencySelector.className = "proficiency";
     proficiencySelector.name = "proficiency";
     for(let level of proficiencyLevel[localStorage.getItem("display_language")]){
         const option = document.createElement("option");
-        console.log(level);
         option.value = level;
         option.innerHTML = level;
         proficiencySelector.appendChild(option);
@@ -304,19 +306,19 @@ const addExperience = function() {
     //Add job title input.
     
     createHTHMLLabel("exp_job_title_label", experienceDiv);
-    const jobTitleInput = createHTHMLInput("text_box", "text", "exp_job_title", experienceDiv);
+    const jobTitleInput = createHTHMLInput("exp_job_title", "text", "exp_job_title", experienceDiv);
 
     //Add employer input.
     createHTHMLLabel("employer_label", experienceDiv);
-    const employerInput = createHTHMLInput("text_box", "text", "employer", experienceDiv);
+    const employerInput = createHTHMLInput("employer", "text", "employer", experienceDiv);
 
     //Add location input.
     createHTHMLLabel("exp_location_label", experienceDiv);
-    const expLocationInput = createHTHMLInput("text_box", "text", "exp_location", experienceDiv);
+    const expLocationInput = createHTHMLInput("exp_location", "text", "exp_location", experienceDiv);
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("exp_from_label", experienceDiv);
-    const expFromInput = createHTHMLInput("date_month", "month", "exp_from", experienceDiv);
+    const expFromInput = createHTHMLInput("exp_from", "month", "exp_from", experienceDiv);
     if (localStorage.getItem("display_language")  == "🇫🇷") {
         expFromInput.placeholder = "MM-AAAA";
     } else {
@@ -325,7 +327,7 @@ const addExperience = function() {
 
     //Add duration "to" date input (with MM-AAAA format).
     createHTHMLLabel("exp_to_label", experienceDiv);
-    const expSinceInput = createHTHMLInput("date_month", "month", "exp_to", experienceDiv);
+    const expSinceInput = createHTHMLInput("exp_to", "month", "exp_to", experienceDiv);
     if (localStorage.getItem("display_language")  == "🇫🇷") {
         expSinceInput.placeholder = "MM-AAAA";
     } else {
@@ -335,7 +337,6 @@ const addExperience = function() {
     //create div for containing activities inputs
     const activitiesDiv = createHTMLDiv("activities", experienceDiv);
     activitiesDivCount++;
-    activitiesDiv.className = "activities";
      
     //Add button action "add task".
     createHTHMLLabel("add_task_label", activitiesDiv);
@@ -343,7 +344,7 @@ const addExperience = function() {
     experienceDiv.appendChild(activitiesDiv);
    
     const addActivity = function() {
-        return createHTHMLInput("text_box", "text", "activity_" + activitiesDivCount, activitiesDiv);
+        return createHTHMLInput("activity_" + activitiesDivCount, "text", "activity_" + activitiesDivCount, activitiesDiv);
     }
     addActivityButton.addEventListener("click", addActivity);
 
@@ -357,15 +358,15 @@ const addEducation = function() {
     const educationDiv = createHTMLDiv("education", educationsDiv);
     //Add institution input.
     createHTHMLLabel("institution_label", educationDiv);
-    const institutionInput = createHTHMLInput("text_box", "text", "institution", educationDiv);
+    const institutionInput = createHTHMLInput("institution", "text", "institution", educationDiv);
 
     //Add location input.
     createHTHMLLabel("edu_location_label", educationDiv);
-    const eduLocationInput = createHTHMLInput("text_box", "text", "edu_location", educationDiv);
+    const eduLocationInput = createHTHMLInput("edu_location", "text", "edu_location", educationDiv);
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("edu_from_label", educationDiv);
-    const eduFromInput = createHTHMLInput("date_month", "month", "edu_from", educationDiv);
+    const eduFromInput = createHTHMLInput("edu_from", "month", "edu_from", educationDiv);
     if (localStorage.getItem("display_language") == "🇫🇷") {
         eduFromInput.placeholder = "MM-AAAA";
     } else {
@@ -374,7 +375,7 @@ const addEducation = function() {
  
     //Add duration "to" date input (with MM-AAAA format).
     createHTHMLLabel("edu_to_label", educationDiv);
-    const eduSinceInput = createHTHMLInput("date_month", "month", "edu_to", educationDiv);
+    const eduSinceInput = createHTHMLInput("edu_to", "month", "edu_to", educationDiv);
     if (localStorage.getItem("display_language")  == "🇫🇷") {
         eduSinceInput.placeholder = "MM-AAAA";
     } else {
@@ -383,14 +384,119 @@ const addEducation = function() {
 
     //Add program title input.
     createHTHMLLabel("program_title_label", educationDiv);
-    const programTitleInput = createHTHMLInput("text_box", "text", "program_title", educationDiv);
+    const programTitleInput = createHTHMLInput("program_title", "text", "program_title", educationDiv);
 
     const labels = new AddEducationLabels();
     labels.translate(displayLanguageSelector.value);
 };
+
+async function load() {
+    try {
+        const response = await fetch("/api/cv");
+        const data = await response.json();
+
+        document.getElementById("name").value = data.personal_data.name;
+        document.getElementById("first_name").value = data.personal_data.first_name;
+        document.getElementById("birth_date").value = data.personal_data.birth_date;
+        document.getElementById("nationality").value = data.personal_data.nationality;
+        document.getElementById("phone_number").value = data.personal_data.phone_number;
+        document.getElementById("email").value = data.personal_data.email;
+        document.getElementById("address").value = data.personal_data.address;
+        document.getElementById("driver_license").value = data.personal_data.driver_license;
+
+        document.getElementById("about_job_title").value = data.about_me.job_title;
+        document.getElementById("years_experience").value = data.about_me.years_experience;
+        document.getElementById("bio").value = data.about_me.bio;
+        const skillValues = data.about_me.skills;
+        for (let i = 0; i < skillValues.length; i++) {
+            addSkill();
+        }
+        const skillInputs = document.getElementsByClassName("skill");
+        for (let i = 0; i < skillInputs.length; i++) {
+            skillInputs[i].value = skillValues[i];
+        }
+        const languageObjects = data.about_me.languages;
+//        console.log(languageObjects); //---------------------------------------CHECK
+        for (let i = 0; i < languageObjects.length; i++) {
+            addLanguage();
+        }
+        const languageInputs = document.getElementsByClassName("language");
+//        console.log(languageInputs); //---------------------------------------CHECK
+        const proficiencySelects = document.getElementsByClassName("proficiency");
+//        console.log(proficiencySelects); //---------------------------------------CHECK
+        for (let i = 0; i < languageObjects.length; i++) {
+            languageInputs[i].value = languageObjects[i].language;
+            const actualDisplayLanguage = localStorage.getItem("display_language");
+            const actualDisplayProficiencyList = proficiencyLevel[actualDisplayLanguage];
+            const savedProficiency = languageObjects[i].proficiency;
+            const traductionEnIndex = proficiencyLevel["🇬🇧"].indexOf(savedProficiency);
+            const traductionFrIndex = proficiencyLevel["🇫🇷"].indexOf(savedProficiency);
+//            console.log(actualDisplayLanguage, actualDisplayProficiencyList, savedProficiency, traductionEnIndex, traductionFrIndex); //---------------------------------------CHECK
+            if (traductionEnIndex != -1) {
+                proficiencySelects[i].value = actualDisplayProficiencyList[traductionEnIndex];
+            } else if (traductionFrIndex != -1) {
+                proficiencySelects[i].value = actualDisplayProficiencyList[traductionFrIndex];
+            }
+        }
+
+        const experienceObjects = data.experiences;
+        for (let i = 0; i < experienceObjects.length; i++) {
+            addExperience();
+        }
+        const activitiesDivs = document.getElementsByClassName("activities");
+        for (let i = 0; i < experienceObjects.length; i++) {
+            for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
+                createHTHMLInput("activity_" + i, "text", "activity_" + i, activitiesDivs[i]);
+            }
+        }
+        const jobTitleInputs = document.getElementsByClassName("exp_job_title");
+        const employerInputs = document.getElementsByClassName("employer");
+        const expLocationInputs = document.getElementsByClassName("exp_location");
+        const expFromInputs = document.getElementsByClassName("exp_from");
+        const expToInputs = document.getElementsByClassName("exp_to");
+        for (let i = 0; i < experienceObjects.length; i++) {
+//            console.log(i) //---------------------------------------CHECK
+            jobTitleInputs[i].value = experienceObjects[i].job_title;
+            employerInputs[i].value = experienceObjects[i].employer;
+            expLocationInputs[i].value = experienceObjects[i].location;
+            expFromInputs[i].value = experienceObjects[i].duration_from;
+            expToInputs[i].value = experienceObjects[i].duration_to;
+            for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
+                const taskInputs = document.getElementsByClassName("activity_" + i);
+//                console.log(taskInputs); //---------------------------------------CHECK
+//                console.log(i) //---------------------------------------CHECK
+//                console.log("activity_" + i) //---------------------------------------CHECK
+//                console.log(taskInputs["activity_" + i]) //---------------------------------------CHECK
+                taskInputs[j].value = experienceObjects[i].key_activities[j];
+            }
+        }
+
+        const educationObjects = data.educations;
+        for (let i = 0; i <= educationObjects.length; i++) {
+            addEducation();
+        }
+        const institutionInputs = document.getElementsByClassName("institution");
+        const eduLocationInputs = document.getElementsByClassName("edu_location");
+        const eduFromInputs = document.getElementsByClassName("edu_from");
+        const eduToInputs = document.getElementsByClassName("edu_to");
+        const programTitleInputs = document.getElementsByClassName("program_title");
+        for (let i = 0; i < educationObjects.length; i++) {
+            institutionInputs[i].value = educationObjects[i].institution;
+            eduLocationInputs[i].value = educationObjects[i].location;
+            eduFromInputs[i].value = educationObjects[i].duration_from;
+            eduToInputs[i].value = educationObjects[i].duration_to;
+            programTitleInputs[i].value = educationObjects[i].program_title;
+        }
+
+        console.log("CV chargé ! : ", data); //---------------------------------------CHECK
+    } catch (error) {
+        console.error("Erreur lors du chargement du CV : ", error)
+    }
+}
 
 //Links adding functions to action buttons. :
 addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
 addEducationButton.addEventListener("click", addEducation);
+loadButton.addEventListener("click", load);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/index.css">
     <title>CV Generator</title>
 </head>
 <body>
@@ -11,55 +11,58 @@
             <option id="english" value="🇬🇧">🇬🇧</option>
             <option id="french" value="🇫🇷">🇫🇷</option>
         </select>
-        <form action="/view_cv" method="get">
+        <button id="load">
+            ⬆️ Load
+        </button>
+        <form action="/cv" method="get" target="_blank">
             <div id="personal_data">
                 <div>
                     <label id="name_label"></label>
-                    <input class="text_box" type="text" name="name" required>
+                    <input id="name" type="text" name="name" required>
                 </div>
                 <div>
                     <label id="first_name_label"></label>
-                    <input class="text_box" type="text" name="first_name" required>
+                    <input id="first_name" type="text" name="first_name" required>
                 </div>
                 <div>
                     <label id="birth_date_label"></label>
-                    <input class="date" type="date" name="birth_date" required>
+                    <input id="birth_date" type="date" name="birth_date" required>
                 </div>
                 <div>
                     <label id="nationality_label"></label>
-                    <input class="text_box" type="text" name="nationality" required>
+                    <input id="nationality" type="text" name="nationality" required>
                 </div>
                 <div>
                     <label id="phone_number_label"></label>
-                    <input class="text_box" type="text" name="phone_number" placeholder="+41 7- --- -- --" required>
+                    <input id="phone_number" type="text" name="phone_number" placeholder="+41 7- --- -- --" required>
                 </div>
                 <div>
                     <label id="email_label">Email<span id=\"required\">*</span> :</label>
-                    <input class="text_box" type="text" name="email" placeholder="exemple@gmail.com" required>
+                    <input id="email" type="text" name="email" placeholder="exemple@gmail.com" required>
                 </div>
                 <div>
                     <label id="address_label"></label>
-                    <input class="text_box" type="text" name="address" placeholder="Rue de la Gare 1, 1205 Genève" required>
+                    <input id="address" type="text" name="address" placeholder="Rue de la Gare 1, 1205 Genève" required>
                 </div>
                 <div>
                     <label id="driver_license_label"></label>
-                    <input class="text_box" type="text" name="driver_license" placeholder="Permis B" required>
+                    <input id="driver_license" type="text" name="driver_license" placeholder="Permis B" required>
                 </div>
             </div>
             <div id="about_me">
                 <div>
                     <label id="about_job_title_label"></label>
-                    <input class="text_box" type="text" name="about_job_title" required>
+                    <input id="about_job_title" type="text" name="about_job_title" required>
                 </div>
 
                 <div>
                     <label id="years_experience_label"></label>
-                    <input class="text_box" type="text" name="years_experience" required>
+                    <input id="years_experience" type="text" name="years_experience" required>
                 </div>
 
                 <div>
                     <label id="bio_label"></label>
-                    <input class="text_box" type="text" name="bio" required>
+                    <input id="bio" type="text" name="bio" required>
                 </div>
 
                 <div id="skills">
@@ -80,9 +83,9 @@
                 <label id="add_education_label"></label>
                 <input id="add_education_button" class="add" type="button" value="+">
             </div>
-            <input class="submit" type="submit" value="Generate CV">
+            <input id="generate" type="submit" value="Save & generate CV">
         </form>
     </div>
-    <script src="/static/js/script.js"></script>
+    <script src="/static/js/index.js"></script>
 </body>
 </html>

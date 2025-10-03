@@ -1,4 +1,4 @@
-import flask, json
+import flask, json, weasyprint
 from datetime import datetime
 
 app = flask.Flask("app.py")
@@ -76,7 +76,7 @@ class Cv:
     def get_personal_data(self):
         self.personal_data["name"] = flask.request.args.get("name")
         self.personal_data["first_name"] = flask.request.args.get("first_name")
-        self.personal_data["birth_date"] = datetime.strptime(flask.request.args.get("birth_date"), "%Y-%m-%d").strftime("%d.%m.%Y")
+        self.personal_data["birth_date"] = flask.request.args.get("birth_date")
         self.personal_data["nationality"] = flask.request.args.get("nationality")
         self.personal_data["phone_number"] = flask.request.args.get("phone_number")
         self.personal_data["email"] = flask.request.args.get("email")
@@ -113,7 +113,7 @@ class Cv:
         exp_to = flask.request.args.getlist("exp_to")
         #constructs Experience objects by gathering in order each experiences data
         for i in range (len(exp_job_title)):
-            activities = flask.request.args.getlist("activity_" + str(i+1))
+            activities = flask.request.args.getlist("activity_" + str(i))
             newExperience = Experience(exp_job_title[i], employer[i], exp_location[i], exp_from[i], exp_to[i], activities)
 #            print("New Experience : ") #---------------------------------------CHECK
 #            print(vars(newExperience)) #---------------------------------------CHECK
@@ -141,7 +141,7 @@ class Cv:
                 "years_experience": self.about_me["years_experience"],
                 "bio": self.about_me["bio"],
                 "skills": self.about_me["skills"],
-                "languages": [language.serialize() for language in self.about_me["languages"]]
+                "languages": [language.serialize() for language in self.about_me["languages"]],
             },
             "experiences": [experience.serialize() for experience in self.experiences],
             "educations": [education.serialize() for education in self.educations]
@@ -156,9 +156,13 @@ class Cv:
 def index():
     return flask.render_template("index.html")
 
-@app.route("/view_cv")
+@app.template_filter('datetimeformat')
+def datetimeformat(value):
+    return datetime.strptime(value, '%Y-%m-%d').strftime('%d.%m.%Y')
+
+@app.route("/cv/")
 def view_cv():
-    myCv = Cv();
+    myCv = Cv()
     myCv.get_personal_data()
     myCv.get_about_me()
     myCv.get_experiences()
@@ -168,4 +172,37 @@ def view_cv():
 #    print("myCv : ") #---------------------------------------CHECK
 #    print(vars(myCv)) #---------------------------------------CHECK
 
-    return flask.render_template("view_cv.html", cv=myCv)
+    return flask.render_template("cv.html", cv=myCv)
+
+@app.route("/cv/pdf")
+def pdf_cv():
+    try:
+        cv_data = open("data/json/cv_data.json")
+        file_content = cv_data.read().strip()
+        cv_data.close()
+        if file_content:
+            cv_data = open("data/json/cv_data.json")
+            data_json = json.load(cv_data)
+            cv_data.close()
+            cv_rendered = flask.render_template("cv.html", cv=data_json)
+            print(cv_rendered)
+            pdf = weasyprint.HTML(string=cv_rendered, base_url=flask.request.root_url).write_pdf()
+
+            response = flask.make_response(pdf)
+            response.headers["Content-Type"] = "application/pdf"
+            response.headers["Content-Disposition"] = "inline; attachment; filename=cv.pdf"
+            
+            return response
+        else:
+            print("⚠️ Le fichier est vide.")
+    except FileNotFoundError:
+        return "⚠️ Le fichier JSON n'existe pas.", 404
+    except json.JSONDecodeError as e:
+        return f"⚠️ JSON invalide : {e}", 400
+
+@app.route("/api/cv")
+def api_cv():
+    data_file = open("data/json/cv_data.json", "r")
+    data = json.load(data_file)
+    data_file.close()
+    return flask.jsonify(data)
