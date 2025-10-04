@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"">
     <title>CV Generator</title>
 </head>
 <body>
@@ -86,6 +86,6 @@
             <input id="generate" type="submit" value="Save & generate CV">
         </form>
     </div>
-    <script src="/static/js/index.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}""></script>
 </body>
 </html>

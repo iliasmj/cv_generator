@@ -395,6 +395,8 @@ async function load() {
         const response = await fetch("/api/cv");
         const data = await response.json();
 
+        console.log(data)
+
         document.getElementById("name").value = data.personal_data.name;
         document.getElementById("first_name").value = data.personal_data.first_name;
         document.getElementById("birth_date").value = data.personal_data.birth_date;
@@ -472,7 +474,8 @@ async function load() {
         }
 
         const educationObjects = data.educations;
-        for (let i = 0; i <= educationObjects.length; i++) {
+        console.log(educationObjects)
+        for (let i = 0; i < educationObjects.length; i++) {
             addEducation();
         }
         const institutionInputs = document.getElementsByClassName("institution");

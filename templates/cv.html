@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/cv.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cv.css') }}">
     <title>myCV</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
             <section id="about_me">
                 <div class="left_grid">
                     <div class="photo_container">
-                        <img class="photo" src="/static/img/photo.jpg"></img>
+                        <img class="photo" src="{{ url_for('static', filename='img/photo.jpg') }}">
                     </div>
                     <div class="bio_container">
                         <h1>{{ cv.about_me["job_title"]|upper }}</h1>
@@ -90,7 +90,7 @@
                             <div class="education_header">
                                 <div class="edu_header_left">
                                     <h2>{{ education.institution }}</h2>
-                                    <p class="edu_location">{{ education.location }}<p>
+                                    <p class="edu_location">{{ education.location }}</p>
                                 </div>
                                 <p class="edu_duration">{{ education.duration_from.replace("-", "/") }} - {{ education.duration_to.replace("-", "/") }}</p>
                             </div>
@@ -101,6 +101,6 @@
             </div>
         </main>
     </div>
-    <script src="/static/js/cv.js"></script>
+    <script src="{{ url_for('static', filename='js/cv.js') }}"></script>
 </body>
 </html>

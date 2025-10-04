@@ -8,6 +8,11 @@ body {
     background-color: #1e1e1e;
 }
 
+@page {
+    size: A4;       /* ou size: 210mm 297mm; */
+    margin: 0;      /* ou margin: 10mm; selon ton besoin */
+}
+
 .cv_container {
     width: 210mm; /*A4 width*/
     height: 297mm; /*A4 height*/
@@ -194,7 +199,7 @@ section#personal_data ul {
 }
 
 .nationality::before {
-    content: url("/static/img/nationality.png");
+    content: url("../img/nationality.png");
     display: inline-flex;
     height: 1em;
     width: 1em;
@@ -203,7 +208,7 @@ section#personal_data ul {
 }
 
 .phone_number::before {
-    content: url("/static/img/phone_number.png");
+    content: url("../img/phone_number.png");
     display: inline-flex;
     height: 1em;
     width: 1em;
@@ -212,7 +217,7 @@ section#personal_data ul {
 }
 
 .email::before {
-    content: url("/static/img/email.png");
+    content: url("../img/email.png");
     display: inline-flex;
     height: 1em;
     width: 1em;
@@ -221,7 +226,7 @@ section#personal_data ul {
 }
 
 .address::before {
-    content: url("/static/img/address.png");
+    content: url("../img/address.png");
     display: inline-flex;
     height: 1em;
     width: 1em;
@@ -230,7 +235,7 @@ section#personal_data ul {
 }
 
 .driver_license::before {
-    content: url("/static/img/driver_license.png");
+    content: url("../img/driver_license.png");
     display: inline-flex;
     height: 1em;
     width: 1em;
@@ -354,4 +359,10 @@ section#personal_data ul {
 
 .program_title {
     margin: 0%;
+}
+
+@media print {
+    #pdf {
+        display: none;
+    }
 }

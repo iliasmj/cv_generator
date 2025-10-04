@@ -1,4 +1,4 @@
-import flask, json, weasyprint
+import flask, json, weasyprint, os
 from datetime import datetime
 
 app = flask.Flask("app.py")
@@ -149,6 +149,7 @@ class Cv:
 
     def save_json(self):
         cv_json = open("data/json/cv_data.json", "w")
+        print(cv_json)
         json.dump(self.serialize(), cv_json, ensure_ascii=False, indent=4)
         cv_json.close()
 
@@ -185,12 +186,21 @@ def pdf_cv():
             data_json = json.load(cv_data)
             cv_data.close()
             cv_rendered = flask.render_template("cv.html", cv=data_json)
-            print(cv_rendered)
-            pdf = weasyprint.HTML(string=cv_rendered, base_url=flask.request.root_url).write_pdf()
+            cv_rendered = cv_rendered.replace('href="/static/', 'href="static/').replace('src="/static/', 'src="static/')
+            print("CV :\n", cv_rendered)
+            project_root = os.path.dirname(__file__)
+            print(project_root)
+
+            def my_fetcher(url, *args, **kwargs):
+                print("🔎 WeasyPrint essaie de charger :", url)
+                return weasyprint.default_url_fetcher(url, *args, **kwargs)
+
+            pdf = weasyprint.HTML(string=cv_rendered, base_url=project_root, url_fetcher=my_fetcher).write_pdf()
+            print(pdf)
 
             response = flask.make_response(pdf)
             response.headers["Content-Type"] = "application/pdf"
-            response.headers["Content-Disposition"] = "inline; attachment; filename=cv.pdf"
+            response.headers["Content-Disposition"] = "attachment; filename=cv.pdf"
             
             return response
         else:
