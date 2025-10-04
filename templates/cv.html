@@ -49,18 +49,33 @@
                             </div>
                             <div class="per_header_dl">
                                 <button id="pdf">
-                                    ⬇️ PDF
+                                    <img id="pdf_icon" src ="{{ url_for('static', filename='img/pdf_icon.png') }}">
                                 </button>
                             </div>
                         </div>
                         <p>{{ cv.personal_data["birth_date"] |datetimeformat }}</p>
                     </div>
                     <ul>
-                        <li class="nationality">{{ cv.personal_data["nationality"] }}</li>
-                        <li class="phone_number">{{ cv.personal_data["phone_number"] }}</li>
-                        <li class="email">{{ cv.personal_data["email"] }}</li>
-                        <li class="address">{{ cv.personal_data["address"] }}</li>
-                        <li class="driver_license">{{ cv.personal_data["driver_license"] }}</li>
+                        <li class="nationality">
+                            <img class="icon" src="{{ url_for('static', filename='img/nationality.png') }}">
+                            {{ cv.personal_data["nationality"] }}
+                        </li>
+                        <li class="phone_number">
+                            <img class="icon" src="{{ url_for('static', filename='img/phone_number.png') }}">
+                            {{ cv.personal_data["phone_number"] }}
+                        </li>
+                        <li class="email">
+                            <img class="icon" src="{{ url_for('static', filename='img/email.png') }}">
+                            {{ cv.personal_data["email"] }}
+                        </li>
+                        <li class="address">
+                            <img class="icon" src="{{ url_for('static', filename='img/address.png') }}">
+                            {{ cv.personal_data["address"] }}
+                        </li>
+                        <li class="driver_license">
+                            <img class="icon" src="{{ url_for('static', filename='img/driver_license.png') }}">
+                            {{ cv.personal_data["driver_license"] }}
+                        </li>
                     </ul>
                 </section>
                 <section id="experiences">

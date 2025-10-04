@@ -107,6 +107,7 @@ section#about_me ul li {
 
 div.languages_container {
     display: grid;
+    text-align: center;
 }
 
 div.languages_container h2 {
@@ -138,8 +139,7 @@ div.languages_container h2 {
 .right_grid > section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-top: 0%;
+    justify-content: space-between;
 }
 
 .right_grid > section h1 {
@@ -168,7 +168,7 @@ div.languages_container h2 {
     display: flex;
     flex-direction: row;
     align-content: center;
-    gap: 40%;
+    justify-content: space-between;
 }
 
 .per_header_name {
@@ -180,6 +180,13 @@ div.languages_container h2 {
 .per_header_dl {
     display: flex;
     justify-content: right;
+}
+
+#pdf_icon {
+    width: 2em; 
+    height: 2em;
+    margin: 0;
+    padding: 0;
 }
 
 .per_header_name > h1 {
@@ -198,49 +205,11 @@ section#personal_data ul {
     margin: 3% 0% 0% 0%;
 }
 
-.nationality::before {
-    content: url("../img/nationality.png");
-    display: inline-flex;
-    height: 1em;
-    width: 1em;
+.icon {
+    width: 1em; 
+    height: 1em; 
+    vertical-align: middle; 
     margin-right: 0.5em;
-    vertical-align: middle;
-}
-
-.phone_number::before {
-    content: url("../img/phone_number.png");
-    display: inline-flex;
-    height: 1em;
-    width: 1em;
-    margin-right: 0.5em;
-    vertical-align: middle;
-}
-
-.email::before {
-    content: url("../img/email.png");
-    display: inline-flex;
-    height: 1em;
-    width: 1em;
-    margin-right: 0.5em;
-    vertical-align: middle;
-}
-
-.address::before {
-    content: url("../img/address.png");
-    display: inline-flex;
-    height: 1em;
-    width: 1em;
-    margin-right: 0.5em;
-    vertical-align: middle;
-}
-
-.driver_license::before {
-    content: url("../img/driver_license.png");
-    display: inline-flex;
-    height: 1em;
-    width: 1em;
-    margin-right: 0.5em;
-    vertical-align: middle;
 }
 
 .right_grid > section:not(section#personal_data) h1::before {
