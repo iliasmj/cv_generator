@@ -15,8 +15,10 @@
                     </div>
                     <div class="bio_container">
                         <h1>{{ cv.about_me["job_title"]|upper }}</h1>
-                        <h2>{{ cv.about_me["years_experience"] }} années d'expériences</h2>
-                        <p class="bio">{{ cv.about_me["bio"] }}</p>
+                        <div class="bio_sub_container">
+                            <h2>{{ cv.about_me["years_experience"] }} années d'expériences</h2>
+                            <p class="bio">{{ cv.about_me["bio"] }}</p>
+                        </div>
                     </div>
                     <div class="skills_container">
                         <h1>COMPÉTENCES</h1>
@@ -28,12 +30,14 @@
                     </div>
                     <div class="languages_container">
                         <h1>LANGUES</h1>
+                        <div class="languages_sub_container">
                         {% for language in cv.about_me["languages"] %}
                             <div class="language">
                                 <h2>{{ language.language }}</h2>
                                 <p>{{ language.proficiency }}</p>
                             </div>
                         {% endfor %}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -80,8 +84,9 @@
                 </section>
                 <section id="experiences">
                     <h1>Expériences</h1>
+                    <div class="experiences_container">
                     {% for experience in cv.experiences %}
-                        <div class="experience_container">
+                        <div class="experiences_sub_container">
                             <div class="experience_header">
                                 <div class="exp_header_left">
                                     <h2>{{ experience.employer }}</h2>
@@ -89,17 +94,21 @@
                                 </div>
                                 <p class="exp_duration">{{ experience.duration_from.replace("-", "/") }} - {{ experience.duration_to.replace("-", "/") }}</p>
                             </div>
-                            <p class="job_title">{{ experience.job_title }}</p>
-                            <ul>
-                            {% for activity in experience.key_activities%}
-                                <li>{{ activity }}</li>
-                            {% endfor %}
-                            </ul>   
+                            <div class="experience_body">
+                                <p class="job_title">{{ experience.job_title }}</p>
+                                <ul>
+                                {% for activity in experience.key_activities%}
+                                    <li>{{ activity }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     {% endfor %}
+                    </div>
                 </section>
                 <section id="educations">
                     <h1>Formations</h1>
+                    <div id="educations_sub_container">
                     {% for education in cv.educations %}
                         <div class="education_container">
                             <div class="education_header">
@@ -112,6 +121,7 @@
                             <p class="program_title">{{ education.program_title }}</p>
                         </div>
                     {% endfor %}
+                    </div>
                 </section>
             </div>
         </main>

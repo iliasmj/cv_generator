@@ -34,36 +34,32 @@ section#about_me {
 
 .left_grid {
     height: 100%;
-    display: grid;
-    grid-template-rows: auto;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 10% 10%;
     box-sizing: border-box;
-}
-
-section#about_me > div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-content: center;
 }
 
 section#about_me h1 {
-    margin-top: 0%;
-    margin-bottom: 6%;
+    margin: 0;
 }
 
 .photo_container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 4%;
 }
 
 .photo {
     width:90%;
     height: 90%;
-    border-radius: 50%;
+    border-radius: 35%;
     object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
 }
 
 .left_column h1 {
@@ -82,6 +78,22 @@ section#about_me h2 {
     text-align: center;
 }
 
+.bio_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    gap: 5mm;
+}
+
+.bio_sub_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: center;
+    gap: 2.5mm;
+}
+
 div.bio_container h2 {
     font-size: 12px;
 }
@@ -90,15 +102,22 @@ div.bio_container h2 {
     padding-left: 5%;
     padding-right: 5%;
     color: white;
-    text-align: left;
-    margin-bottom: 7%;
+    text-align: center;
+    margin: 0;
 }
 
 section#about_me ul {
     color: white;
     padding-left: 10%;
     padding-right: 5%;
-    margin-bottom: 7%;
+    margin: 0;
+}
+
+.skills_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5mm;
 }
 
 section#about_me ul li {
@@ -106,8 +125,11 @@ section#about_me ul li {
 }
 
 div.languages_container {
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
+    gap: 5mm;
 }
 
 div.languages_container h2 {
@@ -115,9 +137,16 @@ div.languages_container h2 {
 }
 
 .languages_container p{
-    margin: 0% 0% 2% 0%;
+    margin: 0;
     color: white;
     text-align: center;
+}
+
+.languages_sub_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5mm;
 }
 
 .right_column {
@@ -125,21 +154,27 @@ div.languages_container h2 {
 }
 
 .right_grid {
-    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 5%;
     box-sizing: border-box;
+    justify-content: space-between;
 }
 
+/*
 .right_grid > section:not(:first-child) {
     margin-top: auto;
-  }
+}
+*/
 
 .right_grid > section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+section#personal_data {
+    gap: 2.5mm;
 }
 
 .right_grid > section h1 {
@@ -150,12 +185,13 @@ div.languages_container h2 {
     margin: 0%;
 }
 
-.right_grid > section:not(section#personal_data) h1 {
-    margin-bottom: 7%;
-}
-
 .right_grid > section h1:not(h1.first_name) {
     color: #0ea9c4;
+}
+
+.right_grid > section:not(section#personal_data) h1 {
+    margin-top: 7mm;
+    margin-bottom: 7mm;
 }
 
 .personal_header {
@@ -173,8 +209,7 @@ div.languages_container h2 {
 
 .per_header_name {
     display: flex;
-    justify-content: left;
-    gap: 5px;
+    gap: 1mm;
 }
 
 .per_header_dl {
@@ -202,7 +237,7 @@ section#personal_data ul {
     font-size: 12px;
     list-style-type: none;
     padding-left: 1em;
-    margin: 3% 0% 0% 0%;
+    margin: 0;
 }
 
 .icon {
@@ -215,19 +250,36 @@ section#personal_data ul {
 .right_grid > section:not(section#personal_data) h1::before {
     content: "";
     flex: 1;
-    border-top: 2px solid #0ea9c4;
-    margin-right: 2%;
+    border-top: 1.5px solid #0ea9c4;
+    margin-right: 2.5mm;
+    margin-top: 2.5mm;
+    margin-bottom: 2.5mm;
+    height: 0;
+    align-self: center;
 }
 
 .right_grid > section:not(section#personal_data) h1::after {
     content: "";
     flex: 1;
-    border-top: 2px solid #0ea9c4;
-    margin-left: 2%;
+    border-top: 1.5px solid #0ea9c4;
+    margin-left: 2.5mm;
+    margin-top: 2.5mm;
+    margin-bottom: 2.5mm;
+    height: 0;
+    align-self: center;
 }
 
+/*
 .experience_container {
     margin-bottom: 3%;
+}
+*/
+
+.experiences_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5mm;
 }
 
 .experience_header {
@@ -263,15 +315,20 @@ section#personal_data ul {
     text-align: right;
 }
 
+.experience_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5mm;
+}
+
 .job_title {
     margin: 0%;
 }
 
-.experience_container ul {
-    padding-left: 2%;
-    margin-top: 1%;
-    margin-bottom: 0%;
-    list-style: none;
+.experiences_sub_container ul {
+    margin: 0;
+    padding-left: 2em;
 }
 
 .experience_container ul li {
@@ -289,8 +346,11 @@ section#personal_data ul {
     top: 0;
 }
 
-.education_container {
-    margin-bottom: 3%;
+#educations_sub_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5mm;
 }
 
 .education_header {
@@ -328,6 +388,10 @@ section#personal_data ul {
 
 .program_title {
     margin: 0%;
+}
+
+@page {
+    size: A4;
 }
 
 @media print {
