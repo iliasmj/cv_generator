@@ -201,40 +201,59 @@ function updatePlaceholders() {
     }
 }
 
-const saveDisplayLanguage = function() {
-    localStorage.setItem("display_language", displayLanguageSelector.value);
+function updateLabels() {
+    const cachedLanguage = localStorage.getItem("cached_display_language");
+    const currentLevels = proficiencyLevel[cachedLanguage];
+    const selectedLanguage = localStorage.getItem("display_language");
+    const updatedLevels = proficiencyLevel[selectedLanguage];
+
     const firstLevelLabels = new FirstLevelLabels();
     firstLevelLabels.translate(displayLanguageSelector.value);
+
+    if (addLanguageClicked) {
+        for (level of currentLevels) {
+            const languageOptions = [...document.getElementsByClassName(level)];
+            if (languageOptions.length > 0) {
+                console.log("SELECTED LANGUAGE OPTIONS: ", languageOptions);
+                for (option of languageOptions) {
+                    updateValue = updatedLevels[currentLevels.indexOf(level)];
+                    console.log("UPDATE VALUE: ", updateValue);
+                    option.className = updateValue;
+                    option.value = updateValue;
+                    option.innerHTML = updateValue;
+                    console.log("UPDATED OPTION: ", option);
+                }
+            }
+        }
+    }
+
     if (addExperienceClicked) {
         const addExperiencelabels = new AddExperienceLabels()
         addExperiencelabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
+    
     if (addEducationClicked) {
         const addEducationLabels = new AddEducationLabels();
         addEducationLabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
+}
 
+const saveDisplayLanguage = function() {
+    const cachedDisplayLanguage = localStorage.getItem("display_language");
+    localStorage.setItem("cached_display_language", cachedDisplayLanguage);
+    localStorage.setItem("display_language", displayLanguageSelector.value);
+    updateLabels()
 };
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
 const loadDisplayLanguage = function() {
+    localStorage.setItem("cached_display_language", displayLanguageSelector.value);
     const savedDisplayLanguage = localStorage.getItem("display_language");
     if (savedDisplayLanguage) {
         displayLanguageSelector.value = savedDisplayLanguage;
-        const labels = new FirstLevelLabels();
-        labels.translate(displayLanguageSelector.value);
-        if (addExperienceClicked) {
-            const addExperiencelabels = new AddExperienceLabels()
-            addExperiencelabels.translate(displayLanguageSelector.value);
-            updatePlaceholders();
-        }
-        if (addEducationClicked) {
-            const addEducationLabels = new AddEducationLabels();
-            addEducationLabels.translate(displayLanguageSelector.value);
-            updatePlaceholders();
-        }
+        updateLabels()
     } else {
         saveDisplayLanguage();
     }
@@ -289,6 +308,7 @@ const addLanguage = function() {
     proficiencySelector.name = "proficiency";
     for(let level of proficiencyLevel[localStorage.getItem("display_language")]){
         const option = document.createElement("option");
+        option.className = level;
         option.value = level;
         option.innerHTML = level;
         proficiencySelector.appendChild(option);
