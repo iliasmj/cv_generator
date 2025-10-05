@@ -161,6 +161,7 @@ const addExperienceButton = document.getElementById("add_experience_button");
 const addEducationButton = document.getElementById("add_education_button");
 
 const loadButton = document.getElementById("load");
+const submitButton = document.getElementById("generate");
 
 //Selects action related divs.
 const skillsDiv = document.getElementById("skills");
@@ -186,6 +187,17 @@ const proficiencyLevel = {
     ]
 };
 
+const buttonInner = {
+    "🇬🇧" : {
+        "load" : "⬆️ Load",
+        "submit" : "Save & generate CV"
+    },
+    "🇫🇷" : {
+        "load" : "⬆️ Charger",
+        "submit" : "Sauvegarder & générer un CV"
+    }
+}
+
 let addLanguageClicked = false;
 let addExperienceClicked = false;
 let addEducationClicked = false;
@@ -201,11 +213,13 @@ function updatePlaceholders() {
     }
 }
 
-function updateLabels() {
+function updateUI() {
     const cachedLanguage = localStorage.getItem("cached_display_language");
     const currentLevels = proficiencyLevel[cachedLanguage];
     const selectedLanguage = localStorage.getItem("display_language");
     const updatedLevels = proficiencyLevel[selectedLanguage];
+
+    loadButton.innerHTML = buttonInner[selectedLanguage]["load"];
 
     const firstLevelLabels = new FirstLevelLabels();
     firstLevelLabels.translate(displayLanguageSelector.value);
@@ -238,13 +252,15 @@ function updateLabels() {
         addEducationLabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
+
+    submitButton.value = buttonInner[selectedLanguage]["submit"];
 }
 
 const saveDisplayLanguage = function() {
     const cachedDisplayLanguage = localStorage.getItem("display_language");
     localStorage.setItem("cached_display_language", cachedDisplayLanguage);
     localStorage.setItem("display_language", displayLanguageSelector.value);
-    updateLabels()
+    updateUI()
 };
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
@@ -253,7 +269,7 @@ const loadDisplayLanguage = function() {
     const savedDisplayLanguage = localStorage.getItem("display_language");
     if (savedDisplayLanguage) {
         displayLanguageSelector.value = savedDisplayLanguage;
-        updateLabels()
+        updateUI()
     } else {
         saveDisplayLanguage();
     }

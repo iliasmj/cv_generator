@@ -11,9 +11,7 @@
             <option id="english" value="🇬🇧">🇬🇧</option>
             <option id="french" value="🇫🇷">🇫🇷</option>
         </select>
-        <button id="load">
-            ⬆️ Load
-        </button>
+        <button id="load"></button>
         <form action="/cv" method="get" target="_blank">
             <div id="personal_data">
                 <div>
@@ -83,9 +81,9 @@
                 <label id="add_education_label"></label>
                 <input id="add_education_button" class="add" type="button" value="+">
             </div>
-            <input id="generate" type="submit" value="Save & generate CV">
+            <input id="generate" type="submit">
         </form>
     </div>
-    <script src="{{ url_for('static', filename='js/index.js') }}""></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
