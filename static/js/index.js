@@ -307,9 +307,25 @@ function createHTMLAddButton(parentElement) {
     return newAddButton;
 }
 
+function createHTMLRemoveButton(parentElement) {
+    const newRemoveButton = document.createElement("input");
+    newRemoveButton.className = "remove";
+    newRemoveButton.type = "button";
+    newRemoveButton.value = "-";
+    parentElement.appendChild(newRemoveButton);
+    return newRemoveButton;
+}
+
 //Creates and appends new text input to skills div.
 const addSkill = function() {
-    const skill = createHTHMLInput("skill","text", "skill", skillsDiv);
+    const skillDiv = createHTMLDiv("skill_div", skillsDiv);
+    const skillInput = createHTHMLInput("skill","text", "skill", skillDiv);
+
+    const removeSkillButton = createHTMLRemoveButton(skillDiv)
+    const removeSkill = function() {
+        skillsDiv.removeChild(skillDiv);
+    }
+    removeSkillButton.addEventListener("click", removeSkill);
 };
 
 //Creates text box input for specifying the language and creates proficiency level selector.
@@ -317,7 +333,7 @@ const addSkill = function() {
 const addLanguage = function() {
     addLanguageClicked = true;
     const languageDiv = createHTMLDiv("language_div", languagesDiv);
-    const language = createHTHMLInput("language", "text", "language", languageDiv);
+    const languageInput = createHTHMLInput("language", "text", "language", languageDiv);
 
     const proficiencySelector = document.createElement("select");
     proficiencySelector.className = "proficiency";
@@ -330,17 +346,41 @@ const addLanguage = function() {
         proficiencySelector.appendChild(option);
     }
     languageDiv.appendChild(proficiencySelector);
+
+    const removeLanguageButton = createHTMLRemoveButton(languageDiv)
+    const removeLanguage = function() {
+        languagesDiv.removeChild(languageDiv);
+    }
+    removeLanguageButton.addEventListener("click", removeLanguage);
 };
 
 //Activities divs count
 let activitiesDivCount = 0;
 
+const addActivity = function(parentDiv, i) {
+    const activityDiv = createHTMLDiv("activity_div", parentDiv);
+    const activityInput = createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
+
+    const removeActivityButton = createHTMLRemoveButton(activityDiv);
+    const removeActivity = function() {
+        parentDiv.removeChild(activityDiv)
+    }
+    removeActivityButton.addEventListener("click", removeActivity);
+}
+
 const addExperience = function() {
     addExperienceClicked = true;
 
-    const experienceDiv = createHTMLDiv("experience", experiencesDiv);
+    const experienceDiv = createHTMLDiv("experience_div", experiencesDiv);
+
+    //add remove experience button to parent div
+    const removeExperienceButton = createHTMLRemoveButton(experienceDiv)
+    const removeExperience = function() {
+        experiencesDiv.removeChild(experienceDiv);
+    }
+    removeExperienceButton.addEventListener("click", removeExperience);
+
     //Add job title input.
-    
     createHTHMLLabel("exp_job_title_label", experienceDiv);
     const jobTitleInput = createHTHMLInput("exp_job_title", "text", "exp_job_title", experienceDiv);
 
@@ -371,18 +411,14 @@ const addExperience = function() {
     }
 
     //create div for containing activities inputs
-    const activitiesDiv = createHTMLDiv("activities", experienceDiv);
+    const activitiesDiv = createHTMLDiv("activities_div", experienceDiv);
     activitiesDivCount++;
      
     //Add button action "add task".
     createHTHMLLabel("add_task_label", activitiesDiv);
     const addActivityButton = createHTMLAddButton(activitiesDiv);
     experienceDiv.appendChild(activitiesDiv);
-   
-    const addActivity = function() {
-        return createHTHMLInput("activity_" + activitiesDivCount, "text", "activity_" + activitiesDivCount, activitiesDiv);
-    }
-    addActivityButton.addEventListener("click", addActivity);
+    addActivityButton.addEventListener("click", () => addActivity(activitiesDiv, activitiesDivCount));
 
     const labels = new AddExperienceLabels();
     labels.translate(displayLanguageSelector.value);
@@ -392,6 +428,14 @@ const addEducation = function() {
     addEducationClicked = true;
 
     const educationDiv = createHTMLDiv("education", educationsDiv);
+
+    //add removeEducationButton to parent div
+    const removeEducationButton = createHTMLRemoveButton(educationDiv)
+    const removeEducation = function() {
+        educationsDiv.removeChild(educationDiv);
+    }
+    removeEducationButton.addEventListener("click", removeEducation);
+
     //Add institution input.
     createHTHMLLabel("institution_label", educationDiv);
     const institutionInput = createHTHMLInput("institution", "text", "institution", educationDiv);
@@ -481,10 +525,11 @@ async function load() {
         for (let i = 0; i < experienceObjects.length; i++) {
             addExperience();
         }
-        const activitiesDivs = document.getElementsByClassName("activities");
+        const activitiesDiv = document.getElementsByClassName("activities_div");
+        console.log(activitiesDiv);
         for (let i = 0; i < experienceObjects.length; i++) {
             for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
-                createHTHMLInput("activity_" + i, "text", "activity_" + i, activitiesDivs[i]);
+                addActivity(activitiesDiv[i], i);
             }
         }
         const jobTitleInputs = document.getElementsByClassName("exp_job_title");
