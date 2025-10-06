@@ -16,12 +16,12 @@
                     <div class="bio_container">
                         <h1>{{ cv.about_me["job_title"]|upper }}</h1>
                         <div class="bio_sub_container">
-                            <h2>{{ cv.about_me["years_experience"] }} années d'expériences</h2>
+                            <h2>{{ cv.about_me["years_experience"] }} {{ "years_experience"|translate(cv.display_language) }}</h2>
                             <p class="bio">{{ cv.about_me["bio"] }}</p>
                         </div>
                     </div>
                     <div class="skills_container">
-                        <h1>COMPÉTENCES</h1>
+                        <h1>{{ "skills_subsection_title"|translate(cv.display_language)|upper }}</h1>
                         <ul>
                             {% for skill in cv.about_me["skills"] %}
                                 <li>{{ skill }}</li>
@@ -29,7 +29,7 @@
                         </ul>
                     </div>
                     <div class="languages_container">
-                        <h1>LANGUES</h1>
+                        <h1>{{ "languages_subsection_title"|translate(cv.display_language)|upper }}</h1>
                         <div class="languages_sub_container">
                         {% for language in cv.about_me["languages"] %}
                             <div class="language">
@@ -83,7 +83,7 @@
                     </ul>
                 </section>
                 <section id="experiences">
-                    <h1>Expériences</h1>
+                    <h1>{{ "experiences_section_title"|translate(cv.display_language)|upper }}</h1>
                     <div class="experiences_container">
                     {% for experience in cv.experiences %}
                         <div class="experiences_sub_container">
@@ -107,7 +107,7 @@
                     </div>
                 </section>
                 <section id="educations">
-                    <h1>Formations</h1>
+                    <h1>{{ "educations_section_title"|translate(cv.display_language)|upper }}</h1>
                     <div id="educations_sub_container">
                     {% for education in cv.educations %}
                         <div class="education_container">

@@ -428,7 +428,7 @@ const addEducation = function() {
 
 async function load() {
     try {
-        const response = await fetch("/api/cv");
+        const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
         const data = await response.json();
 
         console.log(data)

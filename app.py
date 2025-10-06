@@ -1,7 +1,28 @@
 import flask, json, weasyprint, os
 from datetime import datetime
+project_root = os.path.dirname(__file__)
+en_json_path = os.path.join(project_root, "data/json/en/cv_data.json")
+fr_json_path = os.path.join(project_root, "data/json/fr/cv_data.json")
 
-app = flask.Flask("app.py")
+app = flask.Flask(__name__)
+app.secret_key = os.urandom(24)
+
+translation_table = {
+    "🇬🇧" : {
+        "years_experience" : "years of experience",
+        "skills_subsection_title" : "skills",
+        "languages_subsection_title" : "languages",
+        "experiences_section_title" : "professional experience",
+        "educations_section_title" : "education & training"
+    },
+    "🇫🇷" : {
+        "years_experience" : "années d'expérience",
+        "skills_subsection_title" : "compétences",
+        "languages_subsection_title" : "langues",
+        "experiences_section_title" : "experiences professionnelles",
+        "educations_section_title" : "formations"
+    }
+}
 
 class Language:
     def __init__(self, language, level):
@@ -52,6 +73,7 @@ class Education:
 
 class Cv:
     def __init__(self):
+        self.display_language = flask.request.args.get("display_language")
         self.personal_data = {
             "name" : "",
             "first_name" : "",
@@ -71,6 +93,9 @@ class Cv:
         }
         self.experiences = []
         self.educations = []
+
+    def export_display_language(self):
+        flask.session["display_language"] = self.display_language
 
     #gets personal data from index' form
     def get_personal_data(self):
@@ -135,6 +160,7 @@ class Cv:
 
     def serialize(self):
         return {
+            "display_language": self.display_language,
             "personal_data": self.personal_data,
             "about_me": {
                 "job_title": self.about_me["job_title"],
@@ -147,28 +173,47 @@ class Cv:
             "educations": [education.serialize() for education in self.educations]
         }
 
-    def save_json(self):
-        cv_json = open("data/json/cv_data.json", "w")
+    def save_json(self, display_language):
+        if display_language == "🇬🇧":
+            language_folder = "en/"
+        if display_language == "🇫🇷":
+            language_folder = "fr/"
+
+        cv_json = open(os.path.join(project_root, "data/json/", language_folder, "cv_data.json"), "w")
         print(cv_json)
         json.dump(self.serialize(), cv_json, ensure_ascii=False, indent=4)
         cv_json.close()
+
+def get_json_path(display_language):
+    if display_language == "🇬🇧":
+        return en_json_path
+    else:
+        return fr_json_path
 
 @app.route("/")
 def index():
     return flask.render_template("index.html")
 
-@app.template_filter('datetimeformat')
+@app.template_filter("translate")
+def translate(value, display_language):
+    print(display_language)
+    print(value)
+    print(translation_table[display_language][value])
+    return translation_table[display_language][value]
+
+@app.template_filter("datetimeformat")
 def datetimeformat(value):
-    return datetime.strptime(value, '%Y-%m-%d').strftime('%d.%m.%Y')
+    return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
 
 @app.route("/cv/")
 def view_cv():
     myCv = Cv()
+    myCv.export_display_language()
     myCv.get_personal_data()
     myCv.get_about_me()
     myCv.get_experiences()
     myCv.get_educations()
-    myCv.save_json()
+    myCv.save_json(myCv.display_language)
 
 #    print("myCv : ") #---------------------------------------CHECK
 #    print(vars(myCv)) #---------------------------------------CHECK
@@ -177,18 +222,19 @@ def view_cv():
 
 @app.route("/cv/pdf")
 def pdf_cv():
+    json_path = get_json_path(flask.session.get("display_language"))
+
     try:
-        cv_data = open("data/json/cv_data.json")
+        cv_data = open(json_path, encoding="utf-8")
         file_content = cv_data.read().strip()
         cv_data.close()
         if file_content:
-            cv_data = open("data/json/cv_data.json")
+            cv_data = open(json_path, encoding="utf-8")
             data_json = json.load(cv_data)
             cv_data.close()
             cv_rendered = flask.render_template("cv.html", cv=data_json)
             cv_rendered = cv_rendered.replace('href="/static/', 'href="static/').replace('src="/static/', 'src="static/')
             print("CV :\n", cv_rendered)
-            project_root = os.path.dirname(__file__)
             print(project_root)
 
             def my_fetcher(url, *args, **kwargs):
@@ -212,7 +258,14 @@ def pdf_cv():
 
 @app.route("/api/cv")
 def api_cv():
-    data_file = open("data/json/cv_data.json", "r")
+    display_language = flask.request.args.get("display_language")
+    print("DISPLAY LANGUAGE : ", display_language)
+    json_path = get_json_path(display_language)
+    data_file = open(json_path, "r", encoding="utf-8")
     data = json.load(data_file)
     data_file.close()
     return flask.jsonify(data)
+
+if __name__ == "__main__":
+    # Cette ligne active le debugger et le rechargement automatique
+    app.run(debug=True)
