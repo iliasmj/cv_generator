@@ -603,6 +603,7 @@ const generate = function() {
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
 
 loadButton.addEventListener("click", load);
+eraseButton.addEventListener("click", eraseForm);
 
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
