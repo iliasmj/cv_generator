@@ -94,9 +94,6 @@ class Cv:
         self.experiences = []
         self.educations = []
 
-    def export_display_language(self):
-        flask.session["display_language"] = self.display_language
-
     #gets personal data from index' form
     def get_personal_data(self):
         self.personal_data["name"] = flask.request.form.get("name")
@@ -192,7 +189,7 @@ def get_json_path(display_language):
 
 def get_json_data():
     try:
-        json_path = get_json_path(flask.session.get("display_language"))
+        json_path = get_json_path(flask.request.args.get("display_language"))
         cv_data = open(json_path, encoding="utf-8")
         file_content = cv_data.read().strip()
         cv_data.close()

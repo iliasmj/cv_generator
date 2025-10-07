@@ -607,7 +607,7 @@ const load = async function() {
 }
 
 const generate = function() {
-        window.open("/cv", "_blank");
+        window.open(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`, "_blank");
 }
 
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
