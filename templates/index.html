@@ -8,7 +8,7 @@
 <body>
     <div id="form_box">
         <button id="load"></button>
-        <form action="/cv" method="get" target="_blank">
+        <form action="/save" method="post">
             <select id="translate" name="display_language">
                 <option id="english" value="🇬🇧">🇬🇧</option>
                 <option id="french" value="🇫🇷">🇫🇷</option>
@@ -81,8 +81,9 @@
                 <label id="add_education_label"></label>
                 <input id="add_education_button" class="add" type="button" value="+">
             </div>
-            <input id="generate" type="submit">
+            <input id="save" type="submit">
         </form>
+        <button id="generate"></button>
     </div>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>

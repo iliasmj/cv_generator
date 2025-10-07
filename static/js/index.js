@@ -161,7 +161,8 @@ const addExperienceButton = document.getElementById("add_experience_button");
 const addEducationButton = document.getElementById("add_education_button");
 
 const loadButton = document.getElementById("load");
-const submitButton = document.getElementById("generate");
+const saveButton = document.getElementById("save");
+const generateButton = document.getElementById("generate");
 
 //Selects action related divs.
 const skillsDiv = document.getElementById("skills");
@@ -190,11 +191,13 @@ const proficiencyLevel = {
 const buttonInner = {
     "🇬🇧" : {
         "load" : "⬆️ Load",
-        "submit" : "Save & generate CV"
+        "save" : "Save",
+        "generate" : "Generate"
     },
     "🇫🇷" : {
         "load" : "⬆️ Charger",
-        "submit" : "Sauvegarder & générer un CV"
+        "save" : "Sauvegarder",
+        "generate" : "Générer"
     }
 }
 
@@ -253,7 +256,9 @@ function updateUI() {
         updatePlaceholders();
     }
 
-    submitButton.value = buttonInner[selectedLanguage]["submit"];
+    saveButton.value = buttonInner[selectedLanguage]["save"];
+    generateButton.innerHTML = buttonInner[selectedLanguage]["generate"];
+
 }
 
 const saveDisplayLanguage = function() {
@@ -470,7 +475,7 @@ const addEducation = function() {
     labels.translate(displayLanguageSelector.value);
 };
 
-async function load() {
+const load = async function() {
     try {
         const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
         const data = await response.json();
@@ -578,9 +583,14 @@ async function load() {
     }
 }
 
+const generate = function() {
+        window.location.href = "/cv";
+}
+
 //Links adding functions to action buttons. :
 addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
 addEducationButton.addEventListener("click", addEducation);
 loadButton.addEventListener("click", load);
+generateButton.addEventListener("click", generate);

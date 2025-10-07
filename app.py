@@ -73,7 +73,7 @@ class Education:
 
 class Cv:
     def __init__(self):
-        self.display_language = flask.request.args.get("display_language")
+        self.display_language = flask.request.form.get("display_language")
         self.personal_data = {
             "name" : "",
             "first_name" : "",
@@ -99,26 +99,26 @@ class Cv:
 
     #gets personal data from index' form
     def get_personal_data(self):
-        self.personal_data["name"] = flask.request.args.get("name")
-        self.personal_data["first_name"] = flask.request.args.get("first_name")
-        self.personal_data["birth_date"] = flask.request.args.get("birth_date")
-        self.personal_data["nationality"] = flask.request.args.get("nationality")
-        self.personal_data["phone_number"] = flask.request.args.get("phone_number")
-        self.personal_data["email"] = flask.request.args.get("email")
-        self.personal_data["address"] = flask.request.args.get("address")
-        self.personal_data["driver_license"] = flask.request.args.get("driver_license")
+        self.personal_data["name"] = flask.request.form.get("name")
+        self.personal_data["first_name"] = flask.request.form.get("first_name")
+        self.personal_data["birth_date"] = flask.request.form.get("birth_date")
+        self.personal_data["nationality"] = flask.request.form.get("nationality")
+        self.personal_data["phone_number"] = flask.request.form.get("phone_number")
+        self.personal_data["email"] = flask.request.form.get("email")
+        self.personal_data["address"] = flask.request.form.get("address")
+        self.personal_data["driver_license"] = flask.request.form.get("driver_license")
 
     #gets about me data from index' form
     def get_about_me(self):
-        self.about_me["job_title"] =flask.request.args.get("about_job_title")
-        self.about_me["years_experience"] = flask.request.args.get("years_experience")
-        self.about_me["bio"] = flask.request.args.get("bio")
-        self.about_me["skills"] = flask.request.args.getlist("skill")
+        self.about_me["job_title"] =flask.request.form.get("about_job_title")
+        self.about_me["years_experience"] = flask.request.form.get("years_experience")
+        self.about_me["bio"] = flask.request.form.get("bio")
+        self.about_me["skills"] = flask.request.form.getlist("skill")
 
         #constructs Language object by geting languages and proficiency levels lists
         # + gather them in a list as Language object and pass into myself add_about_me function
-        languagesList = flask.request.args.getlist("language")
-        proficiencyLevelsList = flask.request.args.getlist("proficiency")
+        languagesList = flask.request.form.getlist("language")
+        proficiencyLevelsList = flask.request.form.getlist("proficiency")
         languagesObjectsList = []
         for i in range (len(languagesList)):
             language = languagesList[i]
@@ -131,14 +131,14 @@ class Cv:
 
     #gets experiences data from index's form
     def get_experiences(self):
-        exp_job_title = flask.request.args.getlist("exp_job_title")
-        employer = flask.request.args.getlist("employer")
-        exp_location = flask.request.args.getlist("exp_location")
-        exp_from = flask.request.args.getlist("exp_from")
-        exp_to = flask.request.args.getlist("exp_to")
+        exp_job_title = flask.request.form.getlist("exp_job_title")
+        employer = flask.request.form.getlist("employer")
+        exp_location = flask.request.form.getlist("exp_location")
+        exp_from = flask.request.form.getlist("exp_from")
+        exp_to = flask.request.form.getlist("exp_to")
         #constructs Experience objects by gathering in order each experiences data
         for i in range (len(exp_job_title)):
-            activities = flask.request.args.getlist("activity_" + str(i))
+            activities = flask.request.form.getlist("activity_" + str(i))
             newExperience = Experience(exp_job_title[i], employer[i], exp_location[i], exp_from[i], exp_to[i], activities)
 #            print("New Experience : ") #---------------------------------------CHECK
 #            print(vars(newExperience)) #---------------------------------------CHECK
@@ -146,11 +146,11 @@ class Cv:
 
     #gets educations data from index's form
     def get_educations(self) :
-        institution = flask.request.args.getlist("institution")
-        edu_location = flask.request.args.getlist("edu_location")
-        edu_from = flask.request.args.getlist("edu_from")
-        edu_to = flask.request.args.getlist("edu_to")
-        program_title = flask.request.args.getlist("program_title")
+        institution = flask.request.form.getlist("institution")
+        edu_location = flask.request.form.getlist("edu_location")
+        edu_from = flask.request.form.getlist("edu_from")
+        edu_to = flask.request.form.getlist("edu_to")
+        program_title = flask.request.form.getlist("program_title")
         #constructs Education objects by gathering in order each educations data
         for i in range (len(institution)):
             newEducation = Education(institution[i], edu_location[i], edu_from[i], edu_to[i], program_title[i])
@@ -190,8 +190,39 @@ def get_json_path(display_language):
     else:
         return fr_json_path
 
+def get_json_data():
+    try:
+        json_path = get_json_path(flask.session.get("display_language"))
+        cv_data = open(json_path, encoding="utf-8")
+        file_content = cv_data.read().strip()
+        cv_data.close()
+        if file_content:
+            cv_data = open(json_path, encoding="utf-8")
+            data_json = json.load(cv_data)
+            cv_data.close()
+            return data_json
+        else:
+            return "⚠️ Le fichier est JSON vide.", 404
+    except FileNotFoundError:
+        return "⚠️ Le fichier JSON n'existe pas.", 404
+    except json.JSONDecodeError as e:
+        return "⚠️ JSON invalide : " + e, 400
+
 @app.route("/")
-def index():
+def homepage():
+    return flask.render_template("index.html")
+
+@app.route("/save", methods=["POST"])
+def save_cv():
+    myCv = Cv()
+    myCv.export_display_language()
+    myCv.get_personal_data()
+    myCv.get_about_me()
+    myCv.get_experiences()
+    myCv.get_educations()
+    myCv.save_json(myCv.display_language)
+#    print("myCv : ") #---------------------------------------CHECK
+#    print(vars(myCv)) #---------------------------------------CHECK
     return flask.render_template("index.html")
 
 @app.template_filter("translate")
@@ -205,56 +236,30 @@ def translate(value, display_language):
 def datetimeformat(value):
     return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
 
-@app.route("/cv/")
+@app.route("/cv")
 def view_cv():
-    myCv = Cv()
-    myCv.export_display_language()
-    myCv.get_personal_data()
-    myCv.get_about_me()
-    myCv.get_experiences()
-    myCv.get_educations()
-    myCv.save_json(myCv.display_language)
-
-#    print("myCv : ") #---------------------------------------CHECK
-#    print(vars(myCv)) #---------------------------------------CHECK
-
-    return flask.render_template("cv.html", cv=myCv)
+    json_data = get_json_data()
+    if json_data:
+        return flask.render_template("cv.html", cv=json_data)
 
 @app.route("/cv/pdf")
 def pdf_cv():
-    json_path = get_json_path(flask.session.get("display_language"))
+    cv_rendered = flask.render_template("cv.html", cv=get_json_data())
+    cv_rendered = cv_rendered.replace('href="/static/', 'href="static/').replace('src="/static/', 'src="static/')
+    print("CV :\n", cv_rendered)
+    print(project_root)
 
-    try:
-        cv_data = open(json_path, encoding="utf-8")
-        file_content = cv_data.read().strip()
-        cv_data.close()
-        if file_content:
-            cv_data = open(json_path, encoding="utf-8")
-            data_json = json.load(cv_data)
-            cv_data.close()
-            cv_rendered = flask.render_template("cv.html", cv=data_json)
-            cv_rendered = cv_rendered.replace('href="/static/', 'href="static/').replace('src="/static/', 'src="static/')
-            print("CV :\n", cv_rendered)
-            print(project_root)
+#    def my_fetcher(url, *args, **kwargs):
+#        print("🔎 WeasyPrint essaie de charger :", url)
+#        return weasyprint.default_url_fetcher(url, *args, **kwargs)
 
-            def my_fetcher(url, *args, **kwargs):
-                print("🔎 WeasyPrint essaie de charger :", url)
-                return weasyprint.default_url_fetcher(url, *args, **kwargs)
+    pdf = weasyprint.HTML(string=cv_rendered, base_url=project_root).write_pdf()
+#    print(pdf)
 
-            pdf = weasyprint.HTML(string=cv_rendered, base_url=project_root, url_fetcher=my_fetcher).write_pdf()
-            print(pdf)
-
-            response = flask.make_response(pdf)
-            response.headers["Content-Type"] = "application/pdf"
-            response.headers["Content-Disposition"] = "attachment; filename=cv.pdf"
-            
-            return response
-        else:
-            print("⚠️ Le fichier est vide.")
-    except FileNotFoundError:
-        return "⚠️ Le fichier JSON n'existe pas.", 404
-    except json.JSONDecodeError as e:
-        return f"⚠️ JSON invalide : {e}", 400
+    response = flask.make_response(pdf)
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = "attachment; filename=cv.pdf"
+    return response
 
 @app.route("/api/cv")
 def api_cv():
