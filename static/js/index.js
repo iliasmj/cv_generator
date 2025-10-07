@@ -607,7 +607,7 @@ const load = async function() {
 }
 
 const generate = function() {
-        window.location.href = "/cv";
+        window.open("/cv", "_blank");
 }
 
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
