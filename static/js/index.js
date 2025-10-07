@@ -161,6 +161,7 @@ const addExperienceButton = document.getElementById("add_experience_button");
 const addEducationButton = document.getElementById("add_education_button");
 
 const loadButton = document.getElementById("load");
+const eraseButton = document.getElementById("erase");
 const saveButton = document.getElementById("save");
 const generateButton = document.getElementById("generate");
 
@@ -191,11 +192,13 @@ const proficiencyLevel = {
 const buttonInner = {
     "🇬🇧" : {
         "load" : "⬆️ Load",
+        "erase" : "Erase",
         "save" : "Save",
         "generate" : "Generate"
     },
     "🇫🇷" : {
         "load" : "⬆️ Charger",
+        "erase" : "Effacer",
         "save" : "Sauvegarder",
         "generate" : "Générer"
     }
@@ -256,6 +259,7 @@ function updateUI() {
         updatePlaceholders();
     }
 
+    eraseButton.innerHTML = buttonInner[selectedLanguage]["erase"];
     saveButton.value = buttonInner[selectedLanguage]["save"];
     generateButton.innerHTML = buttonInner[selectedLanguage]["generate"];
 
@@ -267,7 +271,6 @@ const saveDisplayLanguage = function() {
     localStorage.setItem("display_language", displayLanguageSelector.value);
     updateUI()
 };
-displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
 const loadDisplayLanguage = function() {
     localStorage.setItem("cached_display_language", displayLanguageSelector.value);
@@ -279,7 +282,17 @@ const loadDisplayLanguage = function() {
         saveDisplayLanguage();
     }
 };
-window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
+
+const eraseForm = function() {
+    const fixedInputs = document.getElementsByClassName("fixed");
+    for (input of fixedInputs) {
+        input.value = "";
+    }
+    skillsDiv.innerHTML = "";
+    languagesDiv.innerHTML = "";
+    experiencesDiv.innerHTML = "";
+    educationsDiv.innerHTML = "";
+}
 
 function createHTMLDiv(className, parentElement) {
     const newDiv = document.createElement("div");
@@ -587,10 +600,16 @@ const generate = function() {
         window.location.href = "/cv";
 }
 
+window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
+
+loadButton.addEventListener("click", load);
+
+displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
+
 //Links adding functions to action buttons. :
 addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
 addEducationButton.addEventListener("click", addEducation);
-loadButton.addEventListener("click", load);
+
 generateButton.addEventListener("click", generate);
