@@ -283,15 +283,25 @@ const loadDisplayLanguage = function() {
     }
 };
 
+function eraseDivContent(parentDiv, className) {
+    console.log("DIV : ", className);
+    const children = [...document.getElementsByClassName(className)];
+    console.log("A EFFACER", children);
+    for (child of children) {
+        parentDiv.removeChild(child);
+    }
+    console.log(parentDiv.innerHTML);
+}
+
 const eraseForm = function() {
     const fixedInputs = document.getElementsByClassName("fixed");
     for (input of fixedInputs) {
         input.value = "";
     }
-    skillsDiv.innerHTML = "";
-    languagesDiv.innerHTML = "";
-    experiencesDiv.innerHTML = "";
-    educationsDiv.innerHTML = "";
+    eraseDivContent(skillsDiv, "skill_div");
+    eraseDivContent(languagesDiv, "language_div");
+    eraseDivContent(experiencesDiv, "experience_div");
+    eraseDivContent(educationsDiv, "education_div");
 }
 
 function createHTMLDiv(className, parentElement) {
@@ -445,7 +455,7 @@ const addExperience = function() {
 const addEducation = function() {
     addEducationClicked = true;
 
-    const educationDiv = createHTMLDiv("education", educationsDiv);
+    const educationDiv = createHTMLDiv("education_div", educationsDiv);
 
     //add removeEducationButton to parent div
     const removeEducationButton = createHTMLRemoveButton(educationDiv)
