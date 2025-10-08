@@ -57,7 +57,7 @@
                                 </button>
                             </div>
                         </div>
-                        <p>{{ cv.personal_data["birth_date"]|datetimeformat }}</p>
+                        <p>{{ cv.personal_data["birth_date"]|birth_date_format(cv.display_language) }}</p>
                     </div>
                     <ul>
                         <li class="nationality">
@@ -92,7 +92,7 @@
                                     <h2>{{ experience.employer }}</h2>
                                     <p class="exp_location">{{ experience.location }}</p>
                                 </div>
-                                <p class="exp_duration">{{ experience.duration_from.replace("-", "/") }} - {{ experience.duration_to.replace("-", "/") }}</p>
+                                <p class="exp_duration">{{ experience.duration_from|date_time_format(cv.display_language) }} - {{ experience.duration_to|date_time_format(cv.display_language) }}</p>
                             </div>
                             <div class="experience_body">
                                 <p class="job_title">{{ experience.job_title }}</p>
@@ -116,7 +116,7 @@
                                     <h2>{{ education.institution }}</h2>
                                     <p class="edu_location">{{ education.location }}</p>
                                 </div>
-                                <p class="edu_duration">{{ education.duration_from.replace("-", "/") }} - {{ education.duration_to.replace("-", "/") }}</p>
+                                <p class="edu_duration">{{ education.duration_from|date_time_format(cv.display_language) }} - {{ education.duration_to|date_time_format(cv.display_language) }}</p>
                             </div>
                             <p class="program_title">{{ education.program_title }}</p>
                         </div>

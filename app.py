@@ -1,4 +1,4 @@
-import flask, json, weasyprint, os
+import flask, json, weasyprint, os, locale
 from datetime import datetime
 project_root = os.path.dirname(__file__)
 en_json_path = os.path.join(project_root, "data/json/en/cv_data.json")
@@ -229,9 +229,21 @@ def translate(value, display_language):
     print(translation_table[display_language][value])
     return translation_table[display_language][value]
 
-@app.template_filter("datetimeformat")
-def datetimeformat(value):
-    return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
+@app.template_filter("birth_date_format")
+def birth_date_format(value, display_language):
+    if display_language == "🇬🇧":
+        return datetime.strptime(value, "%Y-%m-%d").strftime("%d/%m/%Y")
+    else:
+        return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
+
+@app.template_filter("date_time_format")
+def date_time_format(value, display_language):
+    if display_language == "🇬🇧":
+        locale.setlocale(locale.LC_TIME, "en_GB.UTF-8")
+    else: 
+        locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+    
+    return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
 
 @app.route("/cv")
 def view_cv():
