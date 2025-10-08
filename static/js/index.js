@@ -501,9 +501,19 @@ const addEducation = function() {
 const load = async function() {
     try {
         const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
+
+        if (!response.ok) {
+            const message = await response.text();
+            const loadFeedBackMessage = document.createElement("p");
+            loadDisplayLanguage.id = "feedback_message";
+            loadFeedBackMessage.innerHTML = message;
+            const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
+            inputLoadSubMenu.appendChild(loadFeedBackMessage);
+        }
+    
         const data = await response.json();
 
-        console.log(data)
+        console.log(data);
 
         document.getElementById("name").value = data.personal_data.name;
         document.getElementById("first_name").value = data.personal_data.first_name;

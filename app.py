@@ -199,7 +199,7 @@ def get_json_data():
             cv_data.close()
             return data_json
         else:
-            return "⚠️ Le fichier est JSON vide.", 404
+            return "⚠️ Le fichier JSON est vide.", 404
     except FileNotFoundError:
         return "⚠️ Le fichier JSON n'existe pas.", 404
     except json.JSONDecodeError as e:
@@ -248,8 +248,10 @@ def date_time_format(value, display_language):
 @app.route("/cv")
 def view_cv():
     json_data = get_json_data()
-    if json_data:
-        return flask.render_template("cv.html", cv=json_data)
+    if isinstance(json_data, tuple):
+        message, status = json_data
+        return message, status
+    return flask.render_template("cv.html", cv=json_data)
 
 @app.route("/cv/pdf")
 def pdf_cv():
@@ -272,13 +274,11 @@ def pdf_cv():
 
 @app.route("/api/cv")
 def api_cv():
-    display_language = flask.request.args.get("display_language")
-    print("DISPLAY LANGUAGE : ", display_language)
-    json_path = get_json_path(display_language)
-    data_file = open(json_path, "r", encoding="utf-8")
-    data = json.load(data_file)
-    data_file.close()
-    return flask.jsonify(data)
+    json_data = get_json_data()
+    if isinstance(json_data, tuple):
+        message, status = json_data
+        return message, status
+    return flask.jsonify(json_data)
 
 if __name__ == "__main__":
     # Cette ligne active le debugger et le rechargement automatique
