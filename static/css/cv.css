@@ -91,7 +91,7 @@ section#about_me h2 {
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
-    gap: 2.5mm;
+    gap: 5mm;
 }
 
 div.bio_container h2 {
@@ -102,7 +102,7 @@ div.bio_container h2 {
     padding-left: 5%;
     padding-right: 5%;
     color: white;
-    text-align: center;
+    text-align: left;
     margin: 0;
 }
 

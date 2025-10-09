@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #122A40;
+    color: #93B3BF;
+    font-family: 'Saira', sans-serif;
+}
+
+#form_box {
+    width: 25%;
+    min-width: 500px;
+    margin: 5%;
+    padding: 2%;
+    border: none;
+    border-radius: 16px;
+    background-color: #1f4a6a;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4),
+                0 8px 10px rgba(0, 0, 0, 0.25);
+    display: grid;
+    grid-template-columns: auto;
+}
+
+#input_action_menu {
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#load {
+    justify-self: left;
+}
+
+#erase {
+    justify-self: right;
+}
+
+#translate {
+    justify-self: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+form > div {
+    border: none;
+    border-radius: 12px;
+    background-color: #1f4a6a;
+    padding: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+}
+
+form > * {
+    margin-bottom: 5%;
+}
+
+form > * > *{
+    margin-bottom: 5%;
+}
+
+input:not([type="button"]):not([type="submit"]) {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4ca3dd;
+    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#bio_div {
+    display: grid;
+    flex-direction: column;
+}
+
+#bio {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    /* texte aligné en haut */
+    vertical-align: top;
+    overflow-y: auto;  /* permet le scroll si le texte dépasse */
+    resize: vertical;  /* permet à l’utilisateur de redimensionner verticalement */
+}
+
+#bio:focus {
+    outline: none;
+    border-color: #4ca3dd;
+    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+#bio::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#save {
+    justify-self: right;
+}
+
+#generate {
+    justify-self: center;
+}

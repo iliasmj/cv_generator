@@ -63,9 +63,9 @@
                     <input id="years_experience" class="fixed" type="text" name="years_experience" required>
                 </div>
 
-                <div>
+                <div id="bio_div">
                     <label id="bio_label"></label>
-                    <input id="bio" class="fixed" type="text" name="bio" required>
+                    <textarea id="bio" class="fixed" name="bio" required></textarea>
                 </div>
 
                 <div id="skills">
@@ -87,7 +87,7 @@
                 <input id="add_education_button" class="add" type="button" value="+">
             </div>
             <input id="save" type="submit">
-        </form>
+          </form>
         <button id="generate"></button>
     </div>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>

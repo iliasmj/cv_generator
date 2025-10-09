@@ -17,7 +17,7 @@
                         <h1>{{ cv.about_me["job_title"]|upper }}</h1>
                         <div class="bio_sub_container">
                             <h2>{{ cv.about_me["years_experience"] }} {{ "years_experience"|translate(cv.display_language) }}</h2>
-                            <p class="bio">{{ cv.about_me["bio"] }}</p>
+                            <p class="bio">{{ cv.about_me["bio"]|replace('\n', '<br>')|safe }}</p>
                         </div>
                     </div>
                     <div class="skills_container">

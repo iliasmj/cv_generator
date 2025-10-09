@@ -109,6 +109,7 @@ class Cv:
     def get_about_me(self):
         self.about_me["job_title"] =flask.request.form.get("about_job_title")
         self.about_me["years_experience"] = flask.request.form.get("years_experience")
+        print(flask.request.form.get("bio"))
         self.about_me["bio"] = flask.request.form.get("bio")
         self.about_me["skills"] = flask.request.form.getlist("skill")
 
@@ -212,7 +213,6 @@ def homepage():
 @app.route("/save", methods=["POST"])
 def save_cv():
     myCv = Cv()
-    myCv.export_display_language()
     myCv.get_personal_data()
     myCv.get_about_me()
     myCv.get_experiences()
