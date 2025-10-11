@@ -56,7 +56,7 @@ form {
     grid-template-columns: auto;
 }
 
-form > div {
+details {
     border: none;
     border-radius: 12px;
     background-color: #1f4a6a;

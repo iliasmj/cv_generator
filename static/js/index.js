@@ -3,6 +3,7 @@ const displayLanguageSelector = document.getElementById("translate");
 
 traduction = {
     "🇬🇧" : {
+        personalDataTitle : "Personal Data",
         name : "Name<span id=\"required\">*</span> :",
         firstName : "First Name<span id=\"required\">*</span> :",
         birthDate : "Birth Date<span id=\"required\">*</span> :",
@@ -10,12 +11,15 @@ traduction = {
         phoneNumber :  "Phone Number<span id=\"required\">*</span> :",
         address : "Address<span id=\"required\">*</span> :",
         driverLicense : "Driver License<span id=\"required\">*</span> :",
+        aboutMeTitle : "About Me",
         aboutJobTitle : "Job Title<span id=\"required\">*</span> :",
         yearsExperience : "Years of experience<span id=\"required\">*</span> :",
         bio : "Biography<span id=\"required\">*</span> :",
         addSkill : "Add Skill<span id=\"required\">*</span> :",
         addLanguage : "Add Language<span id=\"required\">*</span> :",
+        experiencesTitle : "Experiences",
         addExperience : "Add Experience<span id=\"required\">*</span> :",
+        educationsTitle : "Education & Training",
         addEducation : "Add Education<span id=\"required\">*</span> :",
         expJobTitle : "Job Title<span id=\"required\">*</span> :",
         employer : "Employer<span id=\"required\">*</span> :",
@@ -30,6 +34,7 @@ traduction = {
         programTitle : "Program Title<span id=\"required\">*</span> :",
     },
     "🇫🇷" : {
+        personalDataTitle : "Données personnelles",
         name : "Nom<span id=\"required\">*</span> :",
         firstName : "Prénom<span id=\"required\">*</span> :",
         birthDate : "Date de naissance<span id=\"required\">*</span> :",
@@ -37,12 +42,15 @@ traduction = {
         phoneNumber : "Téléphone<span id=\"required\">*</span> :",
         address : "Adresse<span id=\"required\">*</span> :",
         driverLicense : "Permis de conduire<span id=\"required\">*</span> :",
+        aboutMeTitle : "A propos de moi",
         aboutJobTitle : "Profession<span id=\"required\">*</span> :",
         yearsExperience : "Années d'expérience<span id=\"required\">*</span> :",
         bio : "Biographie<span id=\"required\">*</span> :",
         addSkill : "Ajouter une compétence<span id=\"required\">*</span> :",
         addLanguage : "Ajouter une langue<span id=\"required\">*</span> :",
+        experiencesTitle : "Expériences",
         addExperience : "Ajouter une expérience<span id=\"required\">*</span> :",
+        educationsTitle : "Formations",
         addEducation : "Ajouter une formation<span id=\"required\">*</span> :",
         expJobTitle : "Titre du poste<span id=\"required\">*</span> :",
         employer : "Employeur<span id=\"required\">*</span> :",
@@ -60,6 +68,7 @@ traduction = {
 
 class FirstLevelLabels {
     constructor(){
+        this.personalDataTitle = document.getElementById("personal_data_title");
         this.nameLabel = document.getElementById("name_label");
         this.firstNameLabel = document.getElementById("first_name_label");
         this.birthDateLabel = document.getElementById("birth_date_label");
@@ -67,16 +76,20 @@ class FirstLevelLabels {
         this.phoneNumberLabel = document.getElementById("phone_number_label");
         this.addressLabel = document.getElementById("address_label");
         this.driverLicenseLabel = document.getElementById("driver_license_label");
+        this.aboutMeTitle = document.getElementById("about_me_title");
         this.aboutJobTitleLabel = document.getElementById("about_job_title_label");
         this.yearsExperienceLabel = document.getElementById("years_experience_label");
         this.bioLabel = document.getElementById("bio_label");
         this.addSkillLabel = document.getElementById("add_skill_label");
         this.addLanguageLabel = document.getElementById("add_language_label");
+        this.experiencesTitle = document.getElementById("experiences_title");
         this.addExperienceLabel = document.getElementById("add_experience_label");
+        this.educationsTitle = document.getElementById("educations_title");
         this.addEducationLabel = document.getElementById("add_education_label");
     }
 
     translate(language) {
+        this.personalDataTitle.innerHTML = traduction[language].personalDataTitle;
         this.nameLabel.innerHTML = traduction[language].name;
         this.firstNameLabel.innerHTML = traduction[language].firstName;
         this.birthDateLabel.innerHTML = traduction[language].birthDate;
@@ -84,12 +97,15 @@ class FirstLevelLabels {
         this.phoneNumberLabel.innerHTML = traduction[language].phoneNumber;
         this.addressLabel.innerHTML = traduction[language].address;
         this.driverLicenseLabel.innerHTML = traduction[language].driverLicense;
+        this.aboutMeTitle.innerHTML = traduction[language].aboutMeTitle;
         this.aboutJobTitleLabel.innerHTML = traduction[language].aboutJobTitle;
         this.yearsExperienceLabel.innerHTML = traduction[language].yearsExperience;
         this.bioLabel.innerHTML = traduction[language].bio;
         this.addSkillLabel.innerHTML = traduction[language].addSkill;
         this.addLanguageLabel.innerHTML = traduction[language].addLanguage;
+        this.experiencesTitle.innerHTML = traduction[language].experiencesTitle;
         this.addExperienceLabel.innerHTML = traduction[language].addExperience;
+        this.educationsTitle.innerHTML = traduction[language].educationsTitle;
         this.addEducationLabel.innerHTML = traduction[language].addEducation;
     }
 }

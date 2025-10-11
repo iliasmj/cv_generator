@@ -18,7 +18,8 @@
                 <option id="english" value="🇬🇧">🇬🇧</option>
                 <option id="french" value="🇫🇷">🇫🇷</option>
             </select>
-            <div id="personal_data">
+            <details open id="personal_data">
+                <summary id="personal_data_title"></summary>
                 <div>
                     <label id="name_label"></label>
                     <input id="name" class="fixed" type="text" name="name" required>
@@ -51,8 +52,9 @@
                     <label id="driver_license_label"></label>
                     <input id="driver_license" class="fixed" type="text" name="driver_license" placeholder="Permis B" required>
                 </div>
-            </div>
-            <div id="about_me">
+            </details>
+            <details id="about_me">
+                <summary id="about_me_title"></summary>
                 <div>
                     <label id="about_job_title_label"></label>
                     <input id="about_job_title" class="fixed" type="text" name="about_job_title" required>
@@ -77,15 +79,17 @@
                     <label id="add_language_label"></label>
                     <input id="add_language_button" class="add" type="button" value="+">
                 </div>
-            </div>
-            <div id="experiences">
+            </details>
+            <details id="experiences">
+                <summary id="experiences_title"></summary>
                 <label id="add_experience_label"></label>
                 <input id="add_experience_button" class="add" type="button" value="+">
-            </div>
-            <div id="educations">
+            </details>
+            <details id="educations">
+                <summary id="educations_title"></summary>
                 <label id="add_education_label"></label>
                 <input id="add_education_button" class="add" type="button" value="+">
-            </div>
+            </details>
             <input id="save" type="submit">
           </form>
         <button id="generate"></button>
