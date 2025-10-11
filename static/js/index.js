@@ -348,8 +348,9 @@ function createHTMLRemoveButton(parentElement) {
 const addSkill = function() {
     const skillDiv = createHTMLDiv("skill_div", skillsDiv);
     const skillInput = createHTHMLInput("skill","text", "skill", skillDiv);
-
-    const removeSkillButton = createHTMLRemoveButton(skillDiv)
+    
+    const skillRemoveButtonDiv = createHTMLDiv("skill_remove_button_div", skillDiv);
+    const removeSkillButton = createHTMLRemoveButton(skillRemoveButtonDiv)
     const removeSkill = function() {
         skillsDiv.removeChild(skillDiv);
     }
@@ -361,7 +362,9 @@ const addSkill = function() {
 const addLanguage = function() {
     addLanguageClicked = true;
     const languageDiv = createHTMLDiv("language_div", languagesDiv);
-    const languageInput = createHTHMLInput("language", "text", "language", languageDiv);
+    const langageLeftSubDiv = createHTMLDiv("language_left_sub_div", languageDiv);
+    const languageRightSubDiv = createHTMLDiv("language_right_sub_div", languageDiv);
+    const languageInput = createHTHMLInput("language", "text", "language", langageLeftSubDiv);
 
     const proficiencySelector = document.createElement("select");
     proficiencySelector.className = "proficiency";
@@ -373,9 +376,9 @@ const addLanguage = function() {
         option.innerHTML = level;
         proficiencySelector.appendChild(option);
     }
-    languageDiv.appendChild(proficiencySelector);
+    langageLeftSubDiv.appendChild(proficiencySelector);
 
-    const removeLanguageButton = createHTMLRemoveButton(languageDiv)
+    const removeLanguageButton = createHTMLRemoveButton(languageRightSubDiv)
     const removeLanguage = function() {
         languagesDiv.removeChild(languageDiv);
     }
@@ -388,8 +391,9 @@ let activitiesDivCount = 0;
 const addActivity = function(parentDiv, i) {
     const activityDiv = createHTMLDiv("activity_div", parentDiv);
     const activityInput = createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
+    const activityRemoveButton = createHTMLDiv("activity_remove_button_div", activityDiv);
 
-    const removeActivityButton = createHTMLRemoveButton(activityDiv);
+    const removeActivityButton = createHTMLRemoveButton(activityRemoveButton);
     const removeActivity = function() {
         parentDiv.removeChild(activityDiv)
     }
@@ -407,6 +411,7 @@ const addExperience = function() {
         experiencesDiv.removeChild(experienceDiv);
     }
     removeExperienceButton.addEventListener("click", removeExperience);
+    experienceDiv.appendChild(document.createElement("br"));
 
     //Add job title input.
     createHTHMLLabel("exp_job_title_label", experienceDiv);

@@ -46,6 +46,9 @@ body {
 
 #translate {
     justify-self: center;
+    background-color: #1f4a6a;
+    border: none;
+    color: #93B3BF;
 }
 
 form {
@@ -122,6 +125,80 @@ input::placeholder {
 
 #bio::placeholder {
     color: rgba(255, 255, 255, 0.4);
+}
+
+.skill_div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%
+}
+
+.skill_div > * {
+    width: 50%;
+}
+
+.add, .remove {
+    background-color: #1f4a6a;
+    border: none;
+    color: #93B3BF;
+}
+
+.skill_remove_button_div, .activity_remove_button_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.language_div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+}
+
+.language_left_sub_div {
+    width: 68%;
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+}
+
+.language_right_sub_div {
+    width: 32%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.experience_div, .education_div {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+}
+
+.experience_div + .experience_div, .education_div + .education_div {
+    margin-top: 5%;
+}
+
+.experience_div > .remove, .education_div > .remove {
+   margin-left: 95%;
+}
+
+.activities_div {
+    margin-top: 5%;
+    padding-left: 3%;
+}
+
+.activity_div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+}
+
+.activity_div > * {
+    width: 50%;
 }
 
 #save {
