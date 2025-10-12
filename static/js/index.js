@@ -7,6 +7,7 @@ traduction = {
         name : "Name<span id=\"required\">*</span> :",
         firstName : "First Name<span id=\"required\">*</span> :",
         birthDate : "Birth Date<span id=\"required\">*</span> :",
+        birthDatePlaceholder : "DD/MM/YYYY",
         nationality : "Nationality<span id=\"required\">*</span> :",
         phoneNumber :  "Phone Number<span id=\"required\">*</span> :",
         address : "Address<span id=\"required\">*</span> :",
@@ -15,18 +16,18 @@ traduction = {
         aboutJobTitle : "Job Title<span id=\"required\">*</span> :",
         yearsExperience : "Years of experience<span id=\"required\">*</span> :",
         bio : "Biography<span id=\"required\">*</span> :",
-        addSkill : "Add Skill<span id=\"required\">*</span> :",
-        addLanguage : "Add Language<span id=\"required\">*</span> :",
+        addSkill : "Add Skill<span id=\"required\">*</span>",
+        addLanguage : "Add Language<span id=\"required\">*</span>",
         experiencesTitle : "Experiences",
-        addExperience : "Add Experience<span id=\"required\">*</span> :",
-        educationsTitle : "Education & Training",
-        addEducation : "Add Education<span id=\"required\">*</span> :",
+        addExperience : "Add Experience<span id=\"required\">*</span>",
         expJobTitle : "Job Title<span id=\"required\">*</span> :",
         employer : "Employer<span id=\"required\">*</span> :",
         expLocation : "Location<span id=\"required\">*</span> :",
         expFrom : "From<span id=\"required\">*</span> :",
         expTo : "To<span id=\"required\">*</span> :",
-        addTask : "Add Task<span id=\"required\">*</span> :",
+        addTask : "Add Task<span id=\"required\">*</span>",
+        educationsTitle : "Education & Training",
+        addEducation : "Add Education<span id=\"required\">*</span>",
         institution : "Institution<span id=\"required\">*</span> :",
         eduLocation : "Location<span id=\"required\">*</span> :",
         eduFrom : "From<span id=\"required\">*</span> :",
@@ -37,6 +38,7 @@ traduction = {
         personalDataTitle : "Données personnelles",
         name : "Nom<span id=\"required\">*</span> :",
         firstName : "Prénom<span id=\"required\">*</span> :",
+        birthDatePlaceholder : "JJ/MM/AAAA",
         birthDate : "Date de naissance<span id=\"required\">*</span> :",
         nationality : "Nationalité<span id=\"required\">*</span> :",
         phoneNumber : "Téléphone<span id=\"required\">*</span> :",
@@ -46,18 +48,18 @@ traduction = {
         aboutJobTitle : "Profession<span id=\"required\">*</span> :",
         yearsExperience : "Années d'expérience<span id=\"required\">*</span> :",
         bio : "Biographie<span id=\"required\">*</span> :",
-        addSkill : "Ajouter une compétence<span id=\"required\">*</span> :",
-        addLanguage : "Ajouter une langue<span id=\"required\">*</span> :",
+        addSkill : "Ajouter une compétence<span id=\"required\">*</span>",
+        addLanguage : "Ajouter une langue<span id=\"required\">*</span>",
         experiencesTitle : "Expériences",
-        addExperience : "Ajouter une expérience<span id=\"required\">*</span> :",
-        educationsTitle : "Formations",
-        addEducation : "Ajouter une formation<span id=\"required\">*</span> :",
+        addExperience : "Ajouter une expérience<span id=\"required\">*</span>",
         expJobTitle : "Titre du poste<span id=\"required\">*</span> :",
         employer : "Employeur<span id=\"required\">*</span> :",
         expLocation : "Lieu<span id=\"required\">*</span> :",
         expFrom : "De<span id=\"required\">*</span> :",
         expTo : "À<span id=\"required\">*</span> :",
         addTask : "Ajouter une tâche<span id=\"required\">*</span> :",
+        educationsTitle : "Formations",
+        addEducation : "Ajouter une formation<span id=\"required\">*</span>",
         institution : "Établissement<span id=\"required\">*</span> :",
         eduLocation : "Lieu<span id=\"required\">*</span> :",
         eduFrom : "De<span id=\"required\">*</span> :",
@@ -72,6 +74,7 @@ class FirstLevelLabels {
         this.nameLabel = document.getElementById("name_label");
         this.firstNameLabel = document.getElementById("first_name_label");
         this.birthDateLabel = document.getElementById("birth_date_label");
+        this.birthDatePlaceholder = document.getElementById("birth_date_placeholder");
         this.nationalityLabel = document.getElementById("nationality_label");
         this.phoneNumberLabel = document.getElementById("phone_number_label");
         this.addressLabel = document.getElementById("address_label");
@@ -92,6 +95,7 @@ class FirstLevelLabels {
         this.personalDataTitle.innerHTML = traduction[language].personalDataTitle;
         this.nameLabel.innerHTML = traduction[language].name;
         this.firstNameLabel.innerHTML = traduction[language].firstName;
+        this.birthDatePlaceholder.innerHTML = traduction[language].birthDatePlaceholder;
         this.birthDateLabel.innerHTML = traduction[language].birthDate;
         this.nationalityLabel.innerHTML = traduction[language].nationality;
         this.phoneNumberLabel.innerHTML = traduction[language].phoneNumber;
@@ -343,19 +347,19 @@ function createHTHMLInput(className, type, name, parentElement) {
 }
 
 function createHTMLAddButton(parentElement) {
-    const newAddButton = document.createElement("input");
+    const newAddButton = document.createElement("button");
     newAddButton.className = "add";
     newAddButton.type = "button";
-    newAddButton.value = "+";
+    newAddButton.innerHTML = '<img src="/static/img/add.png">';
     parentElement.appendChild(newAddButton);
     return newAddButton;
 }
 
 function createHTMLRemoveButton(parentElement) {
-    const newRemoveButton = document.createElement("input");
+    const newRemoveButton = document.createElement("button");
     newRemoveButton.className = "remove";
     newRemoveButton.type = "button";
-    newRemoveButton.value = "-";
+    newRemoveButton.innerHTML = '<img src="/static/img/remove.png">';
     parentElement.appendChild(newRemoveButton);
     return newRemoveButton;
 }
@@ -407,9 +411,9 @@ let activitiesDivCount = 0;
 const addActivity = function(parentDiv, i) {
     const activityDiv = createHTMLDiv("activity_div", parentDiv);
     const activityInput = createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
-    const activityRemoveButton = createHTMLDiv("activity_remove_button_div", activityDiv);
+    const activityRemoveButtonDiv = createHTMLDiv("activity_remove_button_div", activityDiv);
 
-    const removeActivityButton = createHTMLRemoveButton(activityRemoveButton);
+    const removeActivityButton = createHTMLRemoveButton(activityRemoveButtonDiv);
     const removeActivity = function() {
         parentDiv.removeChild(activityDiv)
     }
@@ -464,8 +468,9 @@ const addExperience = function() {
     activitiesDivCount++;
      
     //Add button action "add task".
-    createHTHMLLabel("add_task_label", activitiesDiv);
-    const addActivityButton = createHTMLAddButton(activitiesDiv);
+    const activitiesHeader = createHTMLDiv("div_header", activitiesDiv)
+    const addActivityLabel = createHTHMLLabel("add_task_label", activitiesHeader);
+    const addActivityButton = createHTMLAddButton(activitiesHeader);
     experienceDiv.appendChild(activitiesDiv);
     addActivityButton.addEventListener("click", () => addActivity(activitiesDiv, activitiesDivCount));
 

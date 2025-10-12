@@ -30,7 +30,10 @@
                 </div>
                 <div>
                     <label id="birth_date_label"></label>
-                    <input id="birth_date" class="fixed" type="date" name="birth_date" required>
+                    <div id="birth_date_wrapper">
+                        <input id="birth_date" class="fixed" type="date" name="birth_date" required>
+                        <span id="birth_date_placeholder"></span>
+                    </div>
                 </div>
                 <div>
                     <label id="nationality_label"></label>
@@ -71,24 +74,39 @@
                 </div>
 
                 <div id="skills">
-                    <label id="add_skill_label"></label>
-                    <input id="add_skill_button" class="add" type="button" value="+">
+                    <div class="div_header">
+                        <label id="add_skill_label"></label>
+                        <button id="add_skill_button" class="add" type="button">
+                            <img src="/static/img/add.png">
+                        </button>
+                    </div>
                 </div>
-
                 <div id="languages">
-                    <label id="add_language_label"></label>
-                    <input id="add_language_button" class="add" type="button" value="+">
+                    <div class="div_header">
+                        <label id="add_language_label"></label>
+                        <button id="add_language_button" class="add" type="button">
+                            <img src="/static/img/add.png">
+                        </button>
+                    </div>
                 </div>
             </details>
             <details id="experiences">
                 <summary id="experiences_title"></summary>
-                <label id="add_experience_label"></label>
-                <input id="add_experience_button" class="add" type="button" value="+">
+                <div class="div_header">
+                    <label id="add_experience_label"></label>
+                    <button id="add_experience_button" class="add" type="button">
+                        <label id="add_experience_label"></label><img src="/static/img/add.png">
+                    </button>
+                </div>
             </details>
             <details id="educations">
                 <summary id="educations_title"></summary>
-                <label id="add_education_label"></label>
-                <input id="add_education_button" class="add" type="button" value="+">
+                <div class="div_header">
+                    <label id="add_education_label"></label>
+                    <button id="add_education_button" class="add" type="button">
+                        <img src="/static/img/add.png">
+                    </button>
+                </div>
             </details>
             <input id="save" type="submit">
           </form>

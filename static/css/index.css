@@ -64,6 +64,13 @@ details {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
 }
 
+.div_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1%;
+}
+
 form > * {
     margin-bottom: 5%;
 }
@@ -92,6 +99,49 @@ input:focus {
 
 input::placeholder {
     color: rgba(255, 255, 255, 0.4);
+}
+
+#birth_date_wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* Style général de l’input */
+#birth_date_wrapper input[type="date"] {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* 👇 Par défaut : le texte du champ est invisible */
+#birth_date_wrapper input[type="date"]:not(:valid) {
+    color: transparent;
+}
+
+/* 👇 Une fois une date choisie : couleur normale */
+#birth_date_wrapper input[type="date"]:focus, #birth_date_wrapper input[type="date"]:valid {
+    color: #ffffff;
+}
+
+#birth_date_placeholder {
+    position: absolute;
+    top: 50%;
+    left: 0.8rem;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+/* 👇 Le placeholder disparaît quand une date est saisie ou quand on clique */
+#birth_date_wrapper input[type="date"]:focus + #birth_date_placeholder,
+#birth_date_wrapper input[type="date"]:valid + #birth_date_placeholder {
+    opacity: 0;
 }
 
 #bio_div {
@@ -141,6 +191,17 @@ input::placeholder {
     background-color: #1f4a6a;
     border: none;
     color: #93B3BF;
+    display: flex;              /* pour centrer le contenu */
+    justify-content: center;    /* centre horizontalement l’image */
+    align-items: center;        /* centre verticalement l’image */
+    padding: 0.4rem;            /* garde une taille correcte */
+    cursor: pointer;
+}
+
+.add img, .remove img {
+    width: 20px;                /* adapte selon la taille que tu veux */
+    height: 20px;
+    object-fit: contain;
 }
 
 .skill_remove_button_div, .activity_remove_button_div {
@@ -186,8 +247,13 @@ input::placeholder {
    margin-left: 95%;
 }
 
+.experience_div > label:not(:first-of-type) {
+    margin-top: 5%;
+}
+
 .activities_div {
     margin-top: 5%;
+    margin-bottom: 5%;;
     padding-left: 3%;
 }
 
@@ -199,6 +265,10 @@ input::placeholder {
 
 .activity_div > * {
     width: 50%;
+}
+
+.education_div > label:not(:first-of-type) {
+    margin-top: 5%;
 }
 
 #save {
