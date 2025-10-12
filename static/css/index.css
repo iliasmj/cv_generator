@@ -46,9 +46,10 @@ body {
 
 #translate {
     justify-self: center;
-    background-color: #1f4a6a;
+    background-color: #93B3BF;
     border: none;
-    color: #93B3BF;
+    border-radius: 5px;
+    color: #1f4a6a;
 }
 
 form {
@@ -204,6 +205,10 @@ input::placeholder {
     object-fit: contain;
 }
 
+.add:hover img, .remove:hover img {
+    transform: scale(1.2);
+}
+
 .skill_remove_button_div, .activity_remove_button_div {
     display: flex;
     justify-content: center;
@@ -228,6 +233,27 @@ input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+select {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #4ca3dd;
+    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+option {
+    background-color: #1f4a6a;
+    color: #ffffff;
 }
 
 .experience_div, .education_div {
@@ -273,8 +299,26 @@ input::placeholder {
 
 #save {
     justify-self: right;
+    margin-top: 5%;
 }
 
 #generate {
     justify-self: center;
+}
+
+#load, #erase, #generate, #save {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #93B3BF; /* fond clair */
+    color: #1f4a6a; /* texte couleur du parent */
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#load:hover, #erase:hover, #generate:hover, #save:hover {
+    background-color: #b1c8d0; /* un peu plus clair au survol */
+    transform: translateY(-1px);
 }

@@ -74,6 +74,7 @@ class Education:
 class Cv:
     def __init__(self):
         self.display_language = flask.request.form.get("display_language")
+        self.photo = flask.request.files["photo"]
         self.personal_data = {
             "name" : "",
             "first_name" : "",
@@ -107,7 +108,7 @@ class Cv:
 
     #gets about me data from index' form
     def get_about_me(self):
-        self.about_me["job_title"] =flask.request.form.get("about_job_title")
+        self.about_me["job_title"] = flask.request.form.get("about_job_title")
         self.about_me["years_experience"] = flask.request.form.get("years_experience")
         print(flask.request.form.get("bio"))
         self.about_me["bio"] = flask.request.form.get("bio")
@@ -159,6 +160,7 @@ class Cv:
     def serialize(self):
         return {
             "display_language": self.display_language,
+            "photo": self.photo.filename,
             "personal_data": self.personal_data,
             "about_me": {
                 "job_title": self.about_me["job_title"],
@@ -217,6 +219,7 @@ def save_cv():
     myCv.get_about_me()
     myCv.get_experiences()
     myCv.get_educations()
+    myCv.photo.save(os.path.join(project_root, "static/img/", myCv.photo.filename))
     myCv.save_json(myCv.display_language)
 #    print("myCv : ") #---------------------------------------CHECK
 #    print(vars(myCv)) #---------------------------------------CHECK

@@ -13,7 +13,7 @@
             </div>
             <button id="erase"></button>
         </div>
-        <form action="/save" method="post">
+        <form action="/save" method="post" enctype="multipart/form-data">
             <select id="translate" name="display_language">
                 <option id="english" value="🇬🇧">🇬🇧</option>
                 <option id="french" value="🇫🇷">🇫🇷</option>
@@ -58,6 +58,10 @@
             </details>
             <details id="about_me">
                 <summary id="about_me_title"></summary>
+                <div>
+                    <label id="photo_label"></label>
+                    <input id="photo" class="fixed" type="file" name="photo" required>
+                </div>
                 <div>
                     <label id="about_job_title_label"></label>
                     <input id="about_job_title" class="fixed" type="text" name="about_job_title" required>

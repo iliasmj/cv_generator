@@ -13,6 +13,7 @@ traduction = {
         address : "Address<span id=\"required\">*</span> :",
         driverLicense : "Driver License<span id=\"required\">*</span> :",
         aboutMeTitle : "About Me",
+        photoLabel : "CV Photo<span id=\"required\">*</span> :",
         aboutJobTitle : "Job Title<span id=\"required\">*</span> :",
         yearsExperience : "Years of experience<span id=\"required\">*</span> :",
         bio : "Biography<span id=\"required\">*</span> :",
@@ -45,6 +46,7 @@ traduction = {
         address : "Adresse<span id=\"required\">*</span> :",
         driverLicense : "Permis de conduire<span id=\"required\">*</span> :",
         aboutMeTitle : "A propos de moi",
+        photoLabel : "Photo CV<span id=\"required\">*</span> :",
         aboutJobTitle : "Profession<span id=\"required\">*</span> :",
         yearsExperience : "Années d'expérience<span id=\"required\">*</span> :",
         bio : "Biographie<span id=\"required\">*</span> :",
@@ -80,6 +82,7 @@ class FirstLevelLabels {
         this.addressLabel = document.getElementById("address_label");
         this.driverLicenseLabel = document.getElementById("driver_license_label");
         this.aboutMeTitle = document.getElementById("about_me_title");
+        this.photoLabel = document.getElementById("photo_label");
         this.aboutJobTitleLabel = document.getElementById("about_job_title_label");
         this.yearsExperienceLabel = document.getElementById("years_experience_label");
         this.bioLabel = document.getElementById("bio_label");
@@ -102,6 +105,7 @@ class FirstLevelLabels {
         this.addressLabel.innerHTML = traduction[language].address;
         this.driverLicenseLabel.innerHTML = traduction[language].driverLicense;
         this.aboutMeTitle.innerHTML = traduction[language].aboutMeTitle;
+        this.photoLabel.innerHTML = traduction[language].photoLabel;
         this.aboutJobTitleLabel.innerHTML = traduction[language].aboutJobTitle;
         this.yearsExperienceLabel.innerHTML = traduction[language].yearsExperience;
         this.bioLabel.innerHTML = traduction[language].bio;
@@ -211,13 +215,13 @@ const proficiencyLevel = {
 
 const buttonInner = {
     "🇬🇧" : {
-        "load" : "⬆️ Load",
+        "load" : "Load",
         "erase" : "Erase",
         "save" : "Save",
         "generate" : "Generate"
     },
     "🇫🇷" : {
-        "load" : "⬆️ Charger",
+        "load" : "Charger",
         "erase" : "Effacer",
         "save" : "Sauvegarder",
         "generate" : "Générer"
@@ -549,7 +553,6 @@ const load = async function() {
         document.getElementById("email").value = data.personal_data.email;
         document.getElementById("address").value = data.personal_data.address;
         document.getElementById("driver_license").value = data.personal_data.driver_license;
-
         document.getElementById("about_job_title").value = data.about_me.job_title;
         document.getElementById("years_experience").value = data.about_me.years_experience;
         document.getElementById("bio").value = data.about_me.bio;
