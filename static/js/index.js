@@ -1,6 +1,7 @@
-//Selects translate labels action button from index's form
+//Select translate labels action button from index's form.
 const displayLanguageSelector = document.getElementById("translate");
 
+//Define form's elelments traduction dictionnary.
 traduction = {
     "🇬🇧" : {
         personalDataTitle : "Personal Data",
@@ -70,6 +71,7 @@ traduction = {
     }
 };
 
+//Class that selects fisrt level form's elements and translate all selected elements' inner HTML.
 class FirstLevelLabels {
     constructor(){
         this.personalDataTitle = document.getElementById("personal_data_title");
@@ -118,6 +120,7 @@ class FirstLevelLabels {
     }
 }
 
+//Class that selects experience section form's elements and translate all selected elements' inner HTML.
 class AddExperienceLabels {
     constructor(){
         this.expJobTitleLabels = document.getElementsByClassName("exp_job_title_label");
@@ -150,6 +153,7 @@ class AddExperienceLabels {
     }
 }
 
+//Class that selects education section form's elements and translate all selected elements' inner HTML.
 class AddEducationLabels {
     constructor() {
         this.institutionLabels = document.getElementsByClassName("institution_label");
@@ -178,18 +182,19 @@ class AddEducationLabels {
     }
 }
 
-//Selects add action buttons from index's form.
+//Select add action buttons from index' form.
 const addSkillButton = document.getElementById("add_skill_button");
 const addLanguageButton = document.getElementById("add_language_button");
 const addExperienceButton = document.getElementById("add_experience_button");
 const addEducationButton = document.getElementById("add_education_button");
 
+//Select form's action buttons from index' form.
 const loadButton = document.getElementById("load");
 const eraseButton = document.getElementById("erase");
 const saveButton = document.getElementById("save");
 const generateButton = document.getElementById("generate");
 
-//Selects action related divs.
+//Select action related divs.
 const skillsDiv = document.getElementById("skills");
 const languagesDiv = document.getElementById("languages");
 const experiencesDiv = document.getElementById("experiences");
@@ -213,6 +218,7 @@ const proficiencyLevel = {
     ]
 };
 
+//Define innerHTML form's action button translation dictionnary.
 const buttonInner = {
     "🇬🇧" : {
         "load" : "Load",
@@ -228,10 +234,12 @@ const buttonInner = {
     }
 }
 
+//Sets add action button click state tracker.
 let addLanguageClicked = false;
 let addExperienceClicked = false;
 let addEducationClicked = false;
 
+//update all input type=month placeholders.
 function updatePlaceholders() {
     const monthTypeInput = document.getElementsByClassName("date_month");
     for (const input of monthTypeInput) {
@@ -243,52 +251,58 @@ function updatePlaceholders() {
     }
 }
 
+//Update inner html from all form' elements.
 function updateUI() {
+    //Getting previous selected language and respective dictionnary.
     const cachedLanguage = localStorage.getItem("cached_display_language");
     const currentLevels = proficiencyLevel[cachedLanguage];
+    //Getting current selected language and respective dictionnary. 
     const selectedLanguage = localStorage.getItem("display_language");
     const updatedLevels = proficiencyLevel[selectedLanguage];
 
+    //Translates form's header buttons inner html.
     loadButton.innerHTML = buttonInner[selectedLanguage]["load"];
+    eraseButton.innerHTML = buttonInner[selectedLanguage]["erase"];
 
+    //Transtale first level form's elements' inner html.
     const firstLevelLabels = new FirstLevelLabels();
     firstLevelLabels.translate(displayLanguageSelector.value);
 
+    //Translate all languages' proficiency level selectors by selecting options in proficiency dictionnary order.
     if (addLanguageClicked) {
         for (level of currentLevels) {
             const languageOptions = [...document.getElementsByClassName(level)];
             if (languageOptions.length > 0) {
-                console.log("SELECTED LANGUAGE OPTIONS: ", languageOptions);
                 for (option of languageOptions) {
                     updateValue = updatedLevels[currentLevels.indexOf(level)];
-                    console.log("UPDATE VALUE: ", updateValue);
                     option.className = updateValue;
                     option.value = updateValue;
                     option.innerHTML = updateValue;
-                    console.log("UPDATED OPTION: ", option);
                 }
             }
         }
     }
 
+    //Translate all experience div elements' inner html. 
     if (addExperienceClicked) {
         const addExperiencelabels = new AddExperienceLabels()
         addExperiencelabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
     
+    //Translate all education div elements' inner html. 
     if (addEducationClicked) {
         const addEducationLabels = new AddEducationLabels();
         addEducationLabels.translate(displayLanguageSelector.value);
         updatePlaceholders();
     }
 
-    eraseButton.innerHTML = buttonInner[selectedLanguage]["erase"];
+    //Translates form's footer buttons inner html.
     saveButton.value = buttonInner[selectedLanguage]["save"];
     generateButton.innerHTML = buttonInner[selectedLanguage]["generate"];
-
 }
 
+//Save previous and current selected language in localStorage and updateUI accordingly.
 const saveDisplayLanguage = function() {
     const cachedDisplayLanguage = localStorage.getItem("display_language");
     localStorage.setItem("cached_display_language", cachedDisplayLanguage);
@@ -296,6 +310,7 @@ const saveDisplayLanguage = function() {
     updateUI()
 };
 
+//Apply current localStorage display language value on window load and save previous selected display language as cached.
 const loadDisplayLanguage = function() {
     localStorage.setItem("cached_display_language", displayLanguageSelector.value);
     const savedDisplayLanguage = localStorage.getItem("display_language");
@@ -307,25 +322,24 @@ const loadDisplayLanguage = function() {
     }
 };
 
-function eraseDivContent(parentDiv, className) {
-    console.log("DIV : ", className);
+//Remove className selected div from its parent div.
+function eraseDivContent(className, parentDiv) {
     const children = [...document.getElementsByClassName(className)];
-    console.log("A EFFACER", children);
     for (child of children) {
         parentDiv.removeChild(child);
     }
-    console.log(parentDiv.innerHTML);
 }
 
+//Resets fixed inputs inner html and erase dynamic elements div.
 const eraseForm = function() {
     const fixedInputs = document.getElementsByClassName("fixed");
     for (input of fixedInputs) {
         input.value = "";
     }
-    eraseDivContent(skillsDiv, "skill_div");
-    eraseDivContent(languagesDiv, "language_div");
-    eraseDivContent(experiencesDiv, "experience_div");
-    eraseDivContent(educationsDiv, "education_div");
+    eraseDivContent("skill_div", skillsDiv);
+    eraseDivContent("language_div", languagesDiv);
+    eraseDivContent("experience_div", experiencesDiv);
+    eraseDivContent("education_div", educationsDiv);
 }
 
 function createHTMLDiv(className, parentElement) {
@@ -368,7 +382,7 @@ function createHTMLRemoveButton(parentElement) {
     return newRemoveButton;
 }
 
-//Creates and appends new text input to skills div.
+//Creates and appends new text input and its remove button to skills div.
 const addSkill = function() {
     const skillDiv = createHTMLDiv("skill_div", skillsDiv);
     const skillInput = createHTHMLInput("skill","text", "skill", skillDiv);
@@ -381,18 +395,24 @@ const addSkill = function() {
     removeSkillButton.addEventListener("click", removeSkill);
 };
 
-//Creates text box input for specifying the language and creates proficiency level selector.
-//Appends both to langage div.
+//Creates text box input for specifying the language and creates proficiency level selector plus their remove button to languages div.
+//Appends all to langage div.
 const addLanguage = function() {
     addLanguageClicked = true;
+
+    //Creates div for CSS styling.
     const languageDiv = createHTMLDiv("language_div", languagesDiv);
     const langageLeftSubDiv = createHTMLDiv("language_left_sub_div", languageDiv);
     const languageRightSubDiv = createHTMLDiv("language_right_sub_div", languageDiv);
+
+    //Creates language input.
     const languageInput = createHTHMLInput("language", "text", "language", langageLeftSubDiv);
 
+    //Creates proficiency level selector.
     const proficiencySelector = document.createElement("select");
     proficiencySelector.className = "proficiency";
     proficiencySelector.name = "proficiency";
+    //Adding options to cew selector from proficiency level respective current selected language dictionnary.
     for(let level of proficiencyLevel[localStorage.getItem("display_language")]){
         const option = document.createElement("option");
         option.className = level;
@@ -402,6 +422,7 @@ const addLanguage = function() {
     }
     langageLeftSubDiv.appendChild(proficiencySelector);
 
+    //Creates remove language button.
     const removeLanguageButton = createHTMLRemoveButton(languageRightSubDiv)
     const removeLanguage = function() {
         languagesDiv.removeChild(languageDiv);
@@ -409,14 +430,15 @@ const addLanguage = function() {
     removeLanguageButton.addEventListener("click", removeLanguage);
 };
 
-//Activities divs count
+//Activities divs count.
 let activitiesDivCount = 0;
 
+//Creates text box for specifying the activity and its remove button to experiences div.
 const addActivity = function(parentDiv, i) {
     const activityDiv = createHTMLDiv("activity_div", parentDiv);
     const activityInput = createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
+    
     const activityRemoveButtonDiv = createHTMLDiv("activity_remove_button_div", activityDiv);
-
     const removeActivityButton = createHTMLRemoveButton(activityRemoveButtonDiv);
     const removeActivity = function() {
         parentDiv.removeChild(activityDiv)
@@ -424,6 +446,7 @@ const addActivity = function(parentDiv, i) {
     removeActivityButton.addEventListener("click", removeActivity);
 }
 
+//Creates new experience div filled with all experience related inputs and their action buttons.
 const addExperience = function() {
     addExperienceClicked = true;
 
@@ -472,16 +495,18 @@ const addExperience = function() {
     activitiesDivCount++;
      
     //Add button action "add task".
-    const activitiesHeader = createHTMLDiv("div_header", activitiesDiv)
+    const activitiesHeader = createHTMLDiv("dynamic_div_header", activitiesDiv)
     const addActivityLabel = createHTHMLLabel("add_task_label", activitiesHeader);
     const addActivityButton = createHTMLAddButton(activitiesHeader);
     experienceDiv.appendChild(activitiesDiv);
     addActivityButton.addEventListener("click", () => addActivity(activitiesDiv, activitiesDivCount));
 
+    //Translate all experience labels to current selected display language
     const labels = new AddExperienceLabels();
     labels.translate(displayLanguageSelector.value);
 };
 
+//Creates new education div filled with all experience related inputs and its remove button.
 const addEducation = function() {
     addEducationClicked = true;
 
@@ -524,14 +549,18 @@ const addEducation = function() {
     createHTHMLLabel("program_title_label", educationDiv);
     const programTitleInput = createHTHMLInput("program_title", "text", "program_title", educationDiv);
 
+    //Translate all education labels to current selected display language
     const labels = new AddEducationLabels();
     labels.translate(displayLanguageSelector.value);
 };
 
+//Fills all form's input with saved data (creates dynamic inputs accordingly).
 const load = async function() {
     try {
+        //calling /api/cv route by passing current selected display language.
         const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
 
+        //Display load feedback message.
         if (!response.ok) {
             const message = await response.text();
             const loadFeedBackMessage = document.createElement("p");
@@ -540,11 +569,12 @@ const load = async function() {
             const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
             inputLoadSubMenu.appendChild(loadFeedBackMessage);
         }
-    
+        
+        //getting CV json data.
         const data = await response.json();
 
-        console.log(data);
-
+        //Filling all form's input with CV data.
+            //Fixed input.
         document.getElementById("name").value = data.personal_data.name;
         document.getElementById("first_name").value = data.personal_data.first_name;
         document.getElementById("birth_date").value = data.personal_data.birth_date;
@@ -556,23 +586,29 @@ const load = async function() {
         document.getElementById("about_job_title").value = data.about_me.job_title;
         document.getElementById("years_experience").value = data.about_me.years_experience;
         document.getElementById("bio").value = data.about_me.bio;
+
+            //Skills inputs:
+                //Creates skills inputs based on CV data.
         const skillValues = data.about_me.skills;
         for (let i = 0; i < skillValues.length; i++) {
             addSkill();
         }
+                //Fills all new added inputs with respective CV data.
         const skillInputs = document.getElementsByClassName("skill");
         for (let i = 0; i < skillInputs.length; i++) {
             skillInputs[i].value = skillValues[i];
         }
+
+            //Languages inputs:
+                //Creates languages inputs based on CV data.
         const languageObjects = data.about_me.languages;
-//        console.log(languageObjects); //---------------------------------------CHECK
         for (let i = 0; i < languageObjects.length; i++) {
             addLanguage();
         }
+                //Fills all new added inputs with respective CV data:
         const languageInputs = document.getElementsByClassName("language");
-//        console.log(languageInputs); //---------------------------------------CHECK
+                    //Matching proficiency level selection with saved proficiency level in loaded CV data.
         const proficiencySelects = document.getElementsByClassName("proficiency");
-//        console.log(proficiencySelects); //---------------------------------------CHECK
         for (let i = 0; i < languageObjects.length; i++) {
             languageInputs[i].value = languageObjects[i].language;
             const actualDisplayLanguage = localStorage.getItem("display_language");
@@ -580,7 +616,6 @@ const load = async function() {
             const savedProficiency = languageObjects[i].proficiency;
             const traductionEnIndex = proficiencyLevel["🇬🇧"].indexOf(savedProficiency);
             const traductionFrIndex = proficiencyLevel["🇫🇷"].indexOf(savedProficiency);
-//            console.log(actualDisplayLanguage, actualDisplayProficiencyList, savedProficiency, traductionEnIndex, traductionFrIndex); //---------------------------------------CHECK
             if (traductionEnIndex != -1) {
                 proficiencySelects[i].value = actualDisplayProficiencyList[traductionEnIndex];
             } else if (traductionFrIndex != -1) {
@@ -588,24 +623,25 @@ const load = async function() {
             }
         }
 
+            //Experiences inputs:
+                //Creates experiences and activities inputs based on CV data.
         const experienceObjects = data.experiences;
         for (let i = 0; i < experienceObjects.length; i++) {
             addExperience();
         }
         const activitiesDiv = document.getElementsByClassName("activities_div");
-        console.log(activitiesDiv);
         for (let i = 0; i < experienceObjects.length; i++) {
             for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
                 addActivity(activitiesDiv[i], i);
             }
         }
+                //Fills all new added inputs with respective CV data.
         const jobTitleInputs = document.getElementsByClassName("exp_job_title");
         const employerInputs = document.getElementsByClassName("employer");
         const expLocationInputs = document.getElementsByClassName("exp_location");
         const expFromInputs = document.getElementsByClassName("exp_from");
         const expToInputs = document.getElementsByClassName("exp_to");
         for (let i = 0; i < experienceObjects.length; i++) {
-//            console.log(i) //---------------------------------------CHECK
             jobTitleInputs[i].value = experienceObjects[i].job_title;
             employerInputs[i].value = experienceObjects[i].employer;
             expLocationInputs[i].value = experienceObjects[i].location;
@@ -613,19 +649,17 @@ const load = async function() {
             expToInputs[i].value = experienceObjects[i].duration_to;
             for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
                 const taskInputs = document.getElementsByClassName("activity_" + i);
-//                console.log(taskInputs); //---------------------------------------CHECK
-//                console.log(i) //---------------------------------------CHECK
-//                console.log("activity_" + i) //---------------------------------------CHECK
-//                console.log(taskInputs["activity_" + i]) //---------------------------------------CHECK
                 taskInputs[j].value = experienceObjects[i].key_activities[j];
             }
         }
 
+        //Educations inputs:
+                //Creates educations inputs based on CV data.
         const educationObjects = data.educations;
-        console.log(educationObjects)
         for (let i = 0; i < educationObjects.length; i++) {
             addEducation();
         }
+                //Fills all new added inputs with respective CV data.
         const institutionInputs = document.getElementsByClassName("institution");
         const eduLocationInputs = document.getElementsByClassName("edu_location");
         const eduFromInputs = document.getElementsByClassName("edu_from");
@@ -638,28 +672,35 @@ const load = async function() {
             eduToInputs[i].value = educationObjects[i].duration_to;
             programTitleInputs[i].value = educationObjects[i].program_title;
         }
-
-        console.log("CV chargé ! : ", data); //---------------------------------------CHECK
     } catch (error) {
         console.error("Erreur lors du chargement du CV : ", error)
     }
 }
 
+//Open new tab with html generated CV
 const generate = function() {
         window.open(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`, "_blank");
 }
 
+//Add loadDisplayLanguage function to window load envent.
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
 
+//Links action fuction to UI action buttons:
+
+    //Load button.
 loadButton.addEventListener("click", load);
+
+    //Erase form button.
 eraseButton.addEventListener("click", eraseForm);
 
+    //Display language selector.
 displayLanguageSelector.addEventListener("change", saveDisplayLanguage);
 
-//Links adding functions to action buttons. :
+    //Add button for dynamic form's elements.
 addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
 addEducationButton.addEventListener("click", addEducation);
 
+    //Generate HTML CV button
 generateButton.addEventListener("click", generate);

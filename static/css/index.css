@@ -1,5 +1,7 @@
+/* import saira font from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* activate box-box to include padding and border to height and width */ 
 * {
     box-sizing: border-box;
 }
@@ -7,33 +9,35 @@
 body {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; /* activate flex display with flex-dirrection = row (horizontally) by default */
+    justify-content: center; /* center horizontally */
+    align-items: center; /*center vertically */
     background-color: #122A40;
     color: #93B3BF;
     font-family: 'Saira', sans-serif;
 }
 
+/* selects first layout parent div */
 #form_box {
     width: 25%;
-    min-width: 500px;
+    min-width: 500px; /* define minimal width */
     margin: 5%;
     padding: 2%;
     border: none;
     border-radius: 16px;
     background-color: #1f4a6a;
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4),
-                0 8px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 25px #00000066,  /* chat-gpt involved here from https://chatgpt.com/ personal chat */
+                0 8px 10px #00000040;
     display: grid;
     grid-template-columns: auto;
 }
 
+/* selects load and erase buttons parent div */
 #input_action_menu {
     margin-bottom: 5%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between; /* adding a space between child elements that fills the parents width space left automaticaly */
 }
 
 #load {
@@ -52,175 +56,145 @@ body {
     color: #1f4a6a;
 }
 
+/* select form html elements and apply flex display with column directed grid */
 form {
     display: grid;
     grid-template-columns: auto;
 }
 
+/* selects details html elements which correspond to the form sections */
 details {
     border: none;
     border-radius: 12px;
     background-color: #1f4a6a;
-    padding: 1.5rem;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+    padding: 1.5rem; /* sets the padding size relatively to the root font size (used for stability) */
+    box-shadow: 0 6px 15px #00000059;
 }
 
-.div_header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1%;
-}
-
+/* separates first level form's elements : form action buttons + form sections */
 form > * {
     margin-bottom: 5%;
 }
 
-form > * > *{
+/* separates second level form's elements : inputs divs + dynamic divs */
+form > * > * {
     margin-bottom: 5%;
 }
 
-input:not([type="button"]):not([type="submit"]) {
+/* selects all form's text inputs */
+input:not([type="button"]):not([type="submit"]), #bio {
     width: 100%;
     padding: 0.6rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid #FFFFFF33;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #FFFFFF0D;
     color: #ffffff;
     font-size: 0.95rem;
-    transition: all 0.2s ease;
 }
 
-input:focus {
+/* changes input default focus behavior */
+input:focus, #bio:focus, .proficiency:focus {
     outline: none;
     border-color: #4ca3dd;
-    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
-    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 4px #4CA3DD66;
+    background-color: #FFFFFF14;
 }
 
-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+/* changes form's inputs' placeholders */
+input::placeholder, #bio::placeholder {
+    color: #FFFFFF66;
 }
 
+/* hides the default browser input type=date placeholder by custom one */
 #birth_date_wrapper {
     position: relative;
     width: 100%;
 }
 
-/* Style général de l’input */
-#birth_date_wrapper input[type="date"] {
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-    font-size: 0.95rem;
-    transition: color 0.2s ease, opacity 0.2s ease;
-}
-
-/* 👇 Par défaut : le texte du champ est invisible */
+/* if birth date value is not valid, birth date input's text value is hidden */
 #birth_date_wrapper input[type="date"]:not(:valid) {
     color: transparent;
 }
 
-/* 👇 Une fois une date choisie : couleur normale */
+/* if birth date value is focused or valid, birth date input's text value is hidden */
 #birth_date_wrapper input[type="date"]:focus, #birth_date_wrapper input[type="date"]:valid {
     color: #ffffff;
 }
 
+/* define custom brith date placeholder style (chat-gpt involved here from https://chatgpt.com/ personal chat) */ 
 #birth_date_placeholder {
     position: absolute;
     top: 50%;
     left: 0.8rem;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.4);
+    color: #FFFFFF66;
     pointer-events: none;
-    transition: opacity 0.2s ease;
 }
 
-/* 👇 Le placeholder disparaît quand une date est saisie ou quand on clique */
+/* define custom placeholder behavior when birth date input is focused or has a valid value : when true then hide */
 #birth_date_wrapper input[type="date"]:focus + #birth_date_placeholder,
 #birth_date_wrapper input[type="date"]:valid + #birth_date_placeholder {
     opacity: 0;
 }
 
-#bio_div {
-    display: grid;
-    flex-direction: column;
-}
-
+/* define bio text area input style */
 #bio {
-    width: 100%;
     min-height: 100px;
-    padding: 0.6rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-
-    /* texte aligné en haut */
-    vertical-align: top;
-    overflow-y: auto;  /* permet le scroll si le texte dépasse */
-    resize: vertical;  /* permet à l’utilisateur de redimensionner verticalement */
+    /* chat-gpt involved here from https://chatgpt.com/ personal chat */
+    vertical-align: top; /* vertically align text top */
+    overflow-y: auto;  /* permits scroll if text oversize the height textarea */
+    resize: vertical;  /* allow resize vertially the text area  */
 }
 
-#bio:focus {
-    outline: none;
-    border-color: #4ca3dd;
-    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
-    background-color: rgba(255, 255, 255, 0.08);
+/* dynamic divs headers : manage inner child display positions */
+.dynamic_div_header {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* align center vertically */
+    gap: 1%;
 }
 
-#bio::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+/* define add and remove button style */
+.add, .remove {
+    background-color: #1f4a6a;
+    border: none;
+    color: #93B3BF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.4rem;
+    cursor: pointer;
 }
 
-.skill_div {
+/* define button images size */
+.add img, .remove img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* rescale button images on hover */
+.add:hover img, .remove:hover img {
+    transform: scale(1.2);
+}
+
+/* Selects div that gather relative input and its remove button
+define inner child positioning */
+.skill_div, .language_div, .activity_div {
     display: flex;
     flex-direction: row;
     margin-top: 5%
 }
 
-.skill_div > * {
-    width: 50%;
-}
-
-.add, .remove {
-    background-color: #1f4a6a;
-    border: none;
-    color: #93B3BF;
-    display: flex;              /* pour centrer le contenu */
-    justify-content: center;    /* centre horizontalement l’image */
-    align-items: center;        /* centre verticalement l’image */
-    padding: 0.4rem;            /* garde une taille correcte */
-    cursor: pointer;
-}
-
-.add img, .remove img {
-    width: 20px;                /* adapte selon la taille que tu veux */
-    height: 20px;
-    object-fit: contain;
-}
-
-.add:hover img, .remove:hover img {
-    transform: scale(1.2);
-}
-
+/* define position of remove button inside parent div */
 .skill_remove_button_div, .activity_remove_button_div {
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.language_div {
-    display: flex;
-    flex-direction: row;
-    margin-top: 5%;
-}
-
+/* define position of language input and proficency selector inside landuage div */
 .language_left_sub_div {
     width: 68%;
     display: flex;
@@ -228,6 +202,7 @@ input::placeholder {
     gap: 10%;
 }
 
+/* define position of remove button inside language div */
 .language_right_sub_div {
     width: 32%;
     display: flex;
@@ -235,77 +210,59 @@ input::placeholder {
     align-items: center;
 }
 
-select {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
+/* select proficiency selector and apply style */
+.proficiency {
+    border: 1px solid #FFFFFF33;
+    border-radius: 6px;
+    background-color: #FFFFFF0D;
     color: #ffffff;
     font-size: 0.95rem;
-    transition: all 0.2s ease;
 }
 
-select:focus {
-    outline: none;
-    border-color: #4ca3dd;
-    box-shadow: 0 0 4px rgba(76, 163, 221, 0.4);
-    background-color: rgba(255, 255, 255, 0.08);
-}
-
-option {
-    background-color: #1f4a6a;
-    color: #ffffff;
-}
-
+/* define dynamic experience and education div style and child element positioning */
 .experience_div, .education_div {
     border: none;
     border-radius: 12px;
     padding: 1rem;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 6px 15px #00000059;
     display: flex;
     flex-direction: column;
 }
 
+/* space between related divs by selecting all dynamic experience and education div except first */
 .experience_div + .experience_div, .education_div + .education_div {
     margin-top: 5%;
 }
 
+/* positioning dynamic experience and education remove button  */
 .experience_div > .remove, .education_div > .remove {
    margin-left: 95%;
 }
 
-.experience_div > label:not(:first-of-type) {
+/* space between experience/education inputs labels by selecting all except first */
+.experience_div > label:not(:first-of-type), .education_div > label:not(:first-of-type) {
     margin-top: 5%;
 }
 
+/* define activities div positioning inside experience_div */
 .activities_div {
     margin-top: 5%;
     margin-bottom: 5%;;
     padding-left: 3%;
 }
 
-.activity_div {
-    display: flex;
-    flex-direction: row;
-    margin-top: 5%;
-}
-
-.activity_div > * {
-    width: 50%;
-}
-
-.education_div > label:not(:first-of-type) {
-    margin-top: 5%;
-}
-
+/* define save button position */
 #save {
     justify-self: right;
     margin-top: 5%;
 }
 
+/* define generate button position */
 #generate {
     justify-self: center;
 }
 
+/* define action buttons style */
 #load, #erase, #generate, #save {
     padding: 0.6rem 1.2rem;
     border: none;
@@ -315,10 +272,10 @@ option {
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
+/* add hover effet for more interactivity */
 #load:hover, #erase:hover, #generate:hover, #save:hover {
-    background-color: #b1c8d0; /* un peu plus clair au survol */
-    transform: translateY(-1px);
+    background-color: #b1c8d0; /* brighter */
+    transform: translateY(-1px);   /* move button vertically 1 pixel up (chat-gpt involved here from https://chatgpt.com/ personal chat) */
 }

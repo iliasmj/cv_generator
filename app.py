@@ -1,12 +1,17 @@
+#import flask for serving, json for managing data, weasyprint for generate pDF from HTML, os for managing paths, locale for translating purpose.
 import flask, json, weasyprint, os, locale
+
+#import datetime library for formating date strings.
 from datetime import datetime
+
+#setting global paths variables.
 project_root = os.path.dirname(__file__)
 en_json_path = os.path.join(project_root, "data/json/en/cv_data.json")
 fr_json_path = os.path.join(project_root, "data/json/fr/cv_data.json")
 
 app = flask.Flask(__name__)
-app.secret_key = os.urandom(24)
 
+#defining fixed HTMl CV elements translation table.
 translation_table = {
     "🇬🇧" : {
         "years_experience" : "years of experience",
@@ -24,6 +29,7 @@ translation_table = {
     }
 }
 
+#class that stores language form's values as Language object and can be serialized.
 class Language:
     def __init__(self, language, level):
         self.language = language
@@ -35,6 +41,7 @@ class Language:
             "proficiency" : self.proficiency
         }
 
+#class that stores experience form's values as Experience object and can be serialized.
 class Experience:
     def __init__(self, exp_job_title, employer, exp_location, exp_from, exp_to, activities):
         self.job_title = exp_job_title
@@ -54,6 +61,7 @@ class Experience:
             "key_activities" : self.key_activities
         }
 
+#class that stores education form's values as Education object and can be serialized.
 class Education:
     def __init__(self, edu_institution, edu_location, edu_from, edu_to, edu_program):
         self.institution = edu_institution
@@ -71,6 +79,7 @@ class Education:
             "program_title" : self.program_title
         }
 
+#class that stores all form's values as Cv object and can be serialized and saved as json in file.
 class Cv:
     def __init__(self):
         self.display_language = flask.request.form.get("display_language")
@@ -95,7 +104,7 @@ class Cv:
         self.experiences = []
         self.educations = []
 
-    #gets personal data from index' form
+    #gets personal data from index' form.
     def get_personal_data(self):
         self.personal_data["name"] = flask.request.form.get("name")
         self.personal_data["first_name"] = flask.request.form.get("first_name")
@@ -106,16 +115,15 @@ class Cv:
         self.personal_data["address"] = flask.request.form.get("address")
         self.personal_data["driver_license"] = flask.request.form.get("driver_license")
 
-    #gets about me data from index' form
+    #gets about me data from index' form.
     def get_about_me(self):
         self.about_me["job_title"] = flask.request.form.get("about_job_title")
         self.about_me["years_experience"] = flask.request.form.get("years_experience")
-        print(flask.request.form.get("bio"))
         self.about_me["bio"] = flask.request.form.get("bio")
         self.about_me["skills"] = flask.request.form.getlist("skill")
 
         #constructs Language object by geting languages and proficiency levels lists
-        # + gather them in a list as Language object and pass into myself add_about_me function
+        # + gather them in a list as Language object and pass into myself add_about_me function.
         languagesList = flask.request.form.getlist("language")
         proficiencyLevelsList = flask.request.form.getlist("proficiency")
         languagesObjectsList = []
@@ -123,38 +131,32 @@ class Cv:
             language = languagesList[i]
             level = proficiencyLevelsList[i]
             newlanguage = Language(language, level)
-#            print("New Language : ") #---------------------------------------CHECK
-#            print(vars(newlanguage))  #---------------------------------------CHECK
             languagesObjectsList.append(newlanguage)
         self.about_me["languages"] = languagesObjectsList
 
-    #gets experiences data from index's form
+    #gets experiences data from index's form.
     def get_experiences(self):
         exp_job_title = flask.request.form.getlist("exp_job_title")
         employer = flask.request.form.getlist("employer")
         exp_location = flask.request.form.getlist("exp_location")
         exp_from = flask.request.form.getlist("exp_from")
         exp_to = flask.request.form.getlist("exp_to")
-        #constructs Experience objects by gathering in order each experiences data
+        #constructs Experience objects by gathering in order each experiences data.
         for i in range (len(exp_job_title)):
             activities = flask.request.form.getlist("activity_" + str(i))
             newExperience = Experience(exp_job_title[i], employer[i], exp_location[i], exp_from[i], exp_to[i], activities)
-#            print("New Experience : ") #---------------------------------------CHECK
-#            print(vars(newExperience)) #---------------------------------------CHECK
             self.experiences.append(newExperience)
 
-    #gets educations data from index's form
+    #gets educations data from index's form.
     def get_educations(self) :
         institution = flask.request.form.getlist("institution")
         edu_location = flask.request.form.getlist("edu_location")
         edu_from = flask.request.form.getlist("edu_from")
         edu_to = flask.request.form.getlist("edu_to")
         program_title = flask.request.form.getlist("program_title")
-        #constructs Education objects by gathering in order each educations data
+        #constructs Education objects by gathering in order each educations data.
         for i in range (len(institution)):
             newEducation = Education(institution[i], edu_location[i], edu_from[i], edu_to[i], program_title[i])
-#            print("New Education : ") #---------------------------------------CHECK
-#            print(vars(newEducation)) #---------------------------------------CHECK
             self.educations.append(newEducation)
 
     def serialize(self):
@@ -173,6 +175,7 @@ class Cv:
             "educations": [education.serialize() for education in self.educations]
         }
 
+    #save serialized version of cv data on json file according to the selected savec display language
     def save_json(self, display_language):
         if display_language == "🇬🇧":
             language_folder = "en/"
@@ -180,16 +183,17 @@ class Cv:
             language_folder = "fr/"
 
         cv_json = open(os.path.join(project_root, "data/json/", language_folder, "cv_data.json"), "w")
-        print(cv_json)
         json.dump(self.serialize(), cv_json, ensure_ascii=False, indent=4)
         cv_json.close()
 
+#json file path selector 
 def get_json_path(display_language):
     if display_language == "🇬🇧":
         return en_json_path
     else:
         return fr_json_path
 
+#get CV data from json file and return customized exeption message if fail
 def get_json_data():
     try:
         json_path = get_json_path(flask.request.args.get("display_language"))
@@ -208,10 +212,12 @@ def get_json_data():
     except json.JSONDecodeError as e:
         return "⚠️ JSON invalide : " + e, 400
 
+#homepage page : cv form
 @app.route("/")
 def homepage():
     return flask.render_template("index.html")
 
+#route called by save button
 @app.route("/save", methods=["POST"])
 def save_cv():
     myCv = Cv()
@@ -221,17 +227,14 @@ def save_cv():
     myCv.get_educations()
     myCv.photo.save(os.path.join(project_root, "static/img/", myCv.photo.filename))
     myCv.save_json(myCv.display_language)
-#    print("myCv : ") #---------------------------------------CHECK
-#    print(vars(myCv)) #---------------------------------------CHECK
     return flask.render_template("index.html")
 
+#custom jinja filter that translates fixed html cv elements
 @app.template_filter("translate")
 def translate(value, display_language):
-    print(display_language)
-    print(value)
-    print(translation_table[display_language][value])
     return translation_table[display_language][value]
 
+#custom jinja filter that formats birth date for displaying html cv
 @app.template_filter("birth_date_format")
 def birth_date_format(value, display_language):
     if display_language == "🇬🇧":
@@ -239,6 +242,7 @@ def birth_date_format(value, display_language):
     else:
         return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
 
+#custom jinja filter that formats from and to date for displaying html cv
 @app.template_filter("date_time_format")
 def date_time_format(value, display_language):
     if display_language == "🇬🇧":
@@ -248,6 +252,7 @@ def date_time_format(value, display_language):
     
     return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
 
+#route that generate html cv on generate call
 @app.route("/cv")
 def view_cv():
     json_data = get_json_data()
@@ -256,25 +261,19 @@ def view_cv():
         return message, status
     return flask.render_template("cv.html", cv=json_data)
 
+#route that generate pdf cv
 @app.route("/cv/pdf")
 def pdf_cv():
     cv_rendered = flask.render_template("cv.html", cv=get_json_data())
     cv_rendered = cv_rendered.replace('href="/static/', 'href="static/').replace('src="/static/', 'src="static/')
-    print("CV :\n", cv_rendered)
-    print(project_root)
-
-#    def my_fetcher(url, *args, **kwargs):
-#        print("🔎 WeasyPrint essaie de charger :", url)
-#        return weasyprint.default_url_fetcher(url, *args, **kwargs)
-
     pdf = weasyprint.HTML(string=cv_rendered, base_url=project_root).write_pdf()
-#    print(pdf)
 
     response = flask.make_response(pdf)
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = "attachment; filename=cv.pdf"
     return response
 
+#api route that returns cv data from json file
 @app.route("/api/cv")
 def api_cv():
     json_data = get_json_data()
@@ -284,5 +283,5 @@ def api_cv():
     return flask.jsonify(json_data)
 
 if __name__ == "__main__":
-    # Cette ligne active le debugger et le rechargement automatique
+    #activate debugger and permit auto reload
     app.run(debug=True)
