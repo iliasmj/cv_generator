@@ -2,7 +2,6 @@
 
 //Gets display language from <html lang="...">
 const displayLanguage = document.documentElement.lang;
-console.log(displayLanguage);
 
 const pdfButton = document.getElementById("pdf");
 const generatePdf = function() {

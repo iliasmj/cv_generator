@@ -192,21 +192,19 @@ div.languages_container h2 {
     box-sizing: border-box;
 }
 
-
-.right_grid > section:not(:first-child) {
-    margin-top: auto;
-}
-
+/* selects cv right side sections (personal_data; experiences; educations) and define child positioning */
 .right_grid > section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+/* define gap between experience_header and experience_body subs divs */
 section#personal_data {
     gap: 2.5mm;
 }
 
+/* selects cv right side h1 */
 .right_grid > section h1 {
     display: flex;
     text-align: center;
@@ -215,21 +213,25 @@ section#personal_data {
     margin: 0%;
 }
 
-.right_grid > section h1:not(h1.first_name) {
-    color: #0ea9c4;
-}
-
+/* adds margin to top and bottom margin to cv right side h1 expect first */
 .right_grid > section:not(section#personal_data) h1 {
     margin-top: 7mm;
     margin-bottom: 7mm;
 }
 
+/* sets cv.name text color */
+.right_grid > section h1:not(h1.first_name) {
+    color: #0ea9c4;
+}
+
+/* selects personal_data div header and define inner child positioning */
 .personal_header {
     display: flex;
     flex-direction: column;
     align-content: center;
 }
 
+/* selects personal_data header subdiv (name + first name + dl button) and define inner child positioning */
 .personal_header_sub {
     display: flex;
     flex-direction: row;
@@ -237,16 +239,19 @@ section#personal_data {
     justify-content: space-between;
 }
 
+/* selects div that contains name + fist name */
 .per_header_name {
     display: flex;
     gap: 1mm;
 }
 
+/* select div that contains pdf fl button */
 .per_header_dl {
     display: flex;
     justify-content: right;
 }
 
+/* define pdf button image size */
 #pdf_icon {
     width: 2em; 
     height: 2em;
@@ -254,15 +259,18 @@ section#personal_data {
     padding: 0;
 }
 
+/* sets name + first name font size */
 .per_header_name > h1 {
     font-size: 32px;
 }
 
+/* sets birth date font size */
 .personal_header > p {
     font-size: 12px;
     margin: 0%;
 }
 
+/* selects personal_data list */
 section#personal_data ul {
     font-size: 12px;
     list-style-type: none;
@@ -270,6 +278,7 @@ section#personal_data ul {
     margin: 0;
 }
 
+/* selects personal_data list icons */
 .icon {
     width: 1em; 
     height: 1em; 
@@ -277,6 +286,8 @@ section#personal_data ul {
     margin-right: 0.5em;
 }
 
+/* add separating lines to experiences and educations sections titles */
+/* left side (chat-gpt involved here from https://chatgpt.com/ personal chat) */
 .right_grid > section:not(section#personal_data) h1::before {
     content: "";
     flex: 1;
@@ -288,6 +299,7 @@ section#personal_data ul {
     align-self: center;
 }
 
+/* right side (chat-gpt involved here from https://chatgpt.com/ personal chat) */
 .right_grid > section:not(section#personal_data) h1::after {
     content: "";
     flex: 1;
@@ -299,12 +311,7 @@ section#personal_data ul {
     align-self: center;
 }
 
-/*
-.experience_container {
-    margin-bottom: 3%;
-}
-*/
-
+/* selects experiences div that contains experiences and define inner child positioning */
 .experiences_container {
     display: flex;
     flex-direction: column;
@@ -312,39 +319,46 @@ section#personal_data ul {
     gap: 5mm;
 }
 
+/* selects experience div header and define inner child positioning */
 .experience_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* selects div that contains experience employer and location and define inner child positioning */
 .exp_header_left {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* selects experience employer */
 .experience_header h2 {
     margin: 0%;
     text-align: left;
     font-size: 12px;
 }
 
+/* selects experience location */
 .exp_location {
     margin: 0%;
     font-style: normal;
 }
 
+/* add "|” between experience employer and location */
 .exp_location::before {
     content: "|";
     margin: 5px;
 }
 
+/* selects experience duration */
 .exp_duration {
     margin: 0%;
     text-align: right;
 }
 
+/* selects experience body div that contains experience job title and tasks list */
 .experience_body {
     display: flex;
     flex-direction: column;
@@ -352,21 +366,26 @@ section#personal_data ul {
     gap: 2.5mm;
 }
 
+/* selects experience job title */
 .job_title {
     margin: 0%;
 }
 
-.experiences_sub_container ul {
+/* selects experience tasks list */
+.experience_body ul {
+    list-style: none; /* disable default bullet */
     margin: 0;
     padding-left: 2em;
 }
 
-.experience_container ul li {
+/* selects experience tasks list bullet elements */
+.experience_body ul li {
     position: relative;
     padding-left: 1.5em;
 }
 
-.experience_container ul li::before {
+/* adds custom bullet icon */
+.experience_body ul li::before {
     content: "➤";
     font-size: 10px;
     margin-right: 1%;
@@ -376,6 +395,7 @@ section#personal_data ul {
     top: 0;
 }
 
+/* select div that contains one education and define inner child positioning */
 #educations_sub_container {
     display: flex;
     flex-direction: column;
@@ -383,47 +403,51 @@ section#personal_data ul {
     gap: 5mm;
 }
 
+/* selects div that contains education institution, location and duration as education header and define inner child positioning*/
 .education_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* selects div that contains education institution and location */
 .edu_header_left {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* select education insitution */
 .education_header h2 {
     margin: 0%;
     text-align: left;
     font-size: 12px;
 }
 
+/* select education location */
 .edu_location {
     margin: 0%;
     font-style: normal;
 }
 
+/* add "|" between education insitution and location */
 .edu_location::before {
     content: "|";
     margin: 5px;
 }
 
+/* selects education duration */
 .edu_duration {
     margin: 0%;
     text-align: right;
 }
 
+/* selects education program title */
 .program_title {
     margin: 0%;
 }
 
-@page {
-    size: A4;
-}
-
+/* hides pdf button on pdf cv page */
 @media print {
     #pdf {
         display: none;

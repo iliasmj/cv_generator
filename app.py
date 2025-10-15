@@ -196,7 +196,6 @@ def get_json_path(display_language):
 #get CV data from json file and return customized exeption message if fail
 def get_json_data():
     try:
-        print(flask.request.args.get("display_language"))
         json_path = get_json_path(flask.request.args.get("display_language"))
         cv_data = open(json_path, encoding="utf-8")
         file_content = cv_data.read().strip()
@@ -230,6 +229,7 @@ def save_cv():
     myCv.save_json(myCv.display_language)
     return flask.redirect(flask.url_for("homepage"))
 
+#custom jinja filter that right lang value in right format into cv.hmtl's <xml> tag
 @app.template_filter("format_xml_lang")
 def format_xml_language(value):
     if value == "🇫🇷":
