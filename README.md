@@ -24,6 +24,30 @@ List those here (if any).
 ```bash
 git clone https://github.com/ton-compte/ton-projet.git
 ```
+2. browse into project folder
+3. create new virtual environment (venv)
+```bash
+python3 -m venv venv
+```
+4. activate venv
+MacOS
+```bash
+source /venv/bin/activate
+```
+Windows
+```bash
+venv\Scripts\activate
+```
+5. install requierments
+```bash
+pip install -r requirements.txt
+```
+6. start app
+```bash
+FLASK_APP=app.py flask run
+```
+7. open http://127.0.0.1:5000/ in browser
+8. start using !
 
 ## Project Checklist
 - [x] It is available on GitHub.
