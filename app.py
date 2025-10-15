@@ -250,15 +250,22 @@ def birth_date_format(value, display_language):
     else:
         return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
 
-#custom jinja filter that formats from and to date for displaying html cv
+#custom jinja filter that formats from and to date for displaying html cv (chat-gpt involved here from https://chatgpt.com/ personal chat)
 @app.template_filter("date_time_format")
 def date_time_format(value, display_language):
-    if display_language == "🇬🇧":
-        locale.setlocale(locale.LC_TIME, "en_GB.UTF-8")
-    else: 
-        locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
-    
-    return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
+    try:
+        if display_language == "🇬🇧":
+            locale.setlocale(locale.LC_TIME, "en_GB.UTF-8")
+        if display_language == "🇫🇷🇬":
+            locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+        
+        return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
+
+    except ValueError:
+        if display_language == "🇬🇧":
+            return "invalid_format"
+        if display_language == "🇫🇷":
+            return "format_invalide"
 
 #route that generate html cv on generate call
 @app.route("/cv")

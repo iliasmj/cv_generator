@@ -566,6 +566,14 @@ const addEducation = function() {
     labels.translate(displayLanguageSelector.value);
 };
 
+//Selects details html elements and open them.
+function openDetailsSection() {
+    const details = document.getElementsByTagName("details");
+    for (detailsElement of details) {
+        detailsElement.open = true;
+    }
+}
+
 //Fills all form's input with saved data (creates dynamic inputs accordingly).
 const load = async function() {
     try {
@@ -684,6 +692,8 @@ const load = async function() {
             eduToInputs[i].value = educationObjects[i].duration_to;
             programTitleInputs[i].value = educationObjects[i].program_title;
         }
+
+        openDetailsSection();
     } catch (error) {
         console.error("Erreur lors du chargement du CV : ", error)
     }
