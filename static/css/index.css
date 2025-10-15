@@ -1,6 +1,8 @@
 /* import saira font from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* -------------------------- GLOBAL CONTAINER ------------------------------------------------------------------------------------- */
+
 /* activate border-box to include padding and border to height and width */ 
 * {
     box-sizing: border-box;
@@ -17,6 +19,8 @@ body {
     font-family: 'Saira', sans-serif;
 }
 
+/* -------------------------- FORM CONTAINER ------------------------------------------------------------------------------------- */
+
 /* selects first layout parent div */
 #form_box {
     width: 25%;
@@ -31,6 +35,8 @@ body {
     display: grid;
     grid-template-columns: auto;
 }
+
+/* -------------------------- LOAD & ERASE BUTTONS CONTAINER ------------------------------------------------------------------------------------- */
 
 /* selects load and erase buttons parent div */
 #input_action_menu {
@@ -56,12 +62,14 @@ body {
     color: #1f4a6a;
 }
 
+
 /* select form html elements and apply flex display with column directed grid */
 form {
     display: grid;
     grid-template-columns: auto;
 }
 
+/* -------------------------- FORM'S SECTIONS CONTAINER ------------------------------------------------------------------------------------- */
 /* selects details html elements which correspond to the form sections */
 details {
     border: none;
@@ -75,6 +83,8 @@ details {
 form > * {
     margin-bottom: 5%;
 }
+
+/* -------------------------- FIXED FORM'S INPUTS ------------------------------------------------------------------------------------- */
 
 /* separates second level form's elements : inputs divs + dynamic divs */
 form > * > * {
@@ -146,6 +156,8 @@ input::placeholder, #bio::placeholder {
     resize: vertical;  /* allow resize vertially the text area  */
 }
 
+/* -------------------------- DYNAMIC CONTAINER ------------------------------------------------------------------------------------- */
+
 /* dynamic divs headers : manage inner child display positions */
 .dynamic_div_header {
     display: flex;
@@ -177,6 +189,8 @@ input::placeholder, #bio::placeholder {
 .add:hover img, .remove:hover img {
     transform: scale(1.2);
 }
+
+/* -------------------------- SKILLS & LANGUAGES CONTAINER ------------------------------------------------------------------------------------- */
 
 /* Selects div that gather relative input and its remove button
 define inner child positioning */
@@ -219,6 +233,8 @@ define inner child positioning */
     font-size: 0.95rem;
 }
 
+/* -------------------------- EXPERIENCE & EDUCATION CONTAINER ------------------------------------------------------------------------------------- */
+
 /* define dynamic experience and education div style and child element positioning */
 .experience_div, .education_div {
     border: none;
@@ -250,6 +266,8 @@ define inner child positioning */
     margin-bottom: 5%;;
     padding-left: 3%;
 }
+
+/* -------------------------- ACIION BUTTONS  ------------------------------------------------------------------------------------- */
 
 /* define save button position */
 #save {

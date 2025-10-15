@@ -239,7 +239,7 @@ let addLanguageClicked = false;
 let addExperienceClicked = false;
 let addEducationClicked = false;
 
-//update all input type=month placeholders.
+//Updates all input type=month placeholders.
 function updatePlaceholders() {
     const monthTypeInput = document.getElementsByClassName("date_month");
     for (const input of monthTypeInput) {
@@ -251,7 +251,7 @@ function updatePlaceholders() {
     }
 }
 
-//Update inner html from all form' elements.
+//Updates inner html from all form' elements.
 function updateUI() {
     //Getting previous selected language and respective dictionnary.
     const cachedLanguage = localStorage.getItem("cached_display_language");
@@ -302,7 +302,7 @@ function updateUI() {
     generateButton.innerHTML = buttonInner[selectedLanguage]["generate"];
 }
 
-//write lang value in correct format into xml file
+//Writes lang value in correct format into xml file
 function updateXmlLang(selectedLanguage) {
     if (selectedLanguage == "🇬🇧") {
         document.documentElement.lang = "en"
@@ -334,7 +334,7 @@ const loadDisplayLanguage = function() {
     }
 };
 
-//Remove className selected div from its parent div.
+//Removes className selected div from its parent div.
 function eraseDivContent(className, parentDiv) {
     const children = [...document.getElementsByClassName(className)];
     for (child of children) {

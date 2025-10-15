@@ -1,6 +1,7 @@
 /* imports Saira font from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* -------------------------- GLOBAL CONTAINER ------------------------------------------------------------------------------------- */
 body {
     margin: 0;
     padding: 0;
@@ -25,6 +26,8 @@ body {
     grid-template-columns: 35% 65%; /* create 2 columns by specifying the proportions*/
     background-color: white;
 }
+
+/* -------------------------- LEFT SIDE CONTAINER ------------------------------------------------------------------------------------- */
 
 /* selects CV left side */
 .left_column {
@@ -54,6 +57,8 @@ section#about_me {
     align-content: center;
     gap: 7mm;
 }
+
+/* -------------------------- PHOTO CONTAINER ------------------------------------------------------------------------------------- */
 
 /* sets photo phosition as centered */
 .photo_container {
@@ -95,6 +100,8 @@ section#about_me h2 {
     text-align: center;
 }
 
+/* -------------------------- BIO CONTAINER ------------------------------------------------------------------------------------- */
+
 /* define bio container child position which include h1=#about_job_title in index.html */
 .bio_container {
     display: flex;
@@ -128,6 +135,8 @@ div.bio_container h2 {
     margin: 0;
 }
 
+/* -------------------------- SKILLS CONTAINER ------------------------------------------------------------------------------------- */
+
 /* define skills container inner child positioning */
 .skills_container {
     box-sizing: border-box;
@@ -148,6 +157,8 @@ section#about_me ul {
 section#about_me ul li {
     list-style: square;
 }
+
+/* -------------------------- LANGUAGES CONTAINER ------------------------------------------------------------------------------------- */
 
 /* define languages container inner child positioning which includes fixed h1 title */
 div.languages_container {
@@ -179,6 +190,8 @@ div.languages_container h2 {
     gap: 5mm;
 }
 
+/* -------------------------- RIGHT SIDE CONTAINER ------------------------------------------------------------------------------------- */
+
 /* selects CV right side */
 .right_column {
     height: 100%;
@@ -198,6 +211,8 @@ div.languages_container h2 {
     flex-direction: column;
     justify-content: space-between;
 }
+
+/* -------------------------- PERSONAL DATA CONTAINER ------------------------------------------------------------------------------------- */
 
 /* define gap between experience_header and experience_body subs divs */
 section#personal_data {
@@ -223,6 +238,8 @@ section#personal_data {
 .right_grid > section h1:not(h1.first_name) {
     color: #0ea9c4;
 }
+
+/* -------------------------- PERSONAL DATA HEADER CONTAINER ------------------------------------------------------------------------------------- */
 
 /* selects personal_data div header and define inner child positioning */
 .personal_header {
@@ -311,6 +328,8 @@ section#personal_data ul {
     align-self: center;
 }
 
+/* -------------------------- EXPERIENCE CONTAINER ------------------------------------------------------------------------------------- */
+
 /* selects experiences div that contains experiences and define inner child positioning */
 .experiences_container {
     display: flex;
@@ -318,6 +337,8 @@ section#personal_data ul {
     justify-content: space-between;
     gap: 5mm;
 }
+
+/* -------------------------- EXPERIENCE HEADER CONTAINER ------------------------------------------------------------------------------------- */
 
 /* selects experience div header and define inner child positioning */
 .experience_header {
@@ -358,6 +379,8 @@ section#personal_data ul {
     text-align: right;
 }
 
+/* -------------------------- EXPERIENCE BODY CONTAINER ------------------------------------------------------------------------------------- */
+
 /* selects experience body div that contains experience job title and tasks list */
 .experience_body {
     display: flex;
@@ -394,6 +417,8 @@ section#personal_data ul {
     left: 0;
     top: 0;
 }
+
+/* -------------------------- EDUCATIONS SUB CONTAINER ------------------------------------------------------------------------------------- */
 
 /* select div that contains one education and define inner child positioning */
 #educations_sub_container {
@@ -446,6 +471,8 @@ section#personal_data ul {
 .program_title {
     margin: 0%;
 }
+
+/* -------------------------- PDF BUTTON ON PDF ------------------------------------------------------------------------------------- */
 
 /* hides pdf button on pdf cv page */
 @media print {
