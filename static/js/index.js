@@ -273,8 +273,8 @@ function updateUI() {
         for (level of currentLevels) {
             const languageOptions = [...document.getElementsByClassName(level)];
             if (languageOptions.length > 0) {
-                for (option of languageOptions) {
-                    updateValue = updatedLevels[currentLevels.indexOf(level)];
+                for (const option of languageOptions) {
+                    const updateValue = updatedLevels[currentLevels.indexOf(level)];
                     option.className = updateValue;
                     option.value = updateValue;
                     option.innerHTML = updateValue;
@@ -302,11 +302,22 @@ function updateUI() {
     generateButton.innerHTML = buttonInner[selectedLanguage]["generate"];
 }
 
+//write lang value in correct format into xml file
+function updateXmlLang(selectedLanguage) {
+    if (selectedLanguage == "🇬🇧") {
+        document.documentElement.lang = "en"
+    }
+    if (selectedLanguage == "🇫🇷") {
+        document.documentElement.lang = "fr"
+    }
+}
+
 //Save previous and current selected language in localStorage and updateUI accordingly.
 const saveDisplayLanguage = function() {
     const cachedDisplayLanguage = localStorage.getItem("display_language");
     localStorage.setItem("cached_display_language", cachedDisplayLanguage);
     localStorage.setItem("display_language", displayLanguageSelector.value);
+    updateXmlLang(localStorage.getItem("display_language"))
     updateUI()
 };
 
@@ -316,6 +327,7 @@ const loadDisplayLanguage = function() {
     const savedDisplayLanguage = localStorage.getItem("display_language");
     if (savedDisplayLanguage) {
         displayLanguageSelector.value = savedDisplayLanguage;
+        updateXmlLang(savedDisplayLanguage)
         updateUI()
     } else {
         saveDisplayLanguage();

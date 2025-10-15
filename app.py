@@ -190,12 +190,13 @@ class Cv:
 def get_json_path(display_language):
     if display_language == "🇬🇧":
         return en_json_path
-    else:
+    if display_language == "🇫🇷":
         return fr_json_path
 
 #get CV data from json file and return customized exeption message if fail
 def get_json_data():
     try:
+        print(flask.request.args.get("display_language"))
         json_path = get_json_path(flask.request.args.get("display_language"))
         cv_data = open(json_path, encoding="utf-8")
         file_content = cv_data.read().strip()
@@ -228,6 +229,13 @@ def save_cv():
     myCv.photo.save(os.path.join(project_root, "static/img/", myCv.photo.filename))
     myCv.save_json(myCv.display_language)
     return flask.redirect(flask.url_for("homepage"))
+
+@app.template_filter("format_xml_lang")
+def format_xml_language(value):
+    if value == "🇫🇷":
+        return "fr"
+    if value == "🇬🇧":
+        return "en"
 
 #custom jinja filter that translates fixed html cv elements
 @app.template_filter("translate")
