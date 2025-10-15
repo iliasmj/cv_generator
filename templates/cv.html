@@ -9,10 +9,10 @@
     <div class="cv_container">
         <aside class="left_column">
             <section id="about_me">
+                <div class="photo_container">
+                    <img class="photo" src="{{ url_for('static', filename='img/' + cv.photo) }}">
+                </div>
                 <div class="left_grid">
-                    <div class="photo_container">
-                        <img class="photo" src="{{ url_for('static', filename='img/' + cv.photo) }}">
-                    </div>
                     <div class="bio_container">
                         <h1>{{ cv.about_me["job_title"]|upper }}</h1>
                         <div class="bio_sub_container">

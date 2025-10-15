@@ -227,7 +227,7 @@ def save_cv():
     myCv.get_educations()
     myCv.photo.save(os.path.join(project_root, "static/img/", myCv.photo.filename))
     myCv.save_json(myCv.display_language)
-    return flask.render_template("index.html")
+    return flask.redirect(flask.url_for("homepage"))
 
 #custom jinja filter that translates fixed html cv elements
 @app.template_filter("translate")

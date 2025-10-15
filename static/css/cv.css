@@ -1,3 +1,4 @@
+/* imports Saira font from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
@@ -5,14 +6,16 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    background-color: #1e1e1e;
+    background-color: #1E1E1E;
 }
 
+/* sets printed page size and margin for pdf vesion */
 @page {
-    size: A4;       /* ou size: 210mm 297mm; */
-    margin: 0;      /* ou margin: 10mm; selon ton besoin */
+    size: A4;
+    margin: 0;
 }
 
+/* selects first layout parent div */
 .cv_container {
     width: 210mm; /*A4 width*/
     height: 297mm; /*A4 height*/
@@ -23,46 +26,59 @@ body {
     background-color: white;
 }
 
+/* selects CV left side */
 .left_column {
     height: 100%;
+    max-height: 297mm;
     background-color: #0ea9c4;
 }
 
+/* fills CV left side with CV section=about_me */
 section#about_me {
+    box-sizing: border-box;
     height: 100%;
+    padding: 7mm 0;
+    display: grid;
+    grid-template-rows: 20% 80%;
+    justify-content: center;
 }
 
+/* selects cv left side grid and define child positioning */
 .left_grid {
     height: 100%;
-    padding: 10% 10%;
+    width: 100%;
+    padding : 7mm 10% 0 10%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-content: center;
+    gap: 7mm;
 }
 
-section#about_me h1 {
-    margin: 0;
-}
-
+/* sets photo phosition as centered */
 .photo_container {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding-left: 17%;
+    padding-right: 17%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* defines photo size and form */
 .photo {
-    width:90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     border-radius: 30%;
     object-fit: cover;
-    margin-left: auto;
-    margin-right: auto;
     padding: 0;
 }
 
-.left_column h1 {
+/* define style for h1 inside about_me section */
+section#about_me h1 {
+    margin: 0;
     font-size: 16px;
     background-color: white;
     border-radius: 30px;
@@ -72,12 +88,14 @@ section#about_me h1 {
     text-align: center;
 }
 
+/* define years experience and language style */
 section#about_me h2 {
     color: white;
     margin: 0%;
     text-align: center;
 }
 
+/* define bio container child position which include h1=#about_job_title in index.html */
 .bio_container {
     display: flex;
     flex-direction: column;
@@ -86,18 +104,22 @@ section#about_me h2 {
     gap: 5mm;
 }
 
+/* define bio sub_container child position which exculde h1 */
 .bio_sub_container {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-content: center;
-    gap: 5mm;
+    gap: 7mm;
 }
 
+/* selects years experience h2 and apply font size */
 div.bio_container h2 {
     font-size: 12px;
 }
 
+/* selects bio text */
 .bio {
     padding-left: 5%;
     padding-right: 5%;
@@ -106,6 +128,16 @@ div.bio_container h2 {
     margin: 0;
 }
 
+/* define skills container inner child positioning */
+.skills_container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 7mm;
+}
+
+/* selects skills list */
 section#about_me ul {
     color: white;
     padding-left: 10%;
@@ -113,35 +145,33 @@ section#about_me ul {
     margin: 0;
 }
 
-.skills_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5mm;
-}
-
 section#about_me ul li {
     list-style: square;
 }
 
+/* define languages container inner child positioning which includes fixed h1 title */
 div.languages_container {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
-    gap: 5mm;
+    gap: 7mm;
 }
 
+/* selects language values */
 div.languages_container h2 {
     font-size: 14px;
 }
 
+/* selects proficiency values */
 .languages_container p{
     margin: 0;
     color: white;
     text-align: center;
 }
 
+/* define languages sub container inner child positioning which excludes fixed h1 title */
 .languages_sub_container {
     display: flex;
     flex-direction: column;
@@ -149,23 +179,23 @@ div.languages_container h2 {
     gap: 5mm;
 }
 
+/* selects CV right side */
 .right_column {
     height: 100%;
 }
 
+/* selects cv right side grid and define child positioning */
 .right_grid {
     display: flex;
     flex-direction: column;
     padding: 5%;
     box-sizing: border-box;
-    justify-content: space-between;
 }
 
-/*
+
 .right_grid > section:not(:first-child) {
     margin-top: auto;
 }
-*/
 
 .right_grid > section {
     display: flex;

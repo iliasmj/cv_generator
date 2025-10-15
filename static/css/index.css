@@ -1,7 +1,7 @@
 /* import saira font from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* activate box-box to include padding and border to height and width */ 
+/* activate border-box to include padding and border to height and width */ 
 * {
     box-sizing: border-box;
 }
