@@ -30,6 +30,7 @@ git clone https://github.com/ton-compte/ton-projet.git
 python3 -m venv venv
 ```
 4. activate venv
+
 MacOS
 ```bash
 source /venv/bin/activate

@@ -3,3 +3,7 @@ photo.jpg
 cv_data.json
 .DS_Store
 __pycache__
+.venv/
+venv/
+__pycache__/
+*.pyc
