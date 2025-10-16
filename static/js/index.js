@@ -736,7 +736,6 @@ const generate = async function() {
             //Rolls up de window so the user can directly sees the feedback message
             window.scrollTo({
                 top: 0,
-                left: 0,
                 behavior: "smooth"
             });
 

@@ -30,6 +30,12 @@
 
 6. app.py, lines 246-268
     - Tool used: ChatGPT (OpenAI)
-    - Prompt used: “How Can I reformat date type string ?”
+    - Prompt used: “How can I reformat date type string ?”
     - Date of prompt:  October 08, 2025
     - Modifications made to AI code: Used datetime class from datetime module and use locale module.
+
+app.py, lines 283-310
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I return data in flask to JS ?”
+    - Date of prompt:  October 04-08-16, 2025
+    - Modifications made to AI code: Used JSON tuple mecanism to return feedback message and construct pdf.
