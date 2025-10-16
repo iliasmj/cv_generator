@@ -304,7 +304,7 @@ section#personal_data ul {
 }
 
 /* add separating lines to experiences and educations sections titles */
-/* left side (chat-gpt involved here from https://chatgpt.com/ personal chat) */
+/* left side (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.) */
 .right_grid > section:not(section#personal_data) h1::before {
     content: "";
     flex: 1;
@@ -316,7 +316,7 @@ section#personal_data ul {
     align-self: center;
 }
 
-/* right side (chat-gpt involved here from https://chatgpt.com/ personal chat) */
+/* right side (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.) */
 .right_grid > section:not(section#personal_data) h1::after {
     content: "";
     flex: 1;

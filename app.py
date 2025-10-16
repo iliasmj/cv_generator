@@ -242,7 +242,7 @@ def format_xml_language(value):
 def translate(value, display_language):
     return translation_table[display_language][value]
 
-#custom jinja filter that formats birth date for displaying html cv
+#custom jinja filter that formats birth date for displaying html cv (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.)
 @app.template_filter("birth_date_format")
 def birth_date_format(value, display_language):
     if display_language == "🇬🇧":
@@ -250,7 +250,7 @@ def birth_date_format(value, display_language):
     else:
         return datetime.strptime(value, "%Y-%m-%d").strftime("%d.%m.%Y")
 
-#custom jinja filter that formats from and to date for displaying html cv (chat-gpt involved here from https://chatgpt.com/ personal chat)
+#custom jinja filter that formats from and to date for displaying html cv (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.)
 @app.template_filter("date_time_format")
 def date_time_format(value, display_language):
     try:

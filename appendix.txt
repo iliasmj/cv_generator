@@ -1,0 +1,35 @@
+1. index.css, line 33
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can i set the border shadow of a box ?”
+    - Date of prompt:  September 25, 2025
+    - Modifications made to AI code: used the border-shadow value.
+
+2. index.css, lines 135-142
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I change inpute type=date placeholders ?”
+    - Date of prompt:  September 30, 2025
+    - Modifications made to AI code: Used span placeholder mecanism as inspiration : positioning.
+
+3. index.css, lines 151-157
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I set the bio text input height ?”
+    - Date of prompt:  October 09, 2025
+    - Modifications made to AI code: Used textarea html element suggestion and advanced styling.
+
+4. index.css, line 298
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I make the button feel more interactive ?”
+    - Date of prompt:  October 12, 2025
+    - Modifications made to AI code: Used advanced styling to move up the buttons.
+
+5. cv.css, lines 308-329
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I display line as sections separator before and after section title”
+    - Date of prompt:  October 05, 2025
+    - Modifications made to AI code: Used after and before pseudo selectors and used lines style.
+
+6. app.py, lines 246-268
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How Can I reformat date type string ?”
+    - Date of prompt:  October 08, 2025
+    - Modifications made to AI code: Used datetime class from datetime module and use locale module.
