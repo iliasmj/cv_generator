@@ -196,7 +196,8 @@ def get_json_path(display_language):
 #get CV data from json file and return customized exeption message if fail
 def get_json_data():
     try:
-        json_path = get_json_path(flask.request.args.get("display_language"))
+        display_language = flask.request.args.get("display_language")
+        json_path = get_json_path(display_language)
         cv_data = open(json_path, encoding="utf-8")
         file_content = cv_data.read().strip()
         cv_data.close()
@@ -206,11 +207,20 @@ def get_json_data():
             cv_data.close()
             return data_json
         else:
-            return "⚠️ Le fichier JSON est vide.", 404
+            if display_language == "🇫🇷":
+                return "⚠️ Le fichier JSON est vide.", 404
+            if display_language == "🇬🇧":
+                return "⚠️ JSON file is empty.", 404
     except FileNotFoundError:
-        return "⚠️ Le fichier JSON n'existe pas.", 404
-    except json.JSONDecodeError as e:
-        return "⚠️ JSON invalide : " + e, 400
+        if display_language == "🇫🇷":
+            return "⚠️ Le fichier JSON n'existe pas.", 404
+        if display_language == "🇬🇧":
+                return "⚠️ JSON file does not exists.", 404
+    except json.JSONDecodeError:
+        if display_language == "🇫🇷":
+            return "⚠️ JSON invalide : cérifier le contenu du fichier", 400
+        if display_language == "🇬🇧":
+            return "⚠️ invalide JSON : check file content", 400
 
 #homepage page : cv form
 @app.route("/")

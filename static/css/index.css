@@ -46,8 +46,23 @@ body {
     justify-content: space-between; /* adding a space between child elements that fills the parents width space left automaticaly */
 }
 
+/* selects div that contains load button and its feedback message */
+#input_load_sub_menu {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+}
+
 #load {
     justify-self: left;
+}
+
+/*select load button feedback message */
+#input_load_sub_menu > p {
+    margin: 0;
+    font-size: 12px;
 }
 
 #erase {

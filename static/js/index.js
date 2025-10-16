@@ -190,6 +190,8 @@ const addEducationButton = document.getElementById("add_education_button");
 
 //Select form's action buttons from index' form.
 const loadButton = document.getElementById("load");
+const openButton = document.getElementById("open");
+const closeButton = document.getElementById("close");
 const eraseButton = document.getElementById("erase");
 const saveButton = document.getElementById("save");
 const generateButton = document.getElementById("generate");
@@ -238,6 +240,15 @@ const buttonInner = {
 let addLanguageClicked = false;
 let addExperienceClicked = false;
 let addEducationClicked = false;
+
+//Removes old feedback message if exists
+function eraseFeedBackMessage() {  
+    const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
+    const oldFeedBackMessage = document.getElementById("feedback_message");
+    if(oldFeedBackMessage) {
+        inputLoadSubMenu.removeChild(oldFeedBackMessage);
+    }
+}
 
 //Updates all input type=month placeholders.
 function updatePlaceholders() {
@@ -312,28 +323,6 @@ function updateXmlLang(selectedLanguage) {
     }
 }
 
-//Save previous and current selected language in localStorage and updateUI accordingly.
-const saveDisplayLanguage = function() {
-    const cachedDisplayLanguage = localStorage.getItem("display_language");
-    localStorage.setItem("cached_display_language", cachedDisplayLanguage);
-    localStorage.setItem("display_language", displayLanguageSelector.value);
-    updateXmlLang(localStorage.getItem("display_language"))
-    updateUI()
-};
-
-//Apply current localStorage display language value on window load and save previous selected display language as cached.
-const loadDisplayLanguage = function() {
-    localStorage.setItem("cached_display_language", displayLanguageSelector.value);
-    const savedDisplayLanguage = localStorage.getItem("display_language");
-    if (savedDisplayLanguage) {
-        displayLanguageSelector.value = savedDisplayLanguage;
-        updateXmlLang(savedDisplayLanguage)
-        updateUI()
-    } else {
-        saveDisplayLanguage();
-    }
-};
-
 //Removes className selected div from its parent div.
 function eraseDivContent(className, parentDiv) {
     const children = [...document.getElementsByClassName(className)];
@@ -353,6 +342,30 @@ const eraseForm = function() {
     eraseDivContent("experience_div", experiencesDiv);
     eraseDivContent("education_div", educationsDiv);
 }
+
+//Save previous and current selected language in localStorage and updateUI accordingly.
+const saveDisplayLanguage = function() {
+    eraseFeedBackMessage();
+    eraseForm();
+    const cachedDisplayLanguage = localStorage.getItem("display_language");
+    localStorage.setItem("cached_display_language", cachedDisplayLanguage);
+    localStorage.setItem("display_language", displayLanguageSelector.value);
+    updateXmlLang(localStorage.getItem("display_language"))
+    updateUI()
+};
+
+//Apply current localStorage display language value on window load and save previous selected display language as cached.
+const loadDisplayLanguage = function() {
+    localStorage.setItem("cached_display_language", displayLanguageSelector.value);
+    const savedDisplayLanguage = localStorage.getItem("display_language");
+    if (savedDisplayLanguage) {
+        displayLanguageSelector.value = savedDisplayLanguage;
+        updateXmlLang(savedDisplayLanguage)
+        updateUI()
+    } else {
+        saveDisplayLanguage();
+    }
+};
 
 function createHTMLDiv(className, parentElement) {
     const newDiv = document.createElement("div");
@@ -567,27 +580,36 @@ const addEducation = function() {
 };
 
 //Selects details html elements and open them.
-function openDetailsSection() {
+function openDetailsSection(open) {
     const details = document.getElementsByTagName("details");
-    for (detailsElement of details) {
-        detailsElement.open = true;
+    for (const detailsElement of details) {
+        detailsElement.open = open;
     }
 }
 
-//Fills all form's input with saved data (creates dynamic inputs accordingly).
+//Displays feedback message
+function displayFeedBackMessage(message) {
+    const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
+    const loadFeedBackMessage = document.createElement("p");
+    loadFeedBackMessage.id = "feedback_message";
+    loadFeedBackMessage.innerHTML = message; 
+    inputLoadSubMenu.appendChild(loadFeedBackMessage);
+}
+
+//Resets form and refills all form's input with saved data (creates dynamic inputs accordingly).
 const load = async function() {
     try {
+        eraseFeedBackMessage();
+        eraseForm();
+
         //calling /api/cv route by passing current selected display language.
         const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
 
         //Display load feedback message.
         if (!response.ok) {
             const message = await response.text();
-            const loadFeedBackMessage = document.createElement("p");
-            loadDisplayLanguage.id = "feedback_message";
-            loadFeedBackMessage.innerHTML = message;
-            const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
-            inputLoadSubMenu.appendChild(loadFeedBackMessage);
+            displayFeedBackMessage(message);
+            return;
         }
         
         //getting CV json data.
@@ -693,16 +715,42 @@ const load = async function() {
             programTitleInputs[i].value = educationObjects[i].program_title;
         }
 
-        openDetailsSection();
+        openDetailsSection(true);
+
     } catch (error) {
-        console.error("Erreur lors du chargement du CV : ", error)
+        displayFeedBackMessage("Erreur lors du chargement du CV : ", error);
     }
 }
 
 //Open new tab with html generated CV
-const generate = function() {
-        window.open(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`, "_blank");
-}
+const generate = async function() {
+    eraseFeedBackMessage();
+
+    try {
+        const response = await fetch(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
+
+        if (!response.ok) {
+            const message = await response.text();
+            displayFeedBackMessage(message);
+
+            //Rolls up de window so the user can directly sees the feedback message
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+            });
+
+            return;
+        } else {
+            window.open(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`, "_blank");
+            return;
+        }
+        
+    } catch (error) {
+        displayFeedBackMessage("Erreur lors de la génération du CV : ", error);
+    }
+};
+    
 
 //Add loadDisplayLanguage function to window load envent.
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
