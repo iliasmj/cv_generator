@@ -208,9 +208,9 @@ def get_json_data():
             return data_json
         else:
             if display_language == "🇫🇷":
-                return "⚠️ Le fichier JSON est vide.", 404
+                return "⚠️ Le fichier JSON est vide.", 400
             if display_language == "🇬🇧":
-                return "⚠️ JSON file is empty.", 404
+                return "⚠️ JSON file is empty.", 400
     except FileNotFoundError:
         if display_language == "🇫🇷":
             return "⚠️ Le fichier JSON n'existe pas.", 404
