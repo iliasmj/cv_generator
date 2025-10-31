@@ -410,7 +410,7 @@ function createHTMLRemoveButton(parentElement) {
 //Creates and appends new text input and its remove button to skills div.
 const addSkill = function() {
     const skillDiv = createHTMLDiv("skill_div", skillsDiv);
-    const skillInput = createHTHMLInput("skill","text", "skill", skillDiv);
+    createHTHMLInput("skill","text", "skill", skillDiv);
     
     const skillRemoveButtonDiv = createHTMLDiv("skill_remove_button_div", skillDiv);
     const removeSkillButton = createHTMLRemoveButton(skillRemoveButtonDiv)
@@ -431,7 +431,7 @@ const addLanguage = function() {
     const languageRightSubDiv = createHTMLDiv("language_right_sub_div", languageDiv);
 
     //Creates language input.
-    const languageInput = createHTHMLInput("language", "text", "language", langageLeftSubDiv);
+    createHTHMLInput("language", "text", "language", langageLeftSubDiv);
 
     //Creates proficiency level selector.
     const proficiencySelector = document.createElement("select");
@@ -461,7 +461,7 @@ let activitiesDivCount = 0;
 //Creates text box for specifying the activity and its remove button to experiences div.
 const addActivity = function(parentDiv, i) {
     const activityDiv = createHTMLDiv("activity_div", parentDiv);
-    const activityInput = createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
+    createHTHMLInput("activity_" + i, "text", "activity_" + i, activityDiv);
     
     const activityRemoveButtonDiv = createHTMLDiv("activity_remove_button_div", activityDiv);
     const removeActivityButton = createHTMLRemoveButton(activityRemoveButtonDiv);
@@ -487,15 +487,15 @@ const addExperience = function() {
 
     //Add job title input.
     createHTHMLLabel("exp_job_title_label", experienceDiv);
-    const jobTitleInput = createHTHMLInput("exp_job_title", "text", "exp_job_title", experienceDiv);
+    createHTHMLInput("exp_job_title", "text", "exp_job_title", experienceDiv);
 
     //Add employer input.
     createHTHMLLabel("employer_label", experienceDiv);
-    const employerInput = createHTHMLInput("employer", "text", "employer", experienceDiv);
+    createHTHMLInput("employer", "text", "employer", experienceDiv);
 
     //Add location input.
     createHTHMLLabel("exp_location_label", experienceDiv);
-    const expLocationInput = createHTHMLInput("exp_location", "text", "exp_location", experienceDiv);
+    createHTHMLInput("exp_location", "text", "exp_location", experienceDiv);
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("exp_from_label", experienceDiv);
@@ -521,7 +521,7 @@ const addExperience = function() {
      
     //Add button action "add task".
     const activitiesHeader = createHTMLDiv("dynamic_div_header", activitiesDiv)
-    const addActivityLabel = createHTHMLLabel("add_task_label", activitiesHeader);
+    createHTHMLLabel("add_task_label", activitiesHeader);
     const addActivityButton = createHTMLAddButton(activitiesHeader);
     experienceDiv.appendChild(activitiesDiv);
     addActivityButton.addEventListener("click", () => addActivity(activitiesDiv, activitiesDivCount));
@@ -546,11 +546,11 @@ const addEducation = function() {
 
     //Add institution input.
     createHTHMLLabel("institution_label", educationDiv);
-    const institutionInput = createHTHMLInput("institution", "text", "institution", educationDiv);
+    createHTHMLInput("institution", "text", "institution", educationDiv);
 
     //Add location input.
     createHTHMLLabel("edu_location_label", educationDiv);
-    const eduLocationInput = createHTHMLInput("edu_location", "text", "edu_location", educationDiv);
+    createHTHMLInput("edu_location", "text", "edu_location", educationDiv);
 
     //Add duration "from" date input (with MM-AAAA format).
     createHTHMLLabel("edu_from_label", educationDiv);
@@ -572,7 +572,7 @@ const addEducation = function() {
 
     //Add program title input.
     createHTHMLLabel("program_title_label", educationDiv);
-    const programTitleInput = createHTHMLInput("program_title", "text", "program_title", educationDiv);
+    createHTHMLInput("program_title", "text", "program_title", educationDiv);
 
     //Translate all education labels to current selected display language
     const labels = new AddEducationLabels();
@@ -587,6 +587,15 @@ function openDetailsSection(open) {
     }
 }
 
+//Rolls up the window so the user can directly sees the feedback message
+function scrollToFeedbackMessage() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+            
+
 //Displays feedback message
 function displayFeedBackMessage(message) {
     const inputLoadSubMenu = document.getElementById("input_load_sub_menu");
@@ -594,6 +603,25 @@ function displayFeedBackMessage(message) {
     loadFeedBackMessage.id = "feedback_message";
     loadFeedBackMessage.innerHTML = message; 
     inputLoadSubMenu.appendChild(loadFeedBackMessage);
+}
+
+//Any other error uncatched by the server occurs
+function handleUknownServerError(action) {
+    if (action == "load") {
+        if (localStorage.getItem("display_language")  == "🇫🇷") {
+            displayFeedBackMessage("Erreur inconnue lors du chargement.");
+        } else {
+            displayFeedBackMessage("Unknown error in loading.");
+        }
+    } else {
+        if (localStorage.getItem("display_language")  == "🇫🇷") {
+            displayFeedBackMessage("Erreur inconnue lors de la génération.");
+        } else {
+            displayFeedBackMessage("Unknown error while generating.");
+        }
+    }
+
+    scrollToFeedbackMessage();
 }
 
 //Resets form and refills all form's input with saved data (creates dynamic inputs accordingly).
@@ -604,17 +632,13 @@ const load = async function() {
 
         //calling /api/cv route by passing current selected display language.
         const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
-
-        //Display load feedback message.
-        if (!response.ok) {
-            const message = await response.text();
-            displayFeedBackMessage(message);
-            return;
-        }
-        
-        //getting CV json data.
         const data = await response.json();
 
+        if (data.error) {
+            displayFeedBackMessage(data.error);
+            return;
+        }
+    
         //Filling all form's input with CV data.
             //Fixed input.
         document.getElementById("name").value = data.personal_data.name;
@@ -717,8 +741,8 @@ const load = async function() {
 
         openDetailsSection(true);
 
-    } catch (error) {
-        displayFeedBackMessage("Erreur lors du chargement du CV : ", error);
+    } catch {
+        handleUknownServerError("load");
     }
 }
 
@@ -727,17 +751,13 @@ const generate = async function() {
     eraseFeedBackMessage();
 
     try {
-        const response = await fetch(`/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
+        //Checks if saved data exist by calling the api
+        const response = await fetch(`/api/cv?display_language=${encodeURIComponent(displayLanguageSelector.value)}`);
+        const data = await response.json();
 
-        if (!response.ok) {
-            const message = await response.text();
-            displayFeedBackMessage(message);
-
-            //Rolls up de window so the user can directly sees the feedback message
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+        if (data.error) {
+            displayFeedBackMessage(data.error);
+            scrollToFeedbackMessage();
 
             return;
         } else {
@@ -745,12 +765,11 @@ const generate = async function() {
             return;
         }
         
-    } catch (error) {
-        displayFeedBackMessage("Erreur lors de la génération du CV : ", error);
+    } catch {
+        handleUknownServerError("generate");
     }
 };
     
-
 //Add loadDisplayLanguage function to window load envent.
 window.addEventListener("DOMContentLoaded", loadDisplayLanguage);
 
@@ -770,6 +789,10 @@ addSkillButton.addEventListener("click", addSkill);
 addLanguageButton.addEventListener("click", addLanguage);
 addExperienceButton.addEventListener("click", addExperience);
 addEducationButton.addEventListener("click", addEducation);
+
+
+    //Opens all details befor submiting the form to prevent "not focusable" error log when detail content is hidden
+saveButton.addEventListener("click", () => openDetailsSection(true));
 
     //Generate HTML CV button
 generateButton.addEventListener("click", generate);

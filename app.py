@@ -208,19 +208,19 @@ def get_json_data():
             return data_json
         else:
             if display_language == "🇫🇷":
-                return "⚠️ Le fichier JSON est vide.", 400
+                return { "error" : "⚠️ Le fichier JSON est vide." }
             if display_language == "🇬🇧":
-                return "⚠️ JSON file is empty.", 400
+                return { "error" : "⚠️ JSON file is empty." }
     except FileNotFoundError:
         if display_language == "🇫🇷":
-            return "⚠️ Le fichier JSON n'existe pas.", 404
+            return { "error" : "⚠️ Le fichier JSON n'existe pas." }
         if display_language == "🇬🇧":
-                return "⚠️ JSON file does not exists.", 404
+                return { "error" : "⚠️ JSON file does not exists." }
     except json.JSONDecodeError:
         if display_language == "🇫🇷":
-            return "⚠️ JSON invalide : cérifier le contenu du fichier", 400
+            return { "error" : "⚠️ JSON invalide : vérifier le contenu du fichier" }
         if display_language == "🇬🇧":
-            return "⚠️ invalide JSON : check file content", 400
+            return { "error" : "⚠️ invalide JSON : check file content" }
 
 #homepage page : cv form
 @app.route("/")
@@ -230,13 +230,13 @@ def homepage():
 #route called by save button
 @app.route("/save", methods=["POST"])
 def save_cv():
-    myCv = Cv()
-    myCv.get_personal_data()
-    myCv.get_about_me()
-    myCv.get_experiences()
-    myCv.get_educations()
-    myCv.photo.save(os.path.join(project_root, "static/img/", myCv.photo.filename))
-    myCv.save_json(myCv.display_language)
+    my_cv = Cv()
+    my_cv.get_personal_data()
+    my_cv.get_about_me()
+    my_cv.get_experiences()
+    my_cv.get_educations()
+    my_cv.photo.save(os.path.join(project_root, "static/img/", my_cv.photo.filename))
+    my_cv.save_json(my_cv.display_language)
     return flask.redirect(flask.url_for("homepage"))
 
 #custom jinja filter that right lang value in right format into cv.hmtl's <xml> tag
@@ -283,9 +283,8 @@ def date_time_format(value, display_language):
 @app.route("/cv")
 def view_cv():
     json_data = get_json_data()
-    if isinstance(json_data, tuple):
-        message, status = json_data
-        return message, status
+    if "error" in json_data:
+        return flask.jsonify(json_data)
     return flask.render_template("cv.html", cv=json_data)
 
 #route that generate pdf cv
@@ -304,9 +303,6 @@ def pdf_cv():
 @app.route("/api/cv")
 def api_cv():
     json_data = get_json_data()
-    if isinstance(json_data, tuple):
-        message, status = json_data
-        return message, status
     return flask.jsonify(json_data)
 
 if __name__ == "__main__":

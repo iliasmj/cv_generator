@@ -290,6 +290,11 @@ define inner child positioning */
     margin-top: 5%;
 }
 
+/* highlights invalid fields on save */
+input:invalid, textarea:invalid {
+  border: 2px solid red;
+}
+
 /* define generate button position */
 #generate {
     justify-self: center;
