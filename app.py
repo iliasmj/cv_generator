@@ -141,6 +141,7 @@ class Cv:
         exp_location = flask.request.form.getlist("exp_location")
         exp_from = flask.request.form.getlist("exp_from")
         exp_to = flask.request.form.getlist("exp_to")
+        print(exp_to)
         #constructs Experience objects by gathering in order each experiences data.
         for i in range (len(exp_job_title)):
             activities = flask.request.form.getlist("activity_" + str(i))
@@ -263,19 +264,22 @@ def birth_date_format(value, display_language):
 #custom jinja filter that formats from and to date for displaying html cv (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.)
 @app.template_filter("date_time_format")
 def date_time_format(value, display_language):
-    try:
-        if display_language == "🇬🇧":
-            locale.setlocale(locale.LC_TIME, "en_GB.UTF-8")
-        if display_language == "🇫🇷":
-            locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
-        
-        return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
+    if value == "Present" or value == "À ce jour":
+        return value
+    else:
+        try:
+            if display_language == "🇬🇧":
+                locale.setlocale(locale.LC_TIME, "en_GB.UTF-8")
+            if display_language == "🇫🇷":
+                locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+            
+            return datetime.strptime(value, "%m-%Y").strftime("%b %Y").capitalize()
 
-    except ValueError:
-        if display_language == "🇬🇧":
-            return "invalid_format"
-        if display_language == "🇫🇷":
-            return "format_invalide"
+        except ValueError:
+            if display_language == "🇬🇧":
+                return "invalid_format"
+            if display_language == "🇫🇷":
+                return "format_invalide"
 
 #chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.
 

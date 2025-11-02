@@ -34,8 +34,14 @@
     - Date of prompt:  October 08, 2025
     - Modifications made to AI code: Used datetime class from datetime module and use locale module.
 
-app.py, lines 283-310
+7. app.py, lines 283-310
     - Tool used: ChatGPT (OpenAI)
     - Prompt used: “How can I return data in flask to JS ?”
     - Date of prompt:  October 04-08-16, 2025
     - Modifications made to AI code: Used JSON tuple mecanism to return feedback message and construct pdf.
+
+8. index.js, line 500
+    - Tool used: ChatGPT (OpenAI)
+    - Prompt used: “How can I select an input type='hidden' inside a referenced parent div ?"
+    - Date of prompt:  November 02, 2025
+    - Modifications made to AI code: Used querySelector to select html element.

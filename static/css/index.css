@@ -107,7 +107,7 @@ form > * > * {
 }
 
 /* selects all form's text inputs */
-input:not([type="button"]):not([type="submit"]), #bio {
+input:not([type="button"]):not([type="submit"]):not([type="checkbox"]), #bio {
     width: 100%;
     padding: 0.6rem 0.8rem;
     border: 1px solid #FFFFFF33;
@@ -273,6 +273,12 @@ define inner child positioning */
 /* space between experience/education inputs labels by selecting all except first */
 .experience_div > label:not(:first-of-type), .education_div > label:not(:first-of-type) {
     margin-top: 5%;
+}
+
+/* align "to" label and present checkbox (+ present label) */
+.exp_to_header, .edu_to_header {
+    display: flex;
+    margin-top: 5%
 }
 
 /* define activities div positioning inside experience_div */

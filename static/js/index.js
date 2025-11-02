@@ -27,6 +27,7 @@ traduction = {
         expLocation : "Location<span id=\"required\">*</span> :",
         expFrom : "From<span id=\"required\">*</span> :",
         expTo : "To<span id=\"required\">*</span> :",
+        expPresent : "date",
         addTask : "Add Task<span id=\"required\">*</span>",
         educationsTitle : "Education & Training",
         addEducation : "Add Education<span id=\"required\">*</span>",
@@ -34,6 +35,7 @@ traduction = {
         eduLocation : "Location<span id=\"required\">*</span> :",
         eduFrom : "From<span id=\"required\">*</span> :",
         eduTo : "To<span id=\"required\">*</span> :",
+        eduPresent : "date",
         programTitle : "Program Title<span id=\"required\">*</span> :",
     },
     "🇫🇷" : {
@@ -60,6 +62,7 @@ traduction = {
         expLocation : "Lieu<span id=\"required\">*</span> :",
         expFrom : "De<span id=\"required\">*</span> :",
         expTo : "À<span id=\"required\">*</span> :",
+        expPresent: "ce jour",
         addTask : "Ajouter une tâche<span id=\"required\">*</span> :",
         educationsTitle : "Formations",
         addEducation : "Ajouter une formation<span id=\"required\">*</span>",
@@ -67,6 +70,7 @@ traduction = {
         eduLocation : "Lieu<span id=\"required\">*</span> :",
         eduFrom : "De<span id=\"required\">*</span> :",
         eduTo : "À<span id=\"required\">*</span> :",
+        eduPresent : "ce jour",
         programTitle : "Titre du programme<span id=\"required\">*</span> :"
     }
 };
@@ -128,6 +132,7 @@ class AddExperienceLabels {
         this.expLocationLabels = document.getElementsByClassName("exp_location_label");
         this.expFromLabels = document.getElementsByClassName("exp_from_label");
         this.expToLabels = document.getElementsByClassName("exp_to_label");
+        this.expPresentLabels = document.getElementsByClassName("exp_present_label");
         this.addTaskLabels = document.getElementsByClassName("add_task_label");
     }
 
@@ -147,6 +152,9 @@ class AddExperienceLabels {
         for (const label of this.expToLabels) {
             label.innerHTML = traduction[language].expTo;
         }
+        for (const label of this.expPresentLabels) {
+            label.innerHTML = traduction[language].expPresent;
+        }
         for (const label of this.addTaskLabels) {
             label.innerHTML = traduction[language].addTask;
         }
@@ -160,6 +168,7 @@ class AddEducationLabels {
         this.eduLocationLabels = document.getElementsByClassName("edu_location_label");
         this.eduFromLabels = document.getElementsByClassName("edu_from_label");
         this.eduToLabels = document.getElementsByClassName("edu_to_label");
+        this.eduPresentLabels = document.getElementsByClassName("edu_present_label");
         this.programTitleLabels = document.getElementsByClassName("program_title_label");
     }
 
@@ -176,6 +185,9 @@ class AddEducationLabels {
         for(const label of this.eduToLabels) {
             label.innerHTML = traduction[language].eduTo;
         }
+        for (const label of this.eduPresentLabels) {
+            label.innerHTML = traduction[language].eduPresent;
+        }
         for(const label of this.programTitleLabels) {
             label.innerHTML = traduction[language].programTitle;
         }
@@ -191,7 +203,6 @@ const addEducationButton = document.getElementById("add_education_button");
 //Select form's action buttons from index' form.
 const loadButton = document.getElementById("load");
 const openButton = document.getElementById("open");
-const closeButton = document.getElementById("close");
 const eraseButton = document.getElementById("erase");
 const saveButton = document.getElementById("save");
 const generateButton = document.getElementById("generate");
@@ -455,6 +466,46 @@ const addLanguage = function() {
     removeLanguageButton.addEventListener("click", removeLanguage);
 };
 
+//Add "present" option checkbox for "to" date input
+function createPresentCheckBox(className, name, parentDiv) {
+    const presentCheckBox = document.createElement("input");
+    presentCheckBox.type = "checkbox";
+    presentCheckBox.className = className;
+    presentCheckBox.name = name;
+    parentDiv.appendChild(presentCheckBox);
+    return presentCheckBox;
+}
+
+//Create present hidden input to send value to server
+function disableTo(checkbox, toInput, name, parentDiv) {
+function createHiddenPresentInput(name, parentDiv) {
+    const presentValue = document.createElement("input");
+        presentValue.name = name;
+        presentValue.type = "hidden"
+        if (localStorage.getItem("display_language")  == "🇫🇷") {
+            presentValue.value = "À ce jour";
+        } else {
+            presentValue.value = "Present";
+        }
+        parentDiv.appendChild(presentValue);
+}
+
+//Disable/enable following "to" input on present checkbox change
+    if(checkbox.checked) {
+        toInput.disabled = checkbox.checked;
+        toInput.value = "";
+        createHiddenPresentInput(name, parentDiv);
+    } else {
+        //Remove hidden present on present checkbox uncheck (chat-gpt involved here from https://chatgpt.com/ personal chat. See the appendix for more details on the prompt and AI usage.)
+        const previousHiddenPresent = parentDiv.querySelector('input[type="hidden"]');
+        if (previousHiddenPresent) {
+            parentDiv.removeChild(previousHiddenPresent);
+        }
+        toInput.disabled = checkbox.checked;
+        toInput.style.color = ""; //Default color
+    }
+}
+
 //Activities divs count.
 let activitiesDivCount = 0;
 
@@ -466,7 +517,7 @@ const addActivity = function(parentDiv, i) {
     const activityRemoveButtonDiv = createHTMLDiv("activity_remove_button_div", activityDiv);
     const removeActivityButton = createHTMLRemoveButton(activityRemoveButtonDiv);
     const removeActivity = function() {
-        parentDiv.removeChild(activityDiv)
+        parentDiv.removeChild(activityDiv);
     }
     removeActivityButton.addEventListener("click", removeActivity);
 }
@@ -507,13 +558,17 @@ const addExperience = function() {
     }
 
     //Add duration "to" date input (with MM-AAAA format).
-    createHTHMLLabel("exp_to_label", experienceDiv);
-    const expSinceInput = createHTHMLInput("exp_to", "month", "exp_to", experienceDiv);
+    const expToHeader = createHTMLDiv("exp_to_header", experienceDiv);
+    createHTHMLLabel("exp_to_label", expToHeader);
+    const expPresent = createPresentCheckBox("exp_present", "exp_present", expToHeader);
+    createHTHMLLabel("exp_present_label", expToHeader);
+    const expToInput = createHTHMLInput("exp_to", "month", "exp_to", experienceDiv);
     if (localStorage.getItem("display_language")  == "🇫🇷") {
-        expSinceInput.placeholder = "MM-AAAA";
+        expToInput.placeholder = "MM-AAAA";
     } else {
-        expSinceInput.placeholder = "MM-YYYY";
+        expToInput.placeholder = "MM-YYYY";
     }
+    expPresent.addEventListener("change", () => disableTo(expPresent, expToInput, "exp_to", experienceDiv));
 
     //create div for containing activities inputs
     const activitiesDiv = createHTMLDiv("activities_div", experienceDiv);
@@ -562,13 +617,17 @@ const addEducation = function() {
     }
  
     //Add duration "to" date input (with MM-AAAA format).
-    createHTHMLLabel("edu_to_label", educationDiv);
-    const eduSinceInput = createHTHMLInput("edu_to", "month", "edu_to", educationDiv);
+    const eduToHeader = createHTMLDiv("edu_to_header", educationDiv);
+    createHTHMLLabel("edu_to_label", eduToHeader);
+    const eduPresent = createPresentCheckBox("edu_present", "edu_present", eduToHeader);
+    createHTHMLLabel("edu_present_label", eduToHeader);
+    const eduToInput = createHTHMLInput("edu_to", "month", "edu_to", educationDiv);
     if (localStorage.getItem("display_language")  == "🇫🇷") {
-        eduSinceInput.placeholder = "MM-AAAA";
+        eduToInput.placeholder = "MM-AAAA";
     } else {
-        eduSinceInput.placeholder = "MM-YYYY";
+        eduToInput.placeholder = "MM-YYYY";
     }
+    eduPresent.addEventListener("change", () => disableTo(eduPresent, eduToInput, "edu_to", educationDiv));
 
     //Add program title input.
     createHTHMLLabel("program_title_label", educationDiv);
@@ -706,13 +765,23 @@ const load = async function() {
         const employerInputs = document.getElementsByClassName("employer");
         const expLocationInputs = document.getElementsByClassName("exp_location");
         const expFromInputs = document.getElementsByClassName("exp_from");
+        const expPresentCheckboxes = document.getElementsByClassName("exp_present");
         const expToInputs = document.getElementsByClassName("exp_to");
+        const experienceDivs = document.getElementsByClassName("experience_div");
+
         for (let i = 0; i < experienceObjects.length; i++) {
             jobTitleInputs[i].value = experienceObjects[i].job_title;
             employerInputs[i].value = experienceObjects[i].employer;
             expLocationInputs[i].value = experienceObjects[i].location;
             expFromInputs[i].value = experienceObjects[i].duration_from;
-            expToInputs[i].value = experienceObjects[i].duration_to;
+            if (experienceObjects[i].duration_to == "À ce jour" || experienceObjects[i].duration_to == "Present") {
+                expPresentCheckboxes[i].checked = true;
+                expToInputs[i].value = "";
+                expToInputs[i].disabled = true;
+                createHiddenPresentInput("exp_to", experienceDivs[i]);
+            } else {
+                expToInputs[i].value = experienceObjects[i].duration_to;
+            }
             for (let j = 0; j < experienceObjects[i].key_activities.length; j++) {
                 const taskInputs = document.getElementsByClassName("activity_" + i);
                 taskInputs[j].value = experienceObjects[i].key_activities[j];
@@ -729,13 +798,23 @@ const load = async function() {
         const institutionInputs = document.getElementsByClassName("institution");
         const eduLocationInputs = document.getElementsByClassName("edu_location");
         const eduFromInputs = document.getElementsByClassName("edu_from");
+        const eduPresentCheckboxes = document.getElementsByClassName("edu_present");
         const eduToInputs = document.getElementsByClassName("edu_to");
         const programTitleInputs = document.getElementsByClassName("program_title");
+        const educationDivs = document.getElementsByClassName("education_div");
+
         for (let i = 0; i < educationObjects.length; i++) {
             institutionInputs[i].value = educationObjects[i].institution;
             eduLocationInputs[i].value = educationObjects[i].location;
             eduFromInputs[i].value = educationObjects[i].duration_from;
-            eduToInputs[i].value = educationObjects[i].duration_to;
+            if (educationObjects[i].duration_to == "À ce jour" || educationObjects[i].duration_to == "Present") {
+                eduPresentCheckboxes[i].checked = true;
+                eduToInputs[i].value = "";
+                eduToInputs[i].disabled = true;
+                createHiddenPresentInput("edu_to", educationDivs[i]);
+            } else {
+                eduToInputs[i].value = educationObjects[i].duration_to;
+            }
             programTitleInputs[i].value = educationObjects[i].program_title;
         }
 
