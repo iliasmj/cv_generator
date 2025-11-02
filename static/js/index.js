@@ -477,7 +477,6 @@ function createPresentCheckBox(className, name, parentDiv) {
 }
 
 //Create present hidden input to send value to server
-function disableTo(checkbox, toInput, name, parentDiv) {
 function createHiddenPresentInput(name, parentDiv) {
     const presentValue = document.createElement("input");
         presentValue.name = name;
@@ -491,6 +490,7 @@ function createHiddenPresentInput(name, parentDiv) {
 }
 
 //Disable/enable following "to" input on present checkbox change
+function disableTo(checkbox, toInput, name, parentDiv) {
     if(checkbox.checked) {
         toInput.disabled = checkbox.checked;
         toInput.value = "";
