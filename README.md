@@ -1,3 +1,14 @@
+# Notice d'utilisation
+
+Ce dépôt est rendu public uniquement pour consultation et référence.
+Aucune copie, distribution, modification, adaptation ou réutilisation
+des fichiers de ce dépôt n’est autorisée sans une autorisation écrite
+préalable du titulaire des droits.
+
+Tous droits réservés. Copyright © 2025 Mjoun Ilias.
+
+Pour demander une autorisation, contacte : iliasmj@gmail.com
+
 # MY FINAL PROJECT
 My final project is a CV generator which allow the user to generate a CV by complating a form.
 
