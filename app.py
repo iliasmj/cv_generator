@@ -141,7 +141,7 @@ class Cv:
         exp_location = flask.request.form.getlist("exp_location")
         exp_from = flask.request.form.getlist("exp_from")
         exp_to = flask.request.form.getlist("exp_to")
-        print(exp_to)
+        
         #constructs Experience objects by gathering in order each experiences data.
         for i in range (len(exp_job_title)):
             activities = flask.request.form.getlist("activity_" + str(i))
