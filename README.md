@@ -14,7 +14,7 @@ My final project is a CV generator which allow the user to generate a CV by comp
 
 - What does it do?  
   It allows the user to :
-  - save CV data in JSOn file, 
+  - save CV data in JSON file, 
   - display CV in HTML view, 
   - download CV pdf version,
   - load data from pre-saved JSON data file,
